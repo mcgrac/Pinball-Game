@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\marcsg12\\Documents\\GitHub\\Pinball-Game\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcsg12\\Documents\\GitHub\\Pinball-Game\\Source\\Flipper.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\Flipper.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcsg12\\Documents\\GitHub\\Pinball-Game\\Source\\Bumper.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\Bumper.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcsg12\\Documents\\GitHub\\Pinball-Game\\Source\\Launcher.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\Launcher.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcsg12\\Documents\\GitHub\\Pinball-Game\\Source\\Flipper.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\Flipper.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcsg12\\Documents\\GitHub\\Pinball-Game\\Source\\ModulePhysics.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -78,11 +78,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Flipper.cpp",
               "DocumentMoniker": "C:\\Users\\marcsg12\\Documents\\GitHub\\Pinball-Game\\Source\\Flipper.cpp",
               "RelativeDocumentMoniker": "Source\\Flipper.cpp",
@@ -119,20 +119,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Bumper.cpp",
               "DocumentMoniker": "C:\\Users\\marcsg12\\Documents\\GitHub\\Pinball-Game\\Source\\Bumper.cpp",
               "RelativeDocumentMoniker": "Source\\Bumper.cpp",
               "ToolTip": "C:\\Users\\marcsg12\\Documents\\GitHub\\Pinball-Game\\Source\\Bumper.cpp",
               "RelativeToolTip": "Source\\Bumper.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-10-29T12:09:39.818Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Launcher.cpp",
               "DocumentMoniker": "C:\\Users\\marcsg12\\Documents\\GitHub\\Pinball-Game\\Source\\Launcher.cpp",
               "RelativeDocumentMoniker": "Source\\Launcher.cpp",
@@ -140,8 +140,7 @@
               "RelativeToolTip": "Source\\Launcher.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-29T11:47:06.72Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-29T11:47:06.72Z"
             },
             {
               "$type": "Document",
