@@ -1,0 +1,241 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Map.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\Map.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Map.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\Map.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\ModuleAudio.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\ModuleAudio.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Level1.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\Level1.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Application.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\Application.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\ModulePhysics.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\ModulePhysics.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Application.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\Application.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Level1.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\Level1.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Ball.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\Ball.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Ball.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\Ball.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\PhysicEntity.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\PhysicEntity.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\ModuleRender.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}|PhysicsGame.vcxproj|solutionrelative:Source\\ModuleRender.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Map.cpp",
+              "DocumentMoniker": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Map.cpp",
+              "RelativeDocumentMoniker": "Source\\Map.cpp",
+              "ToolTip": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Map.cpp",
+              "RelativeToolTip": "Source\\Map.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-29T13:56:35.109Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Map.h",
+              "DocumentMoniker": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Map.h",
+              "RelativeDocumentMoniker": "Source\\Map.h",
+              "ToolTip": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Map.h",
+              "RelativeToolTip": "Source\\Map.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-10-29T12:58:42.036Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Level1.cpp",
+              "DocumentMoniker": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Level1.cpp",
+              "RelativeDocumentMoniker": "Source\\Level1.cpp",
+              "ToolTip": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Level1.cpp",
+              "RelativeToolTip": "Source\\Level1.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-29T13:28:39.515Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Level1.h",
+              "DocumentMoniker": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Level1.h",
+              "RelativeDocumentMoniker": "Source\\Level1.h",
+              "ToolTip": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Level1.h",
+              "RelativeToolTip": "Source\\Level1.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-10-29T13:03:45.11Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ModuleAudio.cpp",
+              "DocumentMoniker": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\ModuleAudio.cpp",
+              "RelativeDocumentMoniker": "Source\\ModuleAudio.cpp",
+              "ToolTip": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\ModuleAudio.cpp",
+              "RelativeToolTip": "Source\\ModuleAudio.cpp",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-29T13:30:22.255Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Ball.h",
+              "DocumentMoniker": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Ball.h",
+              "RelativeDocumentMoniker": "Source\\Ball.h",
+              "ToolTip": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Ball.h",
+              "RelativeToolTip": "Source\\Ball.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-10-29T12:37:29.831Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Ball.cpp",
+              "DocumentMoniker": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Ball.cpp",
+              "RelativeDocumentMoniker": "Source\\Ball.cpp",
+              "ToolTip": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Ball.cpp",
+              "RelativeToolTip": "Source\\Ball.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-29T13:29:29.914Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Application.h",
+              "DocumentMoniker": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Application.h",
+              "RelativeDocumentMoniker": "Source\\Application.h",
+              "ToolTip": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Application.h",
+              "RelativeToolTip": "Source\\Application.h",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-10-29T12:42:18.911Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ModuleRender.h",
+              "DocumentMoniker": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\ModuleRender.h",
+              "RelativeDocumentMoniker": "Source\\ModuleRender.h",
+              "ToolTip": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\ModuleRender.h",
+              "RelativeToolTip": "Source\\ModuleRender.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-10-29T12:42:05.85Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Main.cpp",
+              "DocumentMoniker": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Main.cpp",
+              "RelativeDocumentMoniker": "Source\\Main.cpp",
+              "ToolTip": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Main.cpp",
+              "RelativeToolTip": "Source\\Main.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-29T12:29:55.342Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Application.cpp",
+              "DocumentMoniker": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Application.cpp",
+              "RelativeDocumentMoniker": "Source\\Application.cpp",
+              "ToolTip": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\Application.cpp",
+              "RelativeToolTip": "Source\\Application.cpp",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-29T13:45:56.699Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ModulePhysics.h",
+              "DocumentMoniker": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\ModulePhysics.h",
+              "RelativeDocumentMoniker": "Source\\ModulePhysics.h",
+              "ToolTip": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\ModulePhysics.h",
+              "RelativeToolTip": "Source\\ModulePhysics.h",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-10-29T12:53:34.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "PhysicEntity.h",
+              "DocumentMoniker": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\PhysicEntity.h",
+              "RelativeDocumentMoniker": "Source\\PhysicEntity.h",
+              "ToolTip": "C:\\Users\\marcve1\\Documents\\GitHub\\Pinball-Game\\Source\\PhysicEntity.h",
+              "RelativeToolTip": "Source\\PhysicEntity.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-10-29T12:53:45.954Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

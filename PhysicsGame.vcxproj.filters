@@ -43,6 +43,12 @@
     <ClCompile Include="Source\Bumper.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Level1.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Map.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source/p2Point.h">
@@ -88,6 +94,12 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Source\Flipper.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Map.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Level1.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
