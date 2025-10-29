@@ -3,13 +3,8 @@
 class Bumper : public PhysicEntity
 {
 public:
-	Bumper(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture, b2BodyType _type)
-		: PhysicEntity(physics->CreateCircle(_x, _y, 25, _type), _listener)
-		, texture(_texture)
-	{
-
-	}
-
+	Bumper(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture, b2BodyType _type, ColliderType _collType);
+	~Bumper();
 	void Update() override
 	{
 		int x, y;

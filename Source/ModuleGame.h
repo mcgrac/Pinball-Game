@@ -4,8 +4,11 @@
 #include "Module.h"
 
 #include "p2Point.h"
+
 #include "Ball.h"
 #include"Launcher.h"
+#include "Bumper.h"
+
 #include "raylib.h"
 #include <vector>
 
@@ -39,6 +42,9 @@ public:
 
 	Ball* ball;
 	Launcher* launcher;
+
+	void OnCollision(PhysBody* bodyA, PhysBody* bodyB) override;
+	void OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) override;
 
 public:
 	std::vector<PhysicEntity*> entities;

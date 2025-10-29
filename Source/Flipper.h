@@ -1,15 +1,12 @@
 #pragma once
 #include"PhysicEntity.h"
 
-class Ball : public PhysicEntity
+class Flipper : public PhysicEntity
 {
 public:
-	Ball(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
-		: PhysicEntity(physics->CreateCircle(_x, _y, 25), _listener)
-		, texture(_texture)
-	{
 
-	}
+	Flipper(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture, b2BodyType _type, ColliderType _collType);
+	~Flipper();
 
 	void Update() override
 	{

@@ -28,6 +28,14 @@ enum update_status
 	UPDATE_STOP,
 	UPDATE_ERROR
 };
+enum ColliderType {
+	BALL,
+	UNKNOWN,
+	LAUNCHER,
+	WALL,
+	FLIPPER,
+	BUMPER
+ };
 
 // Configuration -----------
 #define SCREEN_WIDTH		 1280

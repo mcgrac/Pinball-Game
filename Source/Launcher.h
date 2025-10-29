@@ -4,7 +4,7 @@
 class Launcher : public PhysicEntity
 {
 public:
-	Launcher(ModulePhysics* physics, Ball* ball, int _x, int _y, int _width, int _heigh, Module* _listener, Texture2D _texture, b2BodyType _type);
+	Launcher(ModulePhysics* physics, Ball* ball, int _x, int _y, int _width, int _heigh, Module* _listener, Texture2D _texture, b2BodyType _type, ColliderType _collType);
 
 	~Launcher();
 

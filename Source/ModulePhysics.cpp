@@ -3,6 +3,8 @@
 #include "ModuleRender.h"
 #include "ModulePhysics.h"
 
+#include"iostream"
+
 #include "p2Point.h"
 
 #include <math.h>
@@ -84,6 +86,9 @@ bool ModulePhysics::Start()
 
 	world = new b2World(b2Vec2(gravity));
 
+	world->SetContactListener(this);
+
+	// 
 	// CreateRectangle(0, 980, 1280, 40, b2_staticBody);
 	//std::vector<int> fieldPoints;
 
@@ -127,10 +132,14 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type)
 	if (world == nullptr)
 		return nullptr;
 
+	// --- Do phys body to return it ---
+	PhysBody* pbody = new PhysBody();
+
 	// --- Body definition ---
 	b2BodyDef bodyDef;
 	bodyDef.type = type; // dynamic or static
 	bodyDef.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y)); //set initial position
+	bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
 
 	b2Body* body = world->CreateBody(&bodyDef); //adds that body into the body list (allocates memory)
 
@@ -147,22 +156,25 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type)
 
 	body->CreateFixture(&fixture);
 
-	// --- Do phys body to return it ---
-	PhysBody* pbody = new PhysBody();
+
 	pbody->body = body;
 	pbody->width = radius * 2;
 	pbody->height = radius * 2;
+
 
 	return pbody;
 }
 
 PhysBody* ModulePhysics::CreateChain(int x, int y, const int* points, int size) {
 
-	b2BodyDef body;
-	body.type = b2_staticBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	PhysBody* pbody = new PhysBody();
 
-	b2Body* b = world->CreateBody(&body);
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_staticBody;
+	bodyDef.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
+
+	b2Body* b = world->CreateBody(&bodyDef);
 
 	b2ChainShape shape;
 	b2Vec2* p = new b2Vec2[size / 2];
@@ -181,10 +193,8 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, const int* points, int size) 
 
 	delete[] p;
 
-	PhysBody* pbody = new PhysBody();
 	pbody->body = b;
 	pbody->width = pbody->height = 0;
-
 	return pbody;
 }
 
@@ -192,12 +202,12 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2
 {
 	PhysBody* pbody = new PhysBody();
 
-	b2BodyDef body;
-	body.type = type;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-	body.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
+	b2BodyDef bodyDef;
+	bodyDef.type = type;
+	bodyDef.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
 
-	b2Body* b = world->CreateBody(&body);
+	b2Body* b = world->CreateBody(&bodyDef);
 	b2PolygonShape box;
 	//box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
 	box.SetAsBox(PIXEL_TO_METERS(width) * 1, PIXEL_TO_METERS(height) * 1);
@@ -333,3 +343,51 @@ void PhysBody::GetPhysicPosition(int& x, int& y) const
 	x = METERS_TO_PIXELS(pos.x);
 	y = METERS_TO_PIXELS(pos.y);
 }
+
+void ModulePhysics::BeginContact(b2Contact* contact)
+{
+	std::cout << "BeginContact Physics" << std::endl;
+
+	b2Fixture* fixtureA = contact->GetFixtureA();
+	b2Fixture* fixtureB = contact->GetFixtureB();
+
+	b2Body* bodyA = fixtureA->GetBody();
+	b2Body* bodyB = fixtureB->GetBody();
+
+	// Obtener PhysBody de cada cuerpo (usando UserData)
+	PhysBody* physA = (PhysBody*)bodyA->GetUserData().pointer;
+	PhysBody* physB = (PhysBody*)bodyB->GetUserData().pointer;
+
+	if (physA && physA->listener) {
+		std::cout << "BeginContact2" << std::endl;
+		physA->listener->OnCollision(physA, physB);
+	}
+
+
+	if (physB && physB->listener) {
+		std::cout << "BeginContact2" << std::endl;
+		physB->listener->OnCollision(physB, physA);
+	}
+
+}
+
+void ModulePhysics::EndContact(b2Contact* contact)
+{
+	std::cout << "End contact physics" << std::endl;
+
+	b2Fixture* fixtureA = contact->GetFixtureA();
+	b2Fixture* fixtureB = contact->GetFixtureB();
+
+	b2Body* bodyA = fixtureA->GetBody();
+	b2Body* bodyB = fixtureB->GetBody();
+
+	PhysBody* physA = (PhysBody*)bodyA->GetUserData().pointer;
+	PhysBody* physB = (PhysBody*)bodyB->GetUserData().pointer;
+
+	if (physA && physA->listener)
+		physA->listener->OnCollisionEnd(physA, physB);
+
+	if (physB && physB->listener)
+		physB->listener->OnCollisionEnd(physB, physA);
+}
+

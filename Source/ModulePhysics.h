@@ -11,6 +11,8 @@
 #define METERS_TO_PIXELS(m) ((int) floor(PIXELS_PER_METER * m))
 #define PIXEL_TO_METERS(p)  ((float) METER_PER_PIXEL * p)
 
+class PhysicEntity;
+
 // Small class to return to other modules to track position and rotation of physics bodies
 class PhysBody
 {
@@ -39,8 +41,11 @@ public:
 	void ApplyLinearImpulseToCenter(b2Vec2 impulse, bool wake = true);
 
 public:
+	Module* listener = nullptr;
+	//ColliderType ctype = ColliderType::UNKNOWN;
 	int width, height;
 	b2Body* body;
+	PhysicEntity* entity = nullptr;
 	// TODO 6: Add a pointer to a module that might want to listen to a collision from this body
 };
 
@@ -66,6 +71,8 @@ public:
 
 	b2World* GetWorld() const { return world; }  // Devuelve el puntero al mundo físico
 
+	void BeginContact(b2Contact* contact) override;
+    void EndContact(b2Contact* contact) override;
 
 private:
 
