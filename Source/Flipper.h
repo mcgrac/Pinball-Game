@@ -1,15 +1,19 @@
 #pragma once
-#include"PhysicEntity.h"
+#include "PhysicEntity.h"
 
-class Ball : public PhysicEntity
+class Flipper : public PhysicEntity
 {
 public:
-	Ball(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture)
-		: PhysicEntity(physics->CreateCircle(_x, _y, 25), _listener)
+	Flipper(ModulePhysics* physics, int _x, int _y, int _w, int _h, Module* _listener, Texture2D _texture, b2BodyType _type)
+		: PhysicEntity(physics->CreateRectangle(_x, _y, _w, _h, _type), _listener)
 		, texture(_texture)
 	{
 
 	}
+
+	void Activate();
+	void Deactivate();
+	void IsPressed();
 
 	void Update() override
 	{
@@ -26,5 +30,8 @@ public:
 
 private:
 	Texture2D texture;
+
+	bool isPressed = false;
+
 
 };

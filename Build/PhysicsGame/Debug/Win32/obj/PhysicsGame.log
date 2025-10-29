@@ -1,4 +1,2 @@
-﻿  ModulePhysics.cpp
-C:\Users\34628\Desktop\CleanTemplate\fisica2-CleanTemplate\Source\ModulePhysics.cpp(13,47): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\34628\Desktop\CleanTemplate\fisica2-CleanTemplate\Source\ModulePhysics.cpp(13,16): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-  PhysicsGame.vcxproj -> C:\Users\34628\Desktop\CleanTemplate\fisica2-CleanTemplate\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe
+﻿  Flipper.cpp
+  PhysicsGame.vcxproj -> C:\Users\xaviermm10\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe
