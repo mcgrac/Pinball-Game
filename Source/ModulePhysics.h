@@ -67,7 +67,9 @@ public:
 	PhysBody* CreateCircle(int x, int y, int radius, b2BodyType type);
 	PhysBody* CreateRectangle(int x, int y, int width, int height, b2BodyType type);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
-	PhysBody* CreateChain(int x, int y, const int* points, int size);
+	PhysBody* CreateChain(int x, int y, const int* points, int size, b2BodyType type);
+	PhysBody* CreatePolygon(int x, int y, int* points, int count, b2BodyType type);
+	PhysBody* CreateBall(int x, int y, int radius, b2BodyType type);
 
 	b2World* GetWorld() const { return world; }  // Devuelve el puntero al mundo físico
 

@@ -38,8 +38,8 @@ enum ColliderType {
 };
 
 // Configuration -----------
-#define SCREEN_WIDTH		 1280
-#define SCREEN_HEIGHT		 1000 //antes 720
+#define SCREEN_WIDTH		 648
+#define SCREEN_HEIGHT		 1019 //antes 720
 #define SCREEN_SIZE				1
 #define WIN_FULLSCREEN		false
 #define WIN_RESIZABLE		false
