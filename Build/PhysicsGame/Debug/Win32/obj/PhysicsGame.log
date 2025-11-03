@@ -1,23 +1,5 @@
 ﻿  ScoreTracker.cpp
   Application.cpp
-  Log.cpp
-  Main.cpp
-  ModuleAudio.cpp
-  ModulePhysics.cpp
-C:\Users\marcv\Documents\GitHub\Pinball-Game\Source\ModulePhysics.cpp(15,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\marcv\Documents\GitHub\Pinball-Game\Source\ModulePhysics.cpp(15,16): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  ModuleRender.cpp
-  ModuleWindow.cpp
-  Ball.cpp
-  Bumper.cpp
-C:\Users\marcv\Documents\GitHub\Pinball-Game\Source\Bumper.cpp(3,47): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  Flipper.cpp
-  Launcher.cpp
-C:\Users\marcv\Documents\GitHub\Pinball-Game\Source\Launcher.cpp(12,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  Level1.cpp
-  Map.cpp
   ModuleGame.cpp
-  PhysicEntity.cpp
-  Timer.cpp
   Generating Code...
   PhysicsGame.vcxproj -> C:\Users\marcv\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe

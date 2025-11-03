@@ -10,6 +10,10 @@ public:
 	~ScoreTracker();
 	void UpdateScore();
 	void PrintScore();
+	void StartScoreTracker();
+	void PauseTracker();
+	void ResumeTracker();
+	bool paused = true;
 	int score;
 	Timer* timer;
 	double Frequency;

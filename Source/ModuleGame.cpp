@@ -126,6 +126,7 @@ update_status ModuleGame::Update()
 		ManageScore();
 
 		if (restartBallFlag)
+			scoreTracker->PauseTracker();
 			RestartBall();
 
 	}
@@ -189,6 +190,12 @@ void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) {
 	if (other->entity && other->entity->GetColliderType() == ColliderType::LAUNCHER)
 	{
 		launcher->OnBallCollision(false); //ballCollision launcher false
+		if (scoreTracker->score > 0) {
+			scoreTracker->ResumeTracker();
+		}
+		else {
+			scoreTracker->StartScoreTracker();
+		}
 
 	}
 	else if (other->entity && other->entity->GetColliderType() == ColliderType::BUMPER)
