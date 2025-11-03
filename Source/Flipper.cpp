@@ -54,7 +54,7 @@ Flipper::~Flipper() {}
 
 void Flipper::Press()
 {
-    std::cout << "flipper pressed" << std::endl;
+    //std::cout << "flipper pressed" << std::endl;
     float flipperSpeed = 20.0f;
 
     if (isLeft)
@@ -65,7 +65,7 @@ void Flipper::Press()
 
 void Flipper::Release()
 {
-    std::cout << "flipper released" << std::endl;
+    //std::cout << "flipper released" << std::endl;
     float flipperSpeed = 20.0f;
 
     if (isLeft)

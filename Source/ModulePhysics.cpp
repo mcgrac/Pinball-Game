@@ -300,6 +300,21 @@ PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int count, b2B
 
 	return pbody;
 }
+
+void ModulePhysics::DestroyPhysBody(PhysBody* pbody)
+{
+	if (pbody == nullptr)
+		return;
+
+	if (pbody->body != nullptr)
+	{
+		world->DestroyBody(pbody->body);
+		pbody->body = nullptr;
+	}
+
+	delete pbody;
+}
+
 update_status ModulePhysics::PostUpdate()
 {
 

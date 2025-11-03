@@ -71,6 +71,8 @@ public:
 	PhysBody* CreatePolygon(int x, int y, int* points, int count, b2BodyType type);
 	PhysBody* CreateBall(int x, int y, int radius, b2BodyType type);
 
+	void DestroyPhysBody(PhysBody* pbody);
+
 	b2World* GetWorld() const { return world; }  // Devuelve el puntero al mundo físico
 
 	void BeginContact(b2Contact* contact) override;
