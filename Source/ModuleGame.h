@@ -12,6 +12,9 @@
 #include "raylib.h"
 #include <vector>
 
+#include "Map.h"
+#include"Level1.h"
+
 class PhysBody;
 class PhysicEntity;
 
@@ -47,10 +50,12 @@ public:
 	Flipper* leftFlipper;
 	Flipper* rightFlipper;
 
-	PhysBody* prueba = nullptr;;
+	PhysBody* prueba = nullptr;
 
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB) override;
 	void OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) override;
+
+	Map* currentMap = nullptr;
 
 public:
 	std::vector<PhysicEntity*> entities;

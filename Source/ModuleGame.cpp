@@ -23,9 +23,13 @@ bool ModuleGame::Start()
 
 	bool ret = true;
 
+	
+
+
 	ball = new Ball(App->physics, 150, 200, this, ballTexture, b2_dynamicBody, ColliderType::BALL);
 	//launcher = new Launcher(App->physics, ball, 200, 900, 50, 20, this, launcherTexture, ColliderType::LAUNCHER);
-	
+
+	//ball->SetBullet(true);
 
 	int rightPoints[16] =
 	{
@@ -60,9 +64,10 @@ bool ModuleGame::Start()
 	leftFlipper = new Flipper(App->physics, 125, 800, true, this, leftFlipperTexture, b2_dynamicBody, ColliderType::FLIPPER, flipperLeftPoints);
 	rightFlipper = new Flipper(App->physics, 275, 800, false, this, rightFlipperTexture, b2_dynamicBody, ColliderType::FLIPPER, flipperRightPoints);
 
-	prueba = App->physics->CreateChain(100, 100, rightPoints, 16, b2_staticBody);
+	prueba = App->physics->CreatePolygon(150, 700, rightPoints, 16, b2_staticBody);
 
-	
+	currentMap = new Level1(App->physics);
+	currentMap->Start();
 	return ret;
 }
 
@@ -70,6 +75,8 @@ bool ModuleGame::Start()
 bool ModuleGame::CleanUp()
 {
 	LOG("Unloading Intro scene");
+	currentMap->CleanUp();
+	delete currentMap;
 
 	return true;
 }
@@ -101,6 +108,7 @@ update_status ModuleGame::Update()
 
 	// === Actualizar entidades ===
 	//launcher->Update();
+	currentMap->Update();
 	ball->Update();
 	return UPDATE_CONTINUE;
 }
