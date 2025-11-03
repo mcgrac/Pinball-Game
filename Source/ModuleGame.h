@@ -50,8 +50,6 @@ public:
 	Flipper* leftFlipper;
 	Flipper* rightFlipper;
 
-	PhysBody* prueba = nullptr;
-
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB) override;
 	void OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) override;
 
