@@ -1,14 +1,15 @@
-#include "Launcher.h"
+ï»¿#include "Launcher.h"
 //#include "App.h"
 //#include "Input.h"
+#include"iostream"
 
 
-Launcher::Launcher(ModulePhysics* physics, Ball* ball, int _x, int _y, int _width, int _heigh, Module* _listener, Texture2D _texture, b2BodyType _type, ColliderType _collType)
-    : PhysicEntity(physics->CreateRectangle(_x, _y, _width, _heigh, b2_staticBody), _listener, _collType)
+Launcher::Launcher(ModulePhysics* physics, Ball* ball, int _x, int _y, int _width, int _heigh, Module* _listener, Texture2D _texture, ColliderType _collType)
+    : PhysicEntity(physics->CreateRectangle(_x, _y, _width, _heigh, b2_kinematicBody), _listener, _collType)
 {
     this->ball = ball;
-    initialY = _y;
     body->entity = this;
+    initialY = _y;
 }
 Launcher::~Launcher()
 {
@@ -16,46 +17,47 @@ Launcher::~Launcher()
 
 void Launcher::Press()
 {
-    if (!isPressed)
-    {
-        isPressed = true;
-        pressStartTime = GetTime(); // Raylib: obtiene el tiempo en segundos
-    }
+    std::cout << "isLauncherPressed" << std::endl;
+    isCharging = true;
+    returning = false;
+    body->GetB2Body()->SetLinearVelocity(b2Vec2(0, speedDown));
 }
 
 void Launcher::Release()
 {
-    if (isPressed)
-    {
-        isPressed = false;
+    isCharging = false;
+    returning = true;
 
-        // Calcular cuánto tiempo estuvo presionado
-        float heldTime = GetTime() - pressStartTime;
-        float power = heldTime * chargeSpeed;
-
-        // Limitar a una fuerza máxima
-        if (power > maxPower)
-            power = maxPower;
-
-        // Restablecer posición
-        body->SetPosition(body->GetPositionX(), initialY);
-
-        // Aplicar impulso a la bola
-        if (ball != nullptr)
-        {
-            b2Body* ballBody = ball->GetBody()->GetB2Body();
-            if (ballBody != nullptr)
-                ballBody->ApplyLinearImpulseToCenter(b2Vec2(0, -power), true);
-        }
-    }
+    body->GetB2Body()->SetLinearVelocity(b2Vec2(0, -speedUp));
 }
 
 void Launcher::Update()
 {
-    if (isPressed)
+    float y = body->GetPositionY();
+    std::cout << "Y = " << y << std::endl;
+
+
+
+    // mientras cargas
+    if (isCharging)
     {
-        int newY = body->GetPositionY() + 3; // baja lentamente
-        if (newY < initialY + maxOffset)
-            body->SetPosition(body->GetPositionX(), newY);
+
+        if (y >= initialY + maxOffset)
+        {
+            std::cout << "reset velocity" << std::endl;
+            body->GetB2Body()->SetLinearVelocity(b2Vec2(0, 0));
+        }
+    }
+
+    // cuando retorna
+    if (returning)
+    {
+        if (y <= initialY)
+        {
+            std::cout << "reset velocity returning" << std::endl;
+            body->GetB2Body()->SetLinearVelocity(b2Vec2(0, 0));
+            body->SetPosition(body->GetPositionX(), initialY);
+            returning = false;
+        }
     }
 }

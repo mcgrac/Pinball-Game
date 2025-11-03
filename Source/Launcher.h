@@ -4,7 +4,7 @@
 class Launcher : public PhysicEntity
 {
 public:
-	Launcher(ModulePhysics* physics, Ball* ball, int _x, int _y, int _width, int _heigh, Module* _listener, Texture2D _texture, b2BodyType _type, ColliderType _collType);
+	Launcher(ModulePhysics* physics, Ball* ball, int _x, int _y, int _width, int _heigh, Module* _listener, Texture2D _texture, ColliderType _collType);
 
 	~Launcher();
 
@@ -26,17 +26,33 @@ public:
 		return body->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);;
 	}
 
+	bool ballInside = false;
+
 private:
 	Texture2D texture;
 
 	Ball* ball = nullptr;
 
-	bool isPressed = false;
-	float initialY = 0.0f;
-	float maxOffset = 100.0f;  // cuánto puede bajar
+	//bool isPressed = false;
+	//float initialY = 0.0f;
+	//float maxOffset = 100.0f;  // cuánto puede bajar
 
 	float pressStartTime = 0.0f; // tiempo en que se empezó a presionar
 	float maxPower = 25.0f;      // fuerza máxima
-	float chargeSpeed = 10.0f;   // velocidad de carga del impulso
+	//float chargeSpeed = 10.0f;   // velocidad de carga del impulso
+
+
+
+	bool isCharging = false;
+	bool returning = false;
+
+	float initialY = 0.0f;
+	float maxOffset = 70.0f;  // hasta dónde baja
+	float speedDown = 3.0f;   // lentito hacia abajo
+	float speedUp = 20.0f;    // rápido hacia arriba
+
+	float charge = 0.0f;
+	float chargeSpeed = 2.0f;  // velocidad de carga
+	float maxCharge = 5.0f;
 
 };
