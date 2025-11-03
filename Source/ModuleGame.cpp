@@ -24,7 +24,11 @@ bool ModuleGame::Start()
 	bool ret = true;
 
 	ball = new Ball(App->physics, 200, 200, this, ballTexture, b2_dynamicBody, ColliderType::BALL);
-	launcher = new Launcher(App->physics, ball, 200, 900, 50, 20, this, launcherTexture, ColliderType::LAUNCHER);
+	//launcher = new Launcher(App->physics, ball, 200, 900, 50, 20, this, launcherTexture, ColliderType::LAUNCHER);
+
+	leftFlipper = new Flipper(App->physics, 300, 800, true, this, leftFlipperTexture, b2_dynamicBody, ColliderType::FLIPPER);
+	leftFlipper = new Flipper(App->physics, 500, 800, false, this, leftFlipperTexture, b2_dynamicBody, ColliderType::FLIPPER);		
+	
 	return ret;
 }
 
@@ -51,7 +55,7 @@ update_status ModuleGame::Update()
 	}
 
 	// === Actualizar entidades ===
-	launcher->Update();
+	//launcher->Update();
 	ball->Update();
 	return UPDATE_CONTINUE;
 }

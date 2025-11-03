@@ -8,7 +8,7 @@
 #include "Ball.h"
 #include"Launcher.h"
 #include "Bumper.h"
-
+#include"Flipper.h"
 #include "raylib.h"
 #include <vector>
 
@@ -39,9 +39,14 @@ public:
 
 	Texture2D ballTexture;
 	Texture2D launcherTexture;
+	Texture2D leftFlipperTexture;
+	Texture2D rightFlipperTexture;
 
 	Ball* ball;
 	Launcher* launcher;
+	Flipper* leftFlipper;
+	Flipper* rightFlipper;
+
 
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB) override;
 	void OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) override;

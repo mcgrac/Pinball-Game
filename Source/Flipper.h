@@ -5,7 +5,7 @@ class Flipper : public PhysicEntity
 {
 public:
 
-	Flipper(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture, b2BodyType _type, ColliderType _collType);
+	Flipper(ModulePhysics* physics, int _x, int _y, bool _isLeft,Module* _listener, Texture2D _texture, b2BodyType _type, ColliderType _collType);
 	~Flipper();
 
 	void Update() override
@@ -21,7 +21,13 @@ public:
 		DrawTexturePro(texture, source, dest, origin, rotation, WHITE);
 	}
 
+	void Press();
+	void Release();
+
 private:
+	b2RevoluteJoint* joint;
+	bool isLeft;
+
 	Texture2D texture;
 
 };
