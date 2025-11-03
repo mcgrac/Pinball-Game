@@ -3,21 +3,21 @@
   Main.cpp
   ModuleAudio.cpp
   ModulePhysics.cpp
-C:\Users\34628\Downloads\Pinball-Game-main\Pinball-Game-main\Source\ModulePhysics.cpp(15,47): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\34628\Downloads\Pinball-Game-main\Pinball-Game-main\Source\ModulePhysics.cpp(15,16): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\34628\Desktop\PinballGit\Pinball-Game\Source\ModulePhysics.cpp(15,47): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\34628\Desktop\PinballGit\Pinball-Game\Source\ModulePhysics.cpp(15,16): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
   ModuleRender.cpp
   ModuleWindow.cpp
   Ball.cpp
   Bumper.cpp
   Flipper.cpp
   Launcher.cpp
-C:\Users\34628\Downloads\Pinball-Game-main\Pinball-Game-main\Source\Launcher.cpp(10,16): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\34628\Downloads\Pinball-Game-main\Pinball-Game-main\Source\Launcher.cpp(22,33): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\34628\Downloads\Pinball-Game-main\Pinball-Game-main\Source\Launcher.cpp(33,24): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\34628\Downloads\Pinball-Game-main\Pinball-Game-main\Source\Launcher.cpp(57,18): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\34628\Downloads\Pinball-Game-main\Pinball-Game-main\Source\Launcher.cpp(59,53): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\34628\Desktop\PinballGit\Pinball-Game\Source\Launcher.cpp(10,16): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\34628\Desktop\PinballGit\Pinball-Game\Source\Launcher.cpp(22,33): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\34628\Desktop\PinballGit\Pinball-Game\Source\Launcher.cpp(33,24): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\34628\Desktop\PinballGit\Pinball-Game\Source\Launcher.cpp(57,18): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\34628\Desktop\PinballGit\Pinball-Game\Source\Launcher.cpp(59,53): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
   ModuleGame.cpp
   PhysicEntity.cpp
   Timer.cpp
   Generando código...
-  PhysicsGame.vcxproj -> C:\Users\34628\Downloads\Pinball-Game-main\Pinball-Game-main\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe
+  PhysicsGame.vcxproj -> C:\Users\34628\Desktop\PinballGit\Pinball-Game\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe
