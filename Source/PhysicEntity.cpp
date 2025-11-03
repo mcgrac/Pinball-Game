@@ -7,3 +7,7 @@ PhysicEntity::PhysicEntity(PhysBody* _body, Module* _listener, ColliderType _col
 	body->listener = _listener; // quién recibe BeginContact
 }
 PhysicEntity::~PhysicEntity() {};
+
+void PhysicEntity::Update() {
+
+}

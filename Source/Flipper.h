@@ -25,6 +25,8 @@ public:
 	void Press();
 	void Release();
 
+	inline bool IsLeft() { return isLeft; }
+
 private:
 	b2RevoluteJoint* joint;
 	bool isLeft;

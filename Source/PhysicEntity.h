@@ -5,13 +5,10 @@
 
 class PhysicEntity
 {
-protected:
-
-	PhysicEntity(PhysBody* _body, Module* _listener, ColliderType _collType);
-
 public:
+	PhysicEntity(PhysBody* _body, Module* _listener, ColliderType _collType);
 	virtual ~PhysicEntity();
-	virtual void Update() = 0;
+	virtual void Update();
 
 	virtual int RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal)
 	{
