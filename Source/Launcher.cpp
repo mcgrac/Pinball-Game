@@ -44,7 +44,6 @@ void Launcher::Release()
 void Launcher::Update()
 {
     float y = body->GetPositionY();
-    std::cout << "Y = " << y << std::endl;
 
     if (isCharging)
     {
@@ -65,9 +64,9 @@ void Launcher::Update()
         {
             float upSpeed = -speedUp * (charge / maxCharge); // negativo porque sube
 
-            std::cout << "charge rate: " << charge/maxCharge << std::endl;
+/*            std::cout << "charge rate: " << charge/maxCharge << std::endl;
             std::cout << "charge: " << charge << std::endl;
-            std::cout << "uSpeed: " << upSpeed << std::endl;
+            std::cout << "uSpeed: " << upSpeed << std::endl*/;
 
             body->GetB2Body()->SetLinearVelocity(b2Vec2(0, upSpeed));
         }

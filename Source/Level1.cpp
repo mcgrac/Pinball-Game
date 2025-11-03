@@ -3,21 +3,10 @@
 #include "PhysicEntity.h"
 #include "raylib.h"
 
-//using namespace std;
-//
-//vector<Vector2> positions;
-//
-//
-//Level1::Level1() {
-//	//ModulePhysics::CreateChain(0, 0);
-//	Level1::obstacles = {}; //tots els objectes del nivell
-//	ballPosition = { 0, 0 };
-//}
-
-
-Level1::Level1(ModulePhysics* _physics)
+Level1::Level1(ModulePhysics* _physics, Module* _listener)
 {
 	this->physics = _physics;
+	this->listener = _listener;
 }
 
 Level1::~Level1()
@@ -145,8 +134,7 @@ void Level1::Start()
 	526, 275,
 	525, 960
 	};
-
-	walls.push_back(physics->CreateChain(0, 0, backgroundExternal, 228, b2_staticBody));
+	walls.push_back(new PhysicEntity(physics->CreateChain(0, 0, backgroundExternal, 228, b2_staticBody), listener, ColliderType::WALL));
 
 	int backgroundInternal[118] = {
 		428, 256,
@@ -209,26 +197,112 @@ void Level1::Start()
 	415, 277,
 	419, 270
 	};
+	walls.push_back(new PhysicEntity(physics->CreateChain(0, 0, backgroundInternal, 118, b2_staticBody), listener, ColliderType::WALL));
 
-	walls.push_back(physics->CreateChain(0, 0, backgroundInternal, 118, b2_staticBody));
+	int leftTriangle[32] = {
+	197, 813,
+	214, 824,
+	222, 830,
+	229, 830,
+	236, 827,
+	241, 822,
+	239, 812,
+	205, 723,
+	201, 715,
+	194, 713,
+	187, 715,
+	148, 764,
+	145, 770,
+	147, 776,
+	153, 782,
+	182, 802
+	};
+	walls.push_back(new PhysicEntity(physics->CreateChain(0, 0, leftTriangle, 32, b2_staticBody), listener, ColliderType::WALL));
+
+	int rightTriangle[30] = {
+	404, 821,
+	455, 788,
+	466, 779,
+	468, 772,
+	466, 765,
+	426, 717,
+	420, 714,
+	412, 716,
+	408, 723,
+	374, 813,
+	372, 820,
+	376, 826,
+	382, 829,
+	390, 829,
+	396, 826
+	};
+	walls.push_back(new PhysicEntity(physics->CreateChain(0, 0, rightTriangle, 30, b2_staticBody), listener, ColliderType::WALL));
+
+	//Bumpers creation
+	bumpers.push_back(new Bumper(physics, 242, 555, listener, bumpersText, b2_staticBody, ColliderType::BUMPER, 45));
+	bumpers.push_back(new Bumper(physics, 378, 555, listener, bumpersText, b2_staticBody, ColliderType::BUMPER, 45));
+	bumpers.push_back(new Bumper(physics, 310, 445, listener, bumpersText, b2_staticBody, ColliderType::BUMPER, 45));
+
+	//flippers creation
+	int leftFlipperCords[16] = {
+		-27, 24,
+		-1, 49,
+		-2, 54,
+		-7, 57,
+		-63, 31,
+		-68, 21,
+		-53, 2,
+		-43, 5
+	};
+	flippers.push_back(new Flipper(physics, 850, 249, true, listener, leftFlipper, b2_kinematicBody, ColliderType::FLIPPER, leftFlipperCords));
+	int rightFlipperCords[16] = {
+		27, 24,
+		1, 49,
+		2, 54,
+		7, 57,
+		63, 31,
+		68, 21,
+		53, 2,
+		43, 5
+	};
+	flippers.push_back(new Flipper(physics, 850, 249, false, listener, rightFlipper, b2_kinematicBody, ColliderType::FLIPPER, rightFlipperCords));
+
+	//launcher creation
+
+	sensorDown = new PhysicEntity(physics->CreateRectangleSensor(0, 1009, 648, 10, b2_staticBody), listener, ColliderType::VOID);
+	sensorDown->GetBody()->entity = sensorDown;
 }
 
 void Level1::CleanUp()
 {
     // Eliminar paredes, etc...
 
-	for (auto w : walls)
+	for (PhysicEntity* p : walls)
 	{
-		physics->DestroyPhysBody(w); // o como sea tu wrapper
+		delete p; // o como sea tu wrapper
 	}
 
 	walls.clear();
+
+	for (Bumper* b : bumpers)
+	{
+		delete b;
+	}
+	bumpers.clear();
+
+	delete sensorDown;
+
 }
 
 void Level1::Update() {
 
-	cout << "Update level 1" << endl;
 	DrawTexture(background, 0, 0, WHITE);
+
+	for (Bumper* b : bumpers)
+	{
+		if (b != nullptr)
+			b->Update();
+	}
 }
 
 

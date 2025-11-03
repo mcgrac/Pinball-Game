@@ -27,6 +27,7 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+	void RestartBall();
 
 	ModulePhysics* physics = nullptr;
 	//PhysBody* ball = nullptr;
@@ -47,8 +48,8 @@ public:
 
 	Ball* ball;
 	Launcher* launcher;
-	Flipper* leftFlipper;
-	Flipper* rightFlipper;
+	//Flipper* leftFlipper;
+	//Flipper* rightFlipper;
 
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB) override;
 	void OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) override;
@@ -58,4 +59,9 @@ public:
 public:
 	std::vector<PhysicEntity*> entities;
 
+private:
+	int maxBalls = 5;
+	int currentBalls = 0;
+
+	bool restartBallFlag = false;
 };

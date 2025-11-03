@@ -2,7 +2,7 @@
 
 
 Flipper::Flipper(ModulePhysics* physics, int _x, int _y, bool _isLeft, Module* _listener, Texture2D _texture, b2BodyType _type, ColliderType _collType, int* _points)
-	: PhysicEntity(physics->CreatePolygon(_x, _y, _points, 12, b2_dynamicBody), _listener, _collType), texture(_texture)
+	: PhysicEntity(physics->CreatePolygon(_x, _y, _points, 16, b2_dynamicBody), _listener, _collType), texture(_texture)
 {
 	this->isLeft = _isLeft;
 	body->entity = this;
