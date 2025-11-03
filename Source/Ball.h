@@ -4,12 +4,8 @@
 class Ball : public PhysicEntity
 {
 public:
-	Ball(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture, b2BodyType _type)
-		: PhysicEntity(physics->CreateCircle(_x, _y, 25, _type), _listener)
-		, texture(_texture)
-	{
-
-	}
+	Ball(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture, b2BodyType _type, ColliderType _collType);
+	~Ball();
 
 	void Update() override
 	{

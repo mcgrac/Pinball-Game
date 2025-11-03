@@ -3,6 +3,8 @@
 #include "ModuleRender.h"
 #include "ModulePhysics.h"
 
+#include"iostream"
+
 #include "p2Point.h"
 
 #include <math.h>
@@ -84,6 +86,9 @@ bool ModulePhysics::Start()
 
 	world = new b2World(b2Vec2(gravity));
 
+	world->SetContactListener(this);
+
+	// 
 	// CreateRectangle(0, 980, 1280, 40, b2_staticBody);
 	//std::vector<int> fieldPoints;
 
@@ -127,10 +132,14 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type)
 	if (world == nullptr)
 		return nullptr;
 
+	// --- Do phys body to return it ---
+	PhysBody* pbody = new PhysBody();
+
 	// --- Body definition ---
 	b2BodyDef bodyDef;
 	bodyDef.type = type; // dynamic or static
 	bodyDef.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y)); //set initial position
+	bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
 
 	b2Body* body = world->CreateBody(&bodyDef); //adds that body into the body list (allocates memory)
 
@@ -147,22 +156,25 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type)
 
 	body->CreateFixture(&fixture);
 
-	// --- Do phys body to return it ---
-	PhysBody* pbody = new PhysBody();
+
 	pbody->body = body;
 	pbody->width = radius * 2;
 	pbody->height = radius * 2;
+
 
 	return pbody;
 }
 
 PhysBody* ModulePhysics::CreateChain(int x, int y, const int* points, int size) {
 
-	b2BodyDef body;
-	body.type = b2_staticBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	PhysBody* pbody = new PhysBody();
 
-	b2Body* b = world->CreateBody(&body);
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_staticBody;
+	bodyDef.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
+
+	b2Body* b = world->CreateBody(&bodyDef);
 
 	b2ChainShape shape;
 	b2Vec2* p = new b2Vec2[size / 2];
@@ -181,10 +193,8 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, const int* points, int size) 
 
 	delete[] p;
 
-	PhysBody* pbody = new PhysBody();
 	pbody->body = b;
 	pbody->width = pbody->height = 0;
-
 	return pbody;
 }
 
@@ -192,12 +202,12 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2
 {
 	PhysBody* pbody = new PhysBody();
 
-	b2BodyDef body;
-	body.type = type;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-	body.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
+	b2BodyDef bodyDef;
+	bodyDef.type = type;
+	bodyDef.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
 
-	b2Body* b = world->CreateBody(&body);
+	b2Body* b = world->CreateBody(&bodyDef);
 	b2PolygonShape box;
 	//box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
 	box.SetAsBox(PIXEL_TO_METERS(width) * 1, PIXEL_TO_METERS(height) * 1);
@@ -219,7 +229,7 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2
 
 update_status ModulePhysics::PostUpdate()
 {
-	
+
 
 	if (IsKeyPressed(KEY_F1))
 	{
@@ -235,78 +245,78 @@ update_status ModulePhysics::PostUpdate()
 	// You need to provide your own macro to translate meters to pixels
 	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
 	{
-		for(b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
+		for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
 		{
-			switch(f->GetType())
+			switch (f->GetType())
 			{
 				// Draw circles ------------------------------------------------
-				case b2Shape::e_circle:
+			case b2Shape::e_circle:
+			{
+				b2CircleShape* shape = (b2CircleShape*)f->GetShape();
+				b2Vec2 pos = f->GetBody()->GetPosition();
+
+				DrawCircle(METERS_TO_PIXELS(pos.x), METERS_TO_PIXELS(pos.y), (float)METERS_TO_PIXELS(shape->m_radius), Color{ 0, 0, 0, 128 });
+			}
+			break;
+
+			// Draw polygons ------------------------------------------------
+			case b2Shape::e_polygon:
+			{
+				b2PolygonShape* polygonShape = (b2PolygonShape*)f->GetShape();
+				int32 count = polygonShape->m_count;
+				b2Vec2 prev, v;
+
+				for (int32 i = 0; i < count; ++i)
 				{
-					b2CircleShape* shape = (b2CircleShape*)f->GetShape();
-					b2Vec2 pos = f->GetBody()->GetPosition();
-					
-					DrawCircle(METERS_TO_PIXELS(pos.x), METERS_TO_PIXELS(pos.y), (float)METERS_TO_PIXELS(shape->m_radius), Color{0, 0, 0, 128});
-				}
-				break;
+					v = b->GetWorldPoint(polygonShape->m_vertices[i]);
+					if (i > 0)
+						DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), RED);
 
-				// Draw polygons ------------------------------------------------
-				case b2Shape::e_polygon:
+					prev = v;
+				}
+
+				v = b->GetWorldPoint(polygonShape->m_vertices[0]);
+				DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), RED);
+			}
+			break;
+
+			// Draw chains contour -------------------------------------------
+			case b2Shape::e_chain:
+			{
+				b2ChainShape* shape = (b2ChainShape*)f->GetShape();
+				b2Vec2 prev, v;
+
+				for (int32 i = 0; i < shape->m_count; ++i)
 				{
-					b2PolygonShape* polygonShape = (b2PolygonShape*)f->GetShape();
-					int32 count = polygonShape->m_count;
-					b2Vec2 prev, v;
-
-					for(int32 i = 0; i < count; ++i)
-					{
-						v = b->GetWorldPoint(polygonShape->m_vertices[i]);
-						if(i > 0)
-							DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), RED);
-
-						prev = v;
-					}
-
-					v = b->GetWorldPoint(polygonShape->m_vertices[0]);
-					DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), RED);
+					v = b->GetWorldPoint(shape->m_vertices[i]);
+					if (i > 0)
+						DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), GREEN);
+					prev = v;
 				}
-				break;
 
-				// Draw chains contour -------------------------------------------
-				case b2Shape::e_chain:
-				{
-					b2ChainShape* shape = (b2ChainShape*)f->GetShape();
-					b2Vec2 prev, v;
+				v = b->GetWorldPoint(shape->m_vertices[0]);
+				DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), GREEN);
+			}
+			break;
 
-					for(int32 i = 0; i < shape->m_count; ++i)
-					{
-						v = b->GetWorldPoint(shape->m_vertices[i]);
-						if(i > 0)
-							DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), GREEN);
-						prev = v;
-					}
+			// Draw a single segment(edge) ----------------------------------
+			case b2Shape::e_edge:
+			{
+				b2EdgeShape* shape = (b2EdgeShape*)f->GetShape();
+				b2Vec2 v1, v2;
 
-					v = b->GetWorldPoint(shape->m_vertices[0]);
-					DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), GREEN);
-				}
-				break;
-
-				// Draw a single segment(edge) ----------------------------------
-				case b2Shape::e_edge:
-				{
-					b2EdgeShape* shape = (b2EdgeShape*)f->GetShape();
-					b2Vec2 v1, v2;
-
-					v1 = b->GetWorldPoint(shape->m_vertex0);
-					v1 = b->GetWorldPoint(shape->m_vertex1);
-					DrawLine(METERS_TO_PIXELS(v1.x), METERS_TO_PIXELS(v1.y), METERS_TO_PIXELS(v2.x), METERS_TO_PIXELS(v2.y), BLUE);
-				}
-				break;
+				v1 = b->GetWorldPoint(shape->m_vertex0);
+				v1 = b->GetWorldPoint(shape->m_vertex1);
+				DrawLine(METERS_TO_PIXELS(v1.x), METERS_TO_PIXELS(v1.y), METERS_TO_PIXELS(v2.x), METERS_TO_PIXELS(v2.y), BLUE);
+			}
+			break;
 			}
 
-			
+
 		}
 	}
 
-	
+
 	return UPDATE_CONTINUE;
 }
 
@@ -317,7 +327,7 @@ bool ModulePhysics::CleanUp()
 	LOG("Destroying physics world");
 
 	// Delete the whole physics world!
-	
+
 
 	return true;
 }
@@ -333,3 +343,51 @@ void PhysBody::GetPhysicPosition(int& x, int& y) const
 	x = METERS_TO_PIXELS(pos.x);
 	y = METERS_TO_PIXELS(pos.y);
 }
+
+void ModulePhysics::BeginContact(b2Contact* contact)
+{
+	std::cout << "BeginContact Physics" << std::endl;
+
+	b2Fixture* fixtureA = contact->GetFixtureA();
+	b2Fixture* fixtureB = contact->GetFixtureB();
+
+	b2Body* bodyA = fixtureA->GetBody();
+	b2Body* bodyB = fixtureB->GetBody();
+
+	// Obtener PhysBody de cada cuerpo (usando UserData)
+	PhysBody* physA = (PhysBody*)bodyA->GetUserData().pointer;
+	PhysBody* physB = (PhysBody*)bodyB->GetUserData().pointer;
+
+	if (physA && physA->listener) {
+		std::cout << "BeginContact2" << std::endl;
+		physA->listener->OnCollision(physA, physB);
+	}
+
+
+	if (physB && physB->listener) {
+		std::cout << "BeginContact2" << std::endl;
+		physB->listener->OnCollision(physB, physA);
+	}
+
+}
+
+void ModulePhysics::EndContact(b2Contact* contact)
+{
+	std::cout << "End contact physics" << std::endl;
+
+	b2Fixture* fixtureA = contact->GetFixtureA();
+	b2Fixture* fixtureB = contact->GetFixtureB();
+
+	b2Body* bodyA = fixtureA->GetBody();
+	b2Body* bodyB = fixtureB->GetBody();
+
+	PhysBody* physA = (PhysBody*)bodyA->GetUserData().pointer;
+	PhysBody* physB = (PhysBody*)bodyB->GetUserData().pointer;
+
+	if (physA && physA->listener)
+		physA->listener->OnCollisionEnd(physA, physB);
+
+	if (physB && physB->listener)
+		physB->listener->OnCollisionEnd(physB, physA);
+}
+

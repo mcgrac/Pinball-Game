@@ -3,11 +3,12 @@
 //#include "Input.h"
 
 
-Launcher::Launcher(ModulePhysics* physics, Ball* ball, int _x, int _y, int _width, int _heigh, Module* _listener, Texture2D _texture, b2BodyType _type)
-    : PhysicEntity(physics->CreateRectangle(_x, _y, _width, _heigh, b2_staticBody), listener)
+Launcher::Launcher(ModulePhysics* physics, Ball* ball, int _x, int _y, int _width, int _heigh, Module* _listener, Texture2D _texture, b2BodyType _type, ColliderType _collType)
+    : PhysicEntity(physics->CreateRectangle(_x, _y, _width, _heigh, b2_staticBody), _listener, _collType)
 {
     this->ball = ball;
     initialY = _y;
+    body->entity = this;
 }
 Launcher::~Launcher()
 {
