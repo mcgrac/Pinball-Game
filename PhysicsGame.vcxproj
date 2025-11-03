@@ -180,6 +180,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Documents\GitHub\Pinball-Game\Source\ScoreTracker.h" />
     <ClInclude Include="Source/Application.h" />
     <ClInclude Include="Source/Globals.h" />
     <ClInclude Include="Source/ModulePhysics.h" />
@@ -199,6 +200,7 @@
     <ClInclude Include="Source\Timer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Documents\GitHub\Pinball-Game\Source\ScoreTracker.cpp" />
     <ClCompile Include="Source/Application.cpp" />
     <ClCompile Include="Source/Log.cpp" />
     <ClCompile Include="Source/Main.cpp" />

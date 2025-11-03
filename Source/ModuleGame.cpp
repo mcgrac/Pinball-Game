@@ -23,7 +23,7 @@ bool ModuleGame::Start()
 
 	bool ret = true;
 
-	
+	scoreTracker = new ScoreTracker(0, 0.5, 1);
 
 
 	ball = new Ball(App->physics, 550, 800, this, ballTexture, b2_dynamicBody, ColliderType::BALL);
@@ -122,6 +122,9 @@ update_status ModuleGame::Update()
 		currentMap->Update();
 		ball->Update();
 
+		//manage the score and Score meter
+		ManageScore();
+
 		if (restartBallFlag)
 			RestartBall();
 
@@ -131,6 +134,8 @@ update_status ModuleGame::Update()
 		cout << "GAME OVER" << endl;
 		currentBalls = 0; //restart balls
 	}
+
+	
 
 	return UPDATE_CONTINUE;
 }
@@ -188,6 +193,7 @@ void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) {
 	}
 	else if (other->entity && other->entity->GetColliderType() == ColliderType::BUMPER)
 	{
+		scoreTracker->score += 50;
 		cout << "BumperCollision END" << endl;
 
 	}
@@ -196,4 +202,9 @@ void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) {
 		cout << "VoidCollision END" << endl;
 
 	}
+}
+
+void ModuleGame::ManageScore() {
+	scoreTracker->UpdateScore();
+	scoreTracker->PrintScore();
 }
