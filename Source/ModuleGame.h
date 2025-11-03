@@ -9,6 +9,8 @@
 #include"Launcher.h"
 #include "Bumper.h"
 #include"Flipper.h"
+#include "ScoreTracker.h"
+
 #include "raylib.h"
 #include <vector>
 
@@ -26,6 +28,7 @@ public:
 
 	bool Start();
 	update_status Update();
+	void ManageScore();
 	bool CleanUp();
 
 	ModulePhysics* physics = nullptr;
@@ -39,6 +42,8 @@ public:
 
 	float launcherX = 1150.0f;
 	float launcherY = 600.0f;
+
+	ScoreTracker* scoreTracker; //object that keeps track of the player's score
 
 	Texture2D ballTexture;
 	Texture2D launcherTexture;

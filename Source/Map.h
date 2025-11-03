@@ -31,4 +31,5 @@ protected:
     vector<PhysBody*> walls;
     vector<PhysBody*> bumpers;
     vector<PhysBody*> decorations;
+    vector<PhysBody*> obstacles;
 };

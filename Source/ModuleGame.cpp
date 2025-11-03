@@ -23,7 +23,7 @@ bool ModuleGame::Start()
 
 	bool ret = true;
 
-	
+	scoreTracker = new ScoreTracker(0, 0.5, 1);
 
 
 	ball = new Ball(App->physics, 150, 200, this, ballTexture, b2_dynamicBody, ColliderType::BALL);
@@ -74,6 +74,7 @@ bool ModuleGame::Start()
 // Load assets
 bool ModuleGame::CleanUp()
 {
+	delete scoreTracker; //we eliminate the scoreTracker
 	LOG("Unloading Intro scene");
 	currentMap->CleanUp();
 	delete currentMap;
@@ -110,6 +111,10 @@ update_status ModuleGame::Update()
 	//launcher->Update();
 	currentMap->Update();
 	ball->Update();
+
+	//manage the score and Score meter
+	ManageScore();
+
 	return UPDATE_CONTINUE;
 }
 
@@ -148,3 +153,10 @@ void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) {
 
 	}
 }
+
+void ModuleGame::ManageScore() {
+	scoreTracker->UpdateScore();
+	scoreTracker->PrintScore();
+}
+
+
