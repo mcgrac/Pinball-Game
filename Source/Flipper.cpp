@@ -5,4 +5,4 @@ Flipper::Flipper(ModulePhysics* physics, int _x, int _y, Module* _listener, Text
 {
 	body->entity = this;
 }
-Flipper::~Flipper(){}
+Flipper::~Flipper() {}

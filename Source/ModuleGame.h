@@ -25,7 +25,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	ModulePhysics* physics = nullptr;  
+	ModulePhysics* physics = nullptr;
 	//PhysBody* ball = nullptr;
 	PhysBody* launcherBase = nullptr;
 	PhysBody* launcherPlunger = nullptr;
@@ -48,5 +48,5 @@ public:
 
 public:
 	std::vector<PhysicEntity*> entities;
-	
+
 };

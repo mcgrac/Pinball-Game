@@ -7,4 +7,4 @@ Ball::Ball(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D 
 	body->entity = this;
 }
 
-Ball::~Ball(){}
+Ball::~Ball() {}

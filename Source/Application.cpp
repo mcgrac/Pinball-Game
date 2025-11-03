@@ -24,7 +24,7 @@ Application::Application()
 	AddModule(window);
 	AddModule(physics);
 	AddModule(audio);
-	
+
 	// Scenes
 	AddModule(scene_intro);
 
@@ -40,7 +40,7 @@ Application::~Application()
 		delete item;
 	}
 	list_modules.clear();
-	
+
 }
 
 bool Application::Init()
@@ -62,7 +62,7 @@ bool Application::Init()
 		Module* module = *it;
 		ret = module->Start();
 	}
-	
+
 	return ret;
 }
 
@@ -111,7 +111,7 @@ bool Application::CleanUp()
 		Module* item = *it;
 		ret = item->CleanUp();
 	}
-	
+
 	return ret;
 }
 

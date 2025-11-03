@@ -5,4 +5,4 @@ Bumper::Bumper(ModulePhysics* physics, int _x, int _y, Module* _listener, Textur
 {
 	body->entity = this;
 }
-Bumper::~Bumper(){}
+Bumper::~Bumper() {}

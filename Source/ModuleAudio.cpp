@@ -22,9 +22,9 @@ bool ModuleAudio::Init()
 	LOG("Loading Audio Mixer");
 	bool ret = true;
 
-    LOG("Loading raylib audio system");
+	LOG("Loading raylib audio system");
 
-    InitAudioDevice();
+	InitAudioDevice();
 
 	return ret;
 }
@@ -34,20 +34,20 @@ bool ModuleAudio::CleanUp()
 {
 	LOG("Freeing sound FX, closing Mixer and Audio subsystem");
 
-    // Unload sounds
+	// Unload sounds
 	for (unsigned int i = 0; i < fx_count; i++)
 	{
 		UnloadSound(fx[i]);
 	}
 
-    // Unload music
+	// Unload music
 	if (IsMusicReady(music))
 	{
 		StopMusicStream(music);
 		UnloadMusicStream(music);
 	}
 
-    CloseAudioDevice();
+	CloseAudioDevice();
 
 	return true;
 }
@@ -55,15 +55,15 @@ bool ModuleAudio::CleanUp()
 // Play a music file
 bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 {
-	if(IsEnabled() == false)
+	if (IsEnabled() == false)
 		return false;
 
 	bool ret = true;
-	
-    StopMusicStream(music);
-    music = LoadMusicStream(path);
-    
-    PlayMusicStream(music);
+
+	StopMusicStream(music);
+	music = LoadMusicStream(path);
+
+	PlayMusicStream(music);
 
 	LOG("Successfully playing %s", path);
 
@@ -73,20 +73,20 @@ bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 // Load WAV
 unsigned int ModuleAudio::LoadFx(const char* path)
 {
-	if(IsEnabled() == false)
+	if (IsEnabled() == false)
 		return 0;
 
 	unsigned int ret = 0;
 
 	Sound sound = LoadSound(path);
 
-	if(sound.stream.buffer == NULL)
+	if (sound.stream.buffer == NULL)
 	{
 		LOG("Cannot load sound: %s", path);
 	}
 	else
 	{
-        fx[fx_count++] = sound;
+		fx[fx_count++] = sound;
 		ret = fx_count;
 	}
 
@@ -103,7 +103,7 @@ bool ModuleAudio::PlayFx(unsigned int id, int repeat)
 
 	bool ret = false;
 
-	if(id < fx_count) PlaySound(fx[id]);
+	if (id < fx_count) PlaySound(fx[id]);
 
 	return ret;
 }

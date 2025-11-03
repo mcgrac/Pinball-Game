@@ -35,7 +35,7 @@ enum ColliderType {
 	WALL,
 	FLIPPER,
 	BUMPER
- };
+};
 
 // Configuration -----------
 #define SCREEN_WIDTH		 1280

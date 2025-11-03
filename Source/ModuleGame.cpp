@@ -39,7 +39,7 @@ bool ModuleGame::CleanUp()
 // Update: draw background
 update_status ModuleGame::Update()
 {
-    // === Input centralizado ===
+	// === Input centralizado ===
 	if (IsKeyDown(KEY_DOWN))
 	{
 		launcher->Press(); // baja el lanzador
@@ -50,9 +50,9 @@ update_status ModuleGame::Update()
 		launcher->Release(); // suelta la bola
 	}
 
-    // === Actualizar entidades ===
-    launcher->Update();
-    ball->Update();
+	// === Actualizar entidades ===
+	launcher->Update();
+	ball->Update();
 	return UPDATE_CONTINUE;
 }
 
@@ -71,7 +71,7 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 	{
 		//launcher->SetBallInContact(true);
 		std::cout << "Ball touching launcher" << std::endl;
-		
+
 	}
 }
 

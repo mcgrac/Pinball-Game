@@ -15,6 +15,6 @@ public:
 
 private:
 
-    // Start time in seconds
-	double started_at;   
+	// Start time in seconds
+	double started_at;
 };

@@ -72,12 +72,12 @@ public:
 	b2World* GetWorld() const { return world; }  // Devuelve el puntero al mundo físico
 
 	void BeginContact(b2Contact* contact) override;
-    void EndContact(b2Contact* contact) override;
+	void EndContact(b2Contact* contact) override;
 
 private:
 
 	b2Vec2 gravity = { 0,9.81f };
 	b2World* world = nullptr;
 	bool debug;
-	
+
 };
