@@ -1,3 +1,4 @@
+C:\Users\marcv\Documents\GitHub\Pinball-Game\Source\ScoreTracker.cpp;C:\Users\marcv\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\obj\ScoreTracker.obj
 C:\Users\marcv\Documents\GitHub\Pinball-Game\Source\Application.cpp;C:\Users\marcv\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\obj\Application.obj
 C:\Users\marcv\Documents\GitHub\Pinball-Game\Source\Log.cpp;C:\Users\marcv\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\obj\Log.obj
 C:\Users\marcv\Documents\GitHub\Pinball-Game\Source\Main.cpp;C:\Users\marcv\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\obj\Main.obj
@@ -12,7 +13,5 @@ C:\Users\marcv\Documents\GitHub\Pinball-Game\Source\Launcher.cpp;C:\Users\marcv\
 C:\Users\marcv\Documents\GitHub\Pinball-Game\Source\Level1.cpp;C:\Users\marcv\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\obj\Level1.obj
 C:\Users\marcv\Documents\GitHub\Pinball-Game\Source\Map.cpp;C:\Users\marcv\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\obj\Map.obj
 C:\Users\marcv\Documents\GitHub\Pinball-Game\Source\ModuleGame.cpp;C:\Users\marcv\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\obj\ModuleGame.obj
-C:\Users\marcv\Documents\GitHub\Pinball-Game\Source\Obstacle.cpp;C:\Users\marcv\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\obj\Obstacle.obj
 C:\Users\marcv\Documents\GitHub\Pinball-Game\Source\PhysicEntity.cpp;C:\Users\marcv\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\obj\PhysicEntity.obj
-C:\Users\marcv\Documents\GitHub\Pinball-Game\Source\ScoreTracker.cpp;C:\Users\marcv\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\obj\ScoreTracker.obj
 C:\Users\marcv\Documents\GitHub\Pinball-Game\Source\Timer.cpp;C:\Users\marcv\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\obj\Timer.obj

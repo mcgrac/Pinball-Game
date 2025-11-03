@@ -34,7 +34,8 @@ enum ColliderType {
 	LAUNCHER,
 	WALL,
 	FLIPPER,
-	BUMPER
+	BUMPER,
+	VOID
 };
 
 // Configuration -----------

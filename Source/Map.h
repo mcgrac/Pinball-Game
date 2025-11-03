@@ -3,19 +3,11 @@
 #include "PhysicEntity.h"
 #include "raylib.h"
 #include <vector>
+#include "Bumper.h"
+#include "Flipper.h"
+#include "Launcher.h"
 
 using namespace std;
-//class Map {
-//public:
-//	Map();
-//
-//	~Map();
-//
-//	vector<PhysicEntity*> obstacles;
-//	Vector2 ballPosition;
-//protected:
-//	//PhysicEntity* createOutline(Vector2 pos0, Vector2* points, int size);
-//};
 
 class Map {
 public:
@@ -23,13 +15,19 @@ public:
     virtual ~Map() {}
 
     virtual void Start() = 0;     // Construye el nivel
-    virtual void Update() {}      // Opcional (animaciones)
+    virtual void Update() = 0;      // Opcional (animaciones)
     virtual void CleanUp() = 0;   // Libera memoria
 
+    inline virtual vector<Flipper*>& GetFlippers() { static std::vector<Flipper*> empty; return empty; }
+    inline virtual vector<Launcher*>& GetLaunchers() { static std::vector<Launcher*> empty; return empty; }
+
 protected:
+
     // Cosas comunes que quieran los niveles:
-    vector<PhysBody*> walls;
-    vector<PhysBody*> bumpers;
-    vector<PhysBody*> decorations;
-    vector<PhysBody*> obstacles;
+    vector<PhysicEntity*> walls;
+    vector<Bumper*> bumpers;
+    vector<Flipper*> flippers;
+    vector<Launcher*> launchers;
+
+    PhysicEntity* sensorDown = nullptr;
 };

@@ -20,6 +20,7 @@ public:
 	void Update();          // mueve físicamente el launcher
 	void Press();           // llamada cuando se mantiene pulsado ↓
 	void Release();         // llamada cuando se suelta ↓
+	inline bool OnBallCollision(bool res) { return onBallCollision = res; }
 
 	int RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal) override
 	{
@@ -45,6 +46,7 @@ private:
 
 	bool isCharging = false;
 	bool returning = false;
+	bool onBallCollision = false;
 
 	float initialY = 0.0f;
 	float maxOffset = 70.0f;  // hasta dónde baja
@@ -52,7 +54,7 @@ private:
 	float speedUp = 20.0f;    // rápido hacia arriba
 
 	float charge = 0.0f;
-	float chargeSpeed = 2.0f;  // velocidad de carga
-	float maxCharge = 5.0f;
+	float maxCharge = 15.0f;   // límite (ajústalo)
+	float chargeRate = 0.5f;   // cuánto carga por frame (ajústalo)
 
 };

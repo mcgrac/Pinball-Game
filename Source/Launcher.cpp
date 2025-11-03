@@ -18,6 +18,7 @@ Launcher::~Launcher()
 void Launcher::Press()
 {
     std::cout << "isLauncherPressed" << std::endl;
+
     isCharging = true;
     returning = false;
     body->GetB2Body()->SetLinearVelocity(b2Vec2(0, speedDown));
@@ -25,39 +26,62 @@ void Launcher::Press()
 
 void Launcher::Release()
 {
+    // convertimos la carga en un impulso inicial
+    float launchPower = charge * .5f; // multiplica para ajustar fuerza
+
+    // sube rápido según carga acumulada
+    body->GetB2Body()->SetLinearVelocity(b2Vec2(0, -launchPower));
+
+    // aplica impulso a la bola
+    if (onBallCollision) {
+        ball->GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0, -launchPower * 2), true);
+    }
+
     isCharging = false;
     returning = true;
-
-    body->GetB2Body()->SetLinearVelocity(b2Vec2(0, -speedUp));
 }
 
 void Launcher::Update()
 {
     float y = body->GetPositionY();
-    std::cout << "Y = " << y << std::endl;
 
-
-
-    // mientras cargas
     if (isCharging)
     {
-
-        if (y >= initialY + maxOffset)
+        if (y < initialY + maxOffset)
         {
-            std::cout << "reset velocity" << std::endl;
+            body->GetB2Body()->SetLinearVelocity(b2Vec2(0, speedDown));
+            charge += chargeRate;
+            if (charge > maxCharge) charge = maxCharge;
+        }
+        else
+        {
             body->GetB2Body()->SetLinearVelocity(b2Vec2(0, 0));
         }
     }
-
-    // cuando retorna
-    if (returning)
+    else if (returning)
     {
-        if (y <= initialY)
+        if (y > initialY)
         {
-            std::cout << "reset velocity returning" << std::endl;
+            float upSpeed = -speedUp * (charge / maxCharge); // negativo porque sube
+
+/*            std::cout << "charge rate: " << charge/maxCharge << std::endl;
+            std::cout << "charge: " << charge << std::endl;
+            std::cout << "uSpeed: " << upSpeed << std::endl*/;
+
+            body->GetB2Body()->SetLinearVelocity(b2Vec2(0, upSpeed));
+        }
+        else
+        {
             body->GetB2Body()->SetLinearVelocity(b2Vec2(0, 0));
             body->SetPosition(body->GetPositionX(), initialY);
             returning = false;
+            charge = 0;
         }
+    }
+    else
+    {
+        body->GetB2Body()->SetLinearVelocity(b2Vec2(0, 0));
+        returning = false;
+        isCharging = false;
     }
 }

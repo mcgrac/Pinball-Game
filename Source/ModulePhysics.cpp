@@ -264,6 +264,36 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2
 	return pbody;
 }
 
+PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height, b2BodyType type)
+{
+	PhysBody* pbody = new PhysBody();
+
+	b2BodyDef bodyDef;
+	bodyDef.type = type;
+	bodyDef.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
+
+	b2Body* b = world->CreateBody(&bodyDef);
+	b2PolygonShape box;
+	//box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
+	box.SetAsBox(PIXEL_TO_METERS(width) * 1, PIXEL_TO_METERS(height) * 1);
+
+	b2FixtureDef fixture;
+	fixture.shape = &box;
+	fixture.density = 1.0f;
+	fixture.isSensor = true;
+
+	b->CreateFixture(&fixture);
+
+	pbody->body = b;
+	//pbody->width = (int)(width * 0.5f);
+	//pbody->height = (int)(height * 0.5f);
+
+	pbody->width = width;
+	pbody->height = height;
+	return pbody;
+}
+
 PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int count, b2BodyType type)
 {
 	// Crear body Box2D
@@ -343,7 +373,7 @@ update_status ModulePhysics::PostUpdate()
 				b2CircleShape* shape = (b2CircleShape*)f->GetShape();
 				b2Vec2 pos = f->GetBody()->GetPosition();
 
-				DrawCircle(METERS_TO_PIXELS(pos.x), METERS_TO_PIXELS(pos.y), (float)METERS_TO_PIXELS(shape->m_radius), Color{ 0, 0, 0, 128 });
+				DrawCircle(METERS_TO_PIXELS(pos.x), METERS_TO_PIXELS(pos.y), (float)METERS_TO_PIXELS(shape->m_radius), YELLOW);
 			}
 			break;
 
