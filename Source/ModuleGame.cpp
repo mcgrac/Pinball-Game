@@ -5,61 +5,132 @@
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
 
-#include"iostream"
-
+#include <iostream>
 
 ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	//physics = app->physics; // <-- Esto asegura que physics ya apunta al módulo correcto
+	state = GameState::INTRO;
 }
 
 ModuleGame::~ModuleGame()
-{}
-
-// Load assets
-bool ModuleGame::Start()
 {
-	LOG("Loading Intro assets");
-
-	bool ret = true;
-
-	ball = new Ball(App->physics, 200, 200, this, ballTexture, b2_dynamicBody, ColliderType::BALL);
-	launcher = new Launcher(App->physics, ball, 200, 900, 50, 20, this, launcherTexture, b2_staticBody, ColliderType::LAUNCHER);
-	return ret;
 }
 
-// Load assets
+bool ModuleGame::Start()
+{
+	LOG("Game Module Start");
+
+	// Load intro and end textures
+	introTexture = LoadTexture("Assets/Textures/initialScreen.png");
+	endTexture = LoadTexture("Assets/Textures/endScreen.png");
+
+	// Load game textures (if needed here or later)
+	ballTexture = LoadTexture("Assets/Textures/ball.png");
+	launcherTexture = LoadTexture("Assets/Textures/launcher.png");
+
+	return true; // wait for user to press SPACE
+}
+
 bool ModuleGame::CleanUp()
 {
-	LOG("Unloading Intro scene");
+	LOG("Cleaning Game Module");
+	if (currentMap != nullptr)
+	{
+		currentMap->CleanUp();
+		delete currentMap;
+		currentMap = nullptr;
+	}
 
 	return true;
 }
 
-// Update: draw background
+void ModuleGame::StartGame()
+{
+	// Reset counters
+	currentBalls = 0;
+	restartBallFlag = false;
+
+	// Create objects only once space has been pressed
+	ball = new Ball(App->physics, 550, 800, this, ballTexture, b2_dynamicBody, ColliderType::BALL);
+	launcher = new Launcher(App->physics, ball, 550, 900, 50, 20, this, launcherTexture, ColliderType::LAUNCHER);
+
+	currentMap = new Level1(App->physics, this);
+	currentMap->Start();
+
+	state = GameState::PLAYING;
+}
+
 update_status ModuleGame::Update()
 {
-	// === Input centralizado ===
-	if (IsKeyDown(KEY_DOWN))
+	switch (state)
 	{
-		launcher->Press(); // baja el lanzador
+	case GameState::INTRO:
+	{
+		BeginDrawing();
+		ClearBackground(BLACK);
+		DrawTexture(introTexture, 0, 0, WHITE);
+		EndDrawing();
+
+		if (IsKeyPressed(KEY_SPACE))
+		{
+			StartGame();
+		}
+
+		return UPDATE_CONTINUE;
+	}
+	case GameState::PLAYING:
+	{
+		if (currentBalls <= maxBalls)
+		{
+			if (IsKeyDown(KEY_DOWN)) launcher->Press();
+			if (IsKeyReleased(KEY_DOWN)) launcher->Release();
+
+			launcher->Update();
+			currentMap->Update();
+			ball->Update();
+
+			if (restartBallFlag)
+				RestartBall();
+		}
+		else
+		{
+			state = GameState::GAMEOVER;
+		}
+		break;
+	}
+	case GameState::GAMEOVER:
+	{
+		BeginDrawing();
+		ClearBackground(BLACK);
+		DrawTexture(endTexture, 0, 0, WHITE);
+		EndDrawing();
+
+		if (IsKeyPressed(KEY_SPACE))
+		{
+			// cleanup current game
+			CleanUp();
+			// go back to intro
+			state = GameState::INTRO;
+		}
+
+		return UPDATE_CONTINUE;
+	}
 	}
 
-	if (IsKeyReleased(KEY_DOWN))
-	{
-		launcher->Release(); // suelta la bola
-	}
-
-	// === Actualizar entidades ===
-	launcher->Update();
-	ball->Update();
 	return UPDATE_CONTINUE;
 }
 
-void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
+void ModuleGame::RestartBall()
+{
+	ball->GetBody()->SetPosition(550, 800);
+	currentBalls++;
+	restartBallFlag = false;
+}
 
-	std::cout << "On Collision" << std::endl;
-	// Detectar quién es la bola y quién es el otro
+void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
+{
+	if (!ball) return;
+
 	PhysBody* ballBody = nullptr;
 	PhysBody* other = nullptr;
 
@@ -67,14 +138,29 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 	else if (bodyB == ball->GetBody()) { ballBody = bodyB; other = bodyA; }
 	else return;
 
-	if (other->entity && other->entity->GetColliderType() == ColliderType::BALL)
+	if (other->entity && other->entity->GetColliderType() == ColliderType::LAUNCHER)
 	{
-		//launcher->SetBallInContact(true);
-		std::cout << "Ball touching launcher" << std::endl;
-
+		launcher->OnBallCollision(true);
+	}
+	else if (other->entity && other->entity->GetColliderType() == ColliderType::VOID)
+	{
+		restartBallFlag = true;
 	}
 }
 
-void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) {
-	std::cout << "On Collision End" << std::endl;
+void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB)
+{
+	if (!ball) return;
+
+	PhysBody* ballBody = nullptr;
+	PhysBody* other = nullptr;
+
+	if (bodyA == ball->GetBody()) { ballBody = bodyA; other = bodyB; }
+	else if (bodyB == ball->GetBody()) { ballBody = bodyB; other = bodyA; }
+	else return;
+
+	if (other->entity && other->entity->GetColliderType() == ColliderType::LAUNCHER)
+	{
+		launcher->OnBallCollision(false);
+	}
 }

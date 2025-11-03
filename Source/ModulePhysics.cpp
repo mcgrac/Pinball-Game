@@ -165,12 +165,49 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateChain(int x, int y, const int* points, int size) {
+PhysBody* ModulePhysics::CreateBall(int x, int y, int radius, b2BodyType type)
+{
+	if (world == nullptr)
+		return nullptr;
+
+	// --- Do phys body to return it ---
+	PhysBody* pbody = new PhysBody();
+
+	// --- Body definition ---
+	b2BodyDef bodyDef;
+	bodyDef.type = type; // dynamic or static
+	bodyDef.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y)); //set initial position
+	bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
+
+	b2Body* body = world->CreateBody(&bodyDef); //adds that body into the body list (allocates memory)
+
+	// --- Shape definition ---
+	b2CircleShape shape;
+	shape.m_radius = PIXEL_TO_METERS(radius);
+
+	// --- Fixture definition ---
+	b2FixtureDef fixture;
+	fixture.shape = &shape;
+	fixture.density = 1.0f;
+	fixture.friction = 0.3f;
+	fixture.restitution = 0.1f; // mid rebote
+
+	body->CreateFixture(&fixture);
+
+
+	pbody->body = body;
+	pbody->width = radius * 2;
+	pbody->height = radius * 2;
+
+
+	return pbody;
+}
+PhysBody* ModulePhysics::CreateChain(int x, int y, const int* points, int size, b2BodyType type){
 
 	PhysBody* pbody = new PhysBody();
 
 	b2BodyDef bodyDef;
-	bodyDef.type = b2_staticBody;
+	bodyDef.type = type;
 	bodyDef.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 	bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
 
@@ -227,6 +264,87 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2
 	return pbody;
 }
 
+PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height, b2BodyType type)
+{
+	PhysBody* pbody = new PhysBody();
+
+	b2BodyDef bodyDef;
+	bodyDef.type = type;
+	bodyDef.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
+
+	b2Body* b = world->CreateBody(&bodyDef);
+	b2PolygonShape box;
+	//box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
+	box.SetAsBox(PIXEL_TO_METERS(width) * 1, PIXEL_TO_METERS(height) * 1);
+
+	b2FixtureDef fixture;
+	fixture.shape = &box;
+	fixture.density = 1.0f;
+	fixture.isSensor = true;
+
+	b->CreateFixture(&fixture);
+
+	pbody->body = b;
+	//pbody->width = (int)(width * 0.5f);
+	//pbody->height = (int)(height * 0.5f);
+
+	pbody->width = width;
+	pbody->height = height;
+	return pbody;
+}
+
+PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int count, b2BodyType type)
+{
+	// Crear body Box2D
+	b2BodyDef bodyDef;
+	bodyDef.type = type;
+	bodyDef.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* body = world->CreateBody(&bodyDef);
+
+	// Convertir puntos (int[]) → b2Vec2[]
+	b2Vec2* vecs = new b2Vec2[count];
+	for (int i = 0; i < count; i += 2)
+	{
+		vecs[i / 2].Set(PIXEL_TO_METERS(points[i]), PIXEL_TO_METERS(points[i + 1]));
+	}
+
+	b2PolygonShape shape;
+	shape.Set(vecs, count / 2);
+
+	b2FixtureDef fix;
+	fix.shape = &shape;
+	fix.density = 2.0f;
+	fix.friction = 0.5f;
+	fix.restitution = 0.1f;
+
+	body->CreateFixture(&fix);
+
+	delete[] vecs;
+
+	// Conectar PhysBody
+	PhysBody* pbody = new PhysBody();
+	pbody->body = body;
+	body->GetUserData().pointer = reinterpret_cast<uintptr_t>(pbody);
+
+	return pbody;
+}
+
+void ModulePhysics::DestroyPhysBody(PhysBody* pbody)
+{
+	if (pbody == nullptr)
+		return;
+
+	if (pbody->body != nullptr)
+	{
+		world->DestroyBody(pbody->body);
+		pbody->body = nullptr;
+	}
+
+	delete pbody;
+}
+
 update_status ModulePhysics::PostUpdate()
 {
 
@@ -255,7 +373,7 @@ update_status ModulePhysics::PostUpdate()
 				b2CircleShape* shape = (b2CircleShape*)f->GetShape();
 				b2Vec2 pos = f->GetBody()->GetPosition();
 
-				DrawCircle(METERS_TO_PIXELS(pos.x), METERS_TO_PIXELS(pos.y), (float)METERS_TO_PIXELS(shape->m_radius), Color{ 0, 0, 0, 128 });
+				DrawCircle(METERS_TO_PIXELS(pos.x), METERS_TO_PIXELS(pos.y), (float)METERS_TO_PIXELS(shape->m_radius), YELLOW);
 			}
 			break;
 
