@@ -4,5 +4,8 @@ Bumper::Bumper(ModulePhysics* physics, int _x, int _y, Module* _listener, Textur
 	, texture(_texture)
 {
 	body->entity = this;
+
+	b2Fixture* fix = body->GetB2Body()->GetFixtureList();
+	fix->SetRestitution(1.2f);
 }
 Bumper::~Bumper() {}

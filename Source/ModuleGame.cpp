@@ -23,11 +23,45 @@ bool ModuleGame::Start()
 
 	bool ret = true;
 
-	ball = new Ball(App->physics, 200, 200, this, ballTexture, b2_dynamicBody, ColliderType::BALL);
+	ball = new Ball(App->physics, 150, 200, this, ballTexture, b2_dynamicBody, ColliderType::BALL);
 	//launcher = new Launcher(App->physics, ball, 200, 900, 50, 20, this, launcherTexture, ColliderType::LAUNCHER);
+	
 
-	leftFlipper = new Flipper(App->physics, 300, 800, true, this, leftFlipperTexture, b2_dynamicBody, ColliderType::FLIPPER);
-	leftFlipper = new Flipper(App->physics, 500, 800, false, this, leftFlipperTexture, b2_dynamicBody, ColliderType::FLIPPER);		
+	int rightPoints[16] =
+	{
+		30, -8,
+		 5, -8,
+		 -12, -6,
+		 -30, -2,
+		 -30,  2,
+		 -12,  6,
+		 5,  8,
+		30,  8
+	};
+
+	int flipperLeftPoints[12] = {
+		 -40, -10,
+		 40, -10,
+		 50,  10,
+		 -30,  10,
+		 -35,   0,
+		 -40,   0
+	};
+
+	int flipperRightPoints[12] = {
+		40, -10,
+		-40, -10,
+		-50,  10,
+		30,  10,
+		35,   0,
+		40,   0
+	};
+
+	leftFlipper = new Flipper(App->physics, 125, 800, true, this, leftFlipperTexture, b2_dynamicBody, ColliderType::FLIPPER, flipperLeftPoints);
+	rightFlipper = new Flipper(App->physics, 275, 800, false, this, rightFlipperTexture, b2_dynamicBody, ColliderType::FLIPPER, flipperRightPoints);
+
+	prueba = App->physics->CreateChain(100, 100, rightPoints, 16, b2_staticBody);
+
 	
 	return ret;
 }
@@ -44,15 +78,26 @@ bool ModuleGame::CleanUp()
 update_status ModuleGame::Update()
 {
 	// === Input centralizado ===
-	if (IsKeyDown(KEY_DOWN))
-	{
-		launcher->Press(); // baja el lanzador
-	}
+	//if (IsKeyDown(KEY_DOWN))
+	//{
+	//	launcher->Press(); // baja el lanzador
+	//}
 
-	if (IsKeyReleased(KEY_DOWN))
-	{
-		launcher->Release(); // suelta la bola
-	}
+	//if (IsKeyReleased(KEY_DOWN))
+	//{
+	//	launcher->Release(); // suelta la bola
+	//}
+
+	if (IsKeyDown(KEY_LEFT))
+		leftFlipper->Press();
+	else 
+		leftFlipper->Release();
+
+	if (IsKeyDown(KEY_RIGHT))
+		rightFlipper->Press();
+	else 
+		rightFlipper->Release();
+
 
 	// === Actualizar entidades ===
 	//launcher->Update();
