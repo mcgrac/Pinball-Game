@@ -9,7 +9,10 @@ public:
 
 	void Update() override;
 
+	inline void OnLauncherCollision(bool res) {isTouchingLauncher = res; };
+	inline bool GetTouchingLauncher() { return isTouchingLauncher; }
+
 private:
 	Texture2D texture;
-
+	bool isTouchingLauncher = false;
 };

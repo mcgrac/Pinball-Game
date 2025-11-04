@@ -34,12 +34,6 @@ public:
 	PhysBody* launcherBase = nullptr;
 	PhysBody* launcherPlunger = nullptr;
 
-	bool launcherCharging = false;
-	float launcherPower = 0.0f;
-	const float maxLauncherPower = 8.0f; // potencia máxima
-
-	float launcherX = 1150.0f;
-	float launcherY = 600.0f;
 
 	Texture2D ballTexture;
 	Texture2D launcherTexture;
@@ -47,7 +41,7 @@ public:
 	Texture2D rightFlipperTexture;
 
 	Ball* ball;
-	Launcher* launcher;
+	//Launcher* launcher;
 	//Flipper* leftFlipper;
 	//Flipper* rightFlipper;
 

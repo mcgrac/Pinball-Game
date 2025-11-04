@@ -27,7 +27,7 @@ bool ModuleGame::Start()
 
 
 	ball = new Ball(App->physics, 550, 800, this, ballTexture, b2_dynamicBody, ColliderType::BALL);
-	launcher = new Launcher(App->physics, ball, 550, 900, 50, 20, this, launcherTexture, ColliderType::LAUNCHER);
+	//launcher = new Launcher(App->physics, ball, 550, 900, 50, 20, this, launcherTexture, ColliderType::LAUNCHER);
 
 	//ball->SetBullet(true);
 
@@ -64,7 +64,10 @@ bool ModuleGame::Start()
 	//leftFlipper = new Flipper(App->physics, 125, 800, true, this, leftFlipperTexture, b2_dynamicBody, ColliderType::FLIPPER, flipperLeftPoints);
 	//rightFlipper = new Flipper(App->physics, 275, 800, false, this, rightFlipperTexture, b2_dynamicBody, ColliderType::FLIPPER, flipperRightPoints);
 
-	currentMap = new Level1(App->physics, this);
+	currentBalls = 0; //restart balls
+
+	//CREATION OF THE MAP LEVEL 1;
+	currentMap = new Level1(App->physics, this, ball);
 	currentMap->Start();
 	return ret;
 }
@@ -87,15 +90,18 @@ update_status ModuleGame::Update()
 
 		//=== Input centralizado ===
 
-		if (IsKeyDown(KEY_DOWN))
-		{
-			launcher->Press(); // baja el lanzador
+		for (Launcher* l : currentMap->GetLaunchers()) {
+			if (IsKeyDown(KEY_DOWN))
+			{
+				l->Press(); // baja el lanzador
+			}
+
+			if (IsKeyReleased(KEY_DOWN))
+			{
+				l->Release(); // suelta la bola
+			}
 		}
 
-		if (IsKeyReleased(KEY_DOWN))
-		{
-			launcher->Release(); // suelta la bola
-		}
 
 		//if (IsKeyDown(KEY_LEFT))
 		//	leftFlipper->Press();
@@ -109,27 +115,33 @@ update_status ModuleGame::Update()
 
 		for (Flipper* f : currentMap->GetFlippers())
 		{
-			if (IsKeyDown(KEY_LEFT) && f->IsLeft()) f->Press();
-			else if (f->IsLeft()) f->Release();
+			if (IsKeyDown(KEY_LEFT) && f->IsLeft()) 
+				f->Press();
+			else if (f->IsLeft()) 
+				f->Release();
 
-			if (IsKeyDown(KEY_RIGHT) && !f->IsLeft()) f->Press();
-			else if (!f->IsLeft()) f->Release();
+			if (IsKeyDown(KEY_RIGHT) && !f->IsLeft()) 
+				f->Press();
+			else if (!f->IsLeft()) 
+				f->Release();
 		}
 
 
 		// === Actualizar entidades ===
-		launcher->Update();
+		//launcher->Update();
 		currentMap->Update();
 		ball->Update();
+		//leftFlipper->Update();
+		//rightFlipper->Update();
 
 		if (restartBallFlag)
 			RestartBall();
 
 	}
 	else {
-		//finish game
+		//FINISH GAME	
 		cout << "GAME OVER" << endl;
-		currentBalls = 0; //restart balls
+		
 	}
 
 	return UPDATE_CONTINUE;
@@ -154,7 +166,8 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 
 	if (other->entity && other->entity->GetColliderType() == ColliderType::LAUNCHER)
 	{
-		launcher->OnBallCollision(true); //ball collision launcher true
+		//launcher->OnBallCollision(true); //ball collision launcher true
+		ball->OnLauncherCollision(true);
 
 	}
 	else if (other->entity && other->entity->GetColliderType() == ColliderType::BUMPER)
@@ -183,8 +196,8 @@ void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) {
 
 	if (other->entity && other->entity->GetColliderType() == ColliderType::LAUNCHER)
 	{
-		launcher->OnBallCollision(false); //ballCollision launcher false
-
+		//launcher->OnBallCollision(false); //ballCollision launcher false
+		ball->OnLauncherCollision(false);
 	}
 	else if (other->entity && other->entity->GetColliderType() == ColliderType::BUMPER)
 	{

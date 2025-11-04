@@ -1,4 +1,4 @@
-#include "Flipper.h"
+Ôªø#include "Flipper.h"
 
 
 Flipper::Flipper(ModulePhysics* physics, int _x, int _y, bool _isLeft, Module* _listener, Texture2D _texture, b2BodyType _type, ColliderType _collType, int* _points)
@@ -7,13 +7,16 @@ Flipper::Flipper(ModulePhysics* physics, int _x, int _y, bool _isLeft, Module* _
 	this->isLeft = _isLeft;
 	body->entity = this;
     this->points = _points;
+    if (isLeft) { texture = LoadTexture("Assets/Textures/leftFlipper.png"); }
+    else{ texture = LoadTexture("Assets/Textures/rightFlipper.png"); }
+   
 
-
-    // Obtener body din·mico real
+    // Obtener body din√°mico real
     b2Body* b = body->GetB2Body();
     b->SetGravityScale(1.0f);
 
-    // --- Pivote est·tico ---
+
+    // --- Pivote est√°tico ---
     b2BodyDef pivotDef;
     pivotDef.type = b2_staticBody;
     pivotDef.position.Set(PIXEL_TO_METERS(_x), PIXEL_TO_METERS(_y));
@@ -50,11 +53,12 @@ Flipper::Flipper(ModulePhysics* physics, int _x, int _y, bool _isLeft, Module* _
 
 
 }
+
 Flipper::~Flipper() {}
 
 void Flipper::Press()
 {
-    //std::cout << "flipper pressed" << std::endl;
+    std::cout << "flipper pressed" << std::endl;
     float flipperSpeed = 20.0f;
 
     if (isLeft)
@@ -65,11 +69,31 @@ void Flipper::Press()
 
 void Flipper::Release()
 {
-    //std::cout << "flipper released" << std::endl;
+    std::cout << "flipper released" << std::endl;
     float flipperSpeed = 20.0f;
 
     if (isLeft)
         joint->SetMotorSpeed(flipperSpeed);
     else
         joint->SetMotorSpeed(-flipperSpeed);
+}
+
+void Flipper::Update()
+{
+    int x, y;
+    body->GetPhysicPosition(x, y);
+    Vector2 position{ (float)x, (float)y };
+    float scale = 1.0f;
+    Rectangle source = { 0.0f, 0.0f, (float)texture.width, (float)texture.height };
+    Rectangle dest = { position.x, position.y, (float)texture.width * scale, (float)texture.height * scale };
+    //Vector2 origin = { (float)texture.width / 2.0f, (float)texture.height / 2.0f };
+
+    Vector2 origin;
+    if (isLeft)
+        origin = { 0.0f, (float)texture.height };   // esquina inferior izquierda
+    else
+        origin = { (float)texture.width, (float)texture.height }; // esquina inferior derecha
+
+    float rotation = body->GetRotation() * RAD2DEG;
+    DrawTexturePro(texture, source, dest, origin, rotation, WHITE);
 }
