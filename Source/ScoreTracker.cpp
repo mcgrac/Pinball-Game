@@ -26,12 +26,6 @@ void ScoreTracker::PrintScore(int highScore) {
 	DrawText(TextFormat("High Score: %06i points", highScore), 300, 40, 20, RED);
 }
 
-/*void ScoreTracker::StartScoreTracker() {
-	timer->Start();
-	lastUpdate = timer->ReadSec();
-	paused = false;
-}*/
-
 void ScoreTracker::PauseTracker() {
 	paused = true;
 }

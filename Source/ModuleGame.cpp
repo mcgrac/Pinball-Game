@@ -124,10 +124,15 @@ update_status ModuleGame::Update()
 	case GameState::PLAYING:
 	{
 		//For testing
-		if (IsKeyPressed(KEY_E)) {
-			state = GameState::GAMEOVER;
-			StopSound(music);
-		}
+		//if (IsKeyPressed(KEY_E)) {
+
+		//	if (scoreTracker->score > highScore) {
+		//		highScore = scoreTracker->score;
+		//	}
+
+		//	state = GameState::GAMEOVER;
+		//	StopSound(music);
+		//}
 
 		if (currentBalls <= maxBalls)
 		{
@@ -221,6 +226,12 @@ update_status ModuleGame::Update()
 		{
 			StopSound(music);
 			PlaySound(gameOver);
+
+			//update highscore
+			if (scoreTracker->score > highScore) {
+				highScore = scoreTracker->score;
+			}
+
 			state = GameState::GAMEOVER;
 		}
 		break;
@@ -230,10 +241,13 @@ update_status ModuleGame::Update()
 		App->physics->SetDebug(false);
 
 		DrawTexture(endTexture, 0, 0, WHITE);
+		DrawText(TextFormat("%06i points", scoreTracker->score), 250, 550, 20, WHITE);
+		DrawText(TextFormat("High Score: %06i points", highScore), 200, 570, 20, WHITE);
+		DrawText(TextFormat("Previous score: %06i points", previousScore), 200, 590, 20, WHITE);
 
 		if (IsKeyPressed(KEY_SPACE))
 		{
-
+			previousScore = scoreTracker->score;
 			StopSound(gameOver);
 			ResetGame();
 			PlaySound(start);
