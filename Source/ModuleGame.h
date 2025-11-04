@@ -53,12 +53,22 @@ public:
 
 	Map* currentMap = nullptr;
 
-public:
 	std::vector<PhysicEntity*> entities;
+
+	Sound start;
+	Sound gameOver;
+	Sound music;
+
+	Sound walls;
+	Sound bumpers;
+	Sound flippers;
+	Sound voids;
 
 private:
 	int maxBalls = 5;
 	int currentBalls = 0;
+
+	bool fixtureChanged = false;
 
 	bool restartBallFlag = false;
 	GameState state = GameState::INTRO;

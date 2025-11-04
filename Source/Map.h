@@ -21,6 +21,7 @@ public:
 
     inline virtual vector<Flipper*>& GetFlippers() { static std::vector<Flipper*> empty; return empty; }
     inline virtual vector<Launcher*>& GetLaunchers() { static std::vector<Launcher*> empty; return empty; }
+    inline virtual vector<Bumper*>& GetSpecialBumpers() { static std::vector<Bumper*> empty; return empty; }
     inline virtual vector<Bumper*>& GetBumpers() { static std::vector<Bumper*> empty; return empty; }
 
 protected:

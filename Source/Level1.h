@@ -12,7 +12,8 @@ public:
 
     inline vector<Flipper*>& GetFlippers() override { return flippers; }
     inline vector<Launcher*>& GetLaunchers() override { return launchers; }
-    inline vector<Bumper*>& GetBumpers() override { return specialBumpers; }
+    inline vector<Bumper*>& GetSpecialBumpers() override { return specialBumpers; }
+    inline vector<Bumper*>& GetBumpers() override { return bumpers; }
 
 private:
     ModulePhysics* physics;

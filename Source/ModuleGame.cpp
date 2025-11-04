@@ -28,51 +28,20 @@ bool ModuleGame::Start()
 	introTexture = LoadTexture("Assets/Textures/initialScreen.png");
 	endTexture = LoadTexture("Assets/Textures/endScreen.png");
 	
-
-
-	//ball = new Ball(App->physics, 550, 800, this, b2_dynamicBody, ColliderType::BALL);
-	//launcher = new Launcher(App->physics, ball, 550, 900, 50, 20, this, launcherTexture, ColliderType::LAUNCHER);
-
-	//ball->SetBullet(true);
-
-	int rightPoints[16] =
-	{
-		30, -8,
-		 5, -8,
-		 -12, -6,
-		 -30, -2,
-		 -30,  2,
-		 -12,  6,
-		 5,  8,
-		30,  8
-	};
-
-	int flipperLeftPoints[12] = {
-		 -40, -10,
-		 40, -10,
-		 50,  10,
-		 -30,  10,
-		 -35,   0,
-		 -40,   0
-	};
-
-	int flipperRightPoints[12] = {
-		40, -10,
-		-40, -10,
-		-50,  10,
-		30,  10,
-		35,   0,
-		40,   0
-	};
-
-	//leftFlipper = new Flipper(App->physics, 125, 800, true, this, leftFlipperTexture, b2_dynamicBody, ColliderType::FLIPPER, flipperLeftPoints);
-	//rightFlipper = new Flipper(App->physics, 275, 800, false, this, rightFlipperTexture, b2_dynamicBody, ColliderType::FLIPPER, flipperRightPoints);
+	// Load Main Sounds
+	start = LoadSound("Assets/Sounds/start.wav");
+	gameOver = LoadSound("Assets/Sounds/gameOver.wav");;
+	music = LoadSound("Assets/Sounds/music.wav");;
+	//Load Collision Sounds
+	walls = LoadSound("Assets/Sounds/walls.wav");;
+	bumpers = LoadSound("Assets/Sounds/bumpers.wav");;
+	flippers = LoadSound("Assets/Sounds/flippers.wav");;
+	voids = LoadSound("Assets/Sounds/voids.wav");;
 
 	currentBalls = 0; //restart balls
 
-	////CREATION OF THE MAP LEVEL 1;
-	//currentMap = new Level1(App->physics, this, ball);
-	//currentMap->Start();
+	PlaySound(start);
+
 	return ret;
 }
 
@@ -113,6 +82,15 @@ bool ModuleGame::CleanUp()
 	UnloadTexture(introTexture);
 	UnloadTexture(endTexture);
 
+	UnloadSound(start);
+	UnloadSound(gameOver);
+	UnloadSound(music);
+
+	UnloadSound(walls);
+	UnloadSound(bumpers);
+	UnloadSound(flippers);
+	UnloadSound(voids);
+
 	return true;
 }
 
@@ -129,6 +107,8 @@ update_status ModuleGame::Update()
 
 		if (IsKeyPressed(KEY_SPACE))
 		{
+			StopSound(start);
+			PlaySound(music);
 			StartGame();
 		}
 
@@ -139,6 +119,7 @@ update_status ModuleGame::Update()
 		//For testing
 		if (IsKeyPressed(KEY_E)) {
 			state = GameState::GAMEOVER;
+			StopSound(music);
 		}
 		if (currentBalls <= maxBalls)
 		{
@@ -174,7 +155,7 @@ update_status ModuleGame::Update()
 
 			//specialBumpers logic
 			bool allTouched = true;
-			for (Bumper* b : currentMap->GetBumpers())
+			for (Bumper* b : currentMap->GetSpecialBumpers())
 			{
 				if (!b->GetIsTouched())
 				{
@@ -182,7 +163,6 @@ update_status ModuleGame::Update()
 					break;
 				}
 			}
-
 			if (allTouched)
 			{
 				currentBalls--; //adds one more ball to play
@@ -194,11 +174,42 @@ update_status ModuleGame::Update()
 				}
 			}
 
+			//change bounciness of bumpers
+			if (IsKeyPressed(KEY_F4)) 
+			{ 
+				fixtureChanged = !fixtureChanged;
+
+				if (!fixtureChanged) { //normal restitution
+					for (Bumper* b : currentMap->GetSpecialBumpers())
+					{
+						b->GetBody()->GetB2Body()->GetFixtureList()->SetRestitution(1.2f);
+					}
+					for (Bumper* b : currentMap->GetBumpers())
+					{
+						b->GetBody()->GetB2Body()->GetFixtureList()->SetRestitution(1.2f);
+					}
+				}
+				else if (fixtureChanged) { //alternative restitution
+					cout << "changed restitution" << endl;
+
+					for (Bumper* b : currentMap->GetSpecialBumpers())
+					{
+						b->GetBody()->GetB2Body()->GetFixtureList()->SetRestitution(0.5f);
+					}
+					for (Bumper* b : currentMap->GetBumpers())
+					{
+						b->GetBody()->GetB2Body()->GetFixtureList()->SetRestitution(0.5f);
+					}
+				}
+			}
+
 			if (restartBallFlag)
 				RestartBall();
 		}
 		else
 		{
+			StopSound(music);
+			PlaySound(gameOver);
 			state = GameState::GAMEOVER;
 		}
 		break;
@@ -209,10 +220,10 @@ update_status ModuleGame::Update()
 
 		if (IsKeyPressed(KEY_SPACE))
 		{
-			// cleanup current game
-			//CleanUp();
 
+			StopSound(gameOver);
 			ResetGame();
+			PlaySound(start);
 			// go back to intro
 			state = GameState::INTRO;
 		}
@@ -266,11 +277,25 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 				//no special bumper touched
 			}
 		}
+
+		PlaySound(bumpers);
 	}
 	else if (other->entity && other->entity->GetColliderType() == ColliderType::VOID)
 	{
+		PlaySound(voids);
 		restartBallFlag = true;
 		cout << "VoidCollision START" << endl;
+
+	}
+	else if (other->entity && other->entity->GetColliderType() == ColliderType::WALL)
+	{
+		cout << "Colliding WALLS" << endl;
+		PlaySound(walls);
+
+	}
+	else if (other->entity && other->entity->GetColliderType() == ColliderType::FLIPPER)
+	{
+		PlaySound(flippers);
 
 	}
 }
