@@ -1,4 +1,5 @@
 ﻿  ModulePhysics.cpp
 C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Source\ModulePhysics.cpp(15,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Source\ModulePhysics.cpp(15,16): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Source\ModulePhysics.cpp(104,15): warning C4305: 'argument': truncation from 'const double' to 'float'
   PhysicsGame.vcxproj -> C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe

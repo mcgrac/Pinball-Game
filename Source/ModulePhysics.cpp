@@ -93,7 +93,17 @@ bool ModulePhysics::Start()
 
 update_status ModulePhysics::PreUpdate()
 {
-	world->Step(1.0f / 60.0f, 6, 2);
+	static double accumulator = 0.0;
+	const double fixedDeltaTime = 1.0 / 60.0;
+	double frameTime = GetFrameTime();        
+
+	accumulator += frameTime;
+
+	while (accumulator >= fixedDeltaTime)
+	{
+		world->Step(fixedDeltaTime, 6, 2);
+		accumulator -= fixedDeltaTime;
+	}
 
 	//if (IsKeyPressed(KEY_F1)) {
 	//	showColliders = !showColliders;
