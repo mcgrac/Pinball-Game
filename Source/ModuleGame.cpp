@@ -1,4 +1,4 @@
-﻿#include "Globals.h"
+#include "Globals.h"
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleGame.h"
@@ -166,13 +166,15 @@ update_status ModuleGame::Update()
 			}
 			if (allTouched)
 			{
-				currentBalls--; //adds one more ball to play
+				currentBalls -= 1; //adds one more ball to play
 
 				//reset special bumpers touched to false
-				for (Bumper* b : currentMap->GetBumpers())
+				for (Bumper* b : currentMap->GetSpecialBumpers())
 				{
 					b->HasBeenTouched(false);
 				}
+
+				allTouched = false;
 			}
 
 			//change bounciness of bumpers
