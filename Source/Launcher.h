@@ -17,9 +17,9 @@ public:
 	//		Vector2{ (float)texture.width / 2.0f, (float)texture.height / 2.0f }, body->GetRotation() * RAD2DEG, WHITE);*/
 	//}
 
-	void Update();          // mueve físicamente el launcher
-	void Press();           // llamada cuando se mantiene pulsado ↓
-	void Release();         // llamada cuando se suelta ↓
+	void Update(float dt);          // mueve físicamente el launcher
+	void Press(float dt);           // llamada cuando se mantiene pulsado ↓
+	void Release(float dt);         // llamada cuando se suelta ↓
 	inline bool OnBallCollision(bool res) { return onBallCollision = res; }
 
 	int RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal) override

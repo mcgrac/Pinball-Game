@@ -18,6 +18,13 @@
 class PhysBody;
 class PhysicEntity;
 
+enum class GameState
+{
+	INTRO,
+	PLAYING,
+	GAMEOVER
+};
+
 class ModuleGame : public Module
 {
 public:
@@ -28,17 +35,13 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void RestartBall();
+	void StartGame();
+	void ResetGame();
 
 	ModulePhysics* physics = nullptr;
 	//PhysBody* ball = nullptr;
 	PhysBody* launcherBase = nullptr;
 	PhysBody* launcherPlunger = nullptr;
-
-
-	Texture2D ballTexture;
-	Texture2D launcherTexture;
-	Texture2D leftFlipperTexture;
-	Texture2D rightFlipperTexture;
 
 	Ball* ball;
 	//Launcher* launcher;
@@ -58,4 +61,8 @@ private:
 	int currentBalls = 0;
 
 	bool restartBallFlag = false;
+	GameState state = GameState::INTRO;
+
+	Texture2D introTexture;
+	Texture2D endTexture;
 };

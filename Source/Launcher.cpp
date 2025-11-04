@@ -15,16 +15,16 @@ Launcher::~Launcher()
 {
 }
 
-void Launcher::Press()
+void Launcher::Press(float dt)
 {
-    std::cout << "isLauncherPressed" << std::endl;
+    //std::cout << "isLauncherPressed" << std::endl;
 
     isCharging = true;
     returning = false;
     body->GetB2Body()->SetLinearVelocity(b2Vec2(0, speedDown));
 }
 
-void Launcher::Release()
+void Launcher::Release(float dt)
 {
     // convertimos la carga en un impulso inicial
     float launchPower = charge * .5f; // multiplica para ajustar fuerza
@@ -41,7 +41,7 @@ void Launcher::Release()
     returning = true;
 }
 
-void Launcher::Update()
+void Launcher::Update(float dt)
 {
     float y = body->GetPositionY();
 

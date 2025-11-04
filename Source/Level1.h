@@ -7,11 +7,12 @@ public:
     ~Level1();
 
     void Start() override;
-    void Update() override;
+    void Update(float dt) override;
     void CleanUp() override;
 
     inline vector<Flipper*>& GetFlippers() override { return flippers; }
     inline vector<Launcher*>& GetLaunchers() override { return launchers; }
+    inline vector<Bumper*>& GetBumpers() override { return specialBumpers; }
 
 private:
     ModulePhysics* physics;

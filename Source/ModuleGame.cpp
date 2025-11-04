@@ -1,4 +1,4 @@
-#include "Globals.h"
+ï»¿#include "Globals.h"
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleGame.h"
@@ -10,7 +10,7 @@
 
 ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	//physics = app->physics; // <-- Esto asegura que physics ya apunta al módulo correcto
+	//physics = app->physics; // <-- Esto asegura que physics ya apunta al mÃ³dulo correcto
 }
 
 ModuleGame::~ModuleGame()
@@ -22,11 +22,15 @@ bool ModuleGame::Start()
 	LOG("Loading Intro assets");
 
 	bool ret = true;
+	state = GameState::INTRO;
 
+	// Load intro and end textures
+	introTexture = LoadTexture("Assets/Textures/initialScreen.png");
+	endTexture = LoadTexture("Assets/Textures/endScreen.png");
 	
 
 
-	ball = new Ball(App->physics, 550, 800, this, ballTexture, b2_dynamicBody, ColliderType::BALL);
+	//ball = new Ball(App->physics, 550, 800, this, b2_dynamicBody, ColliderType::BALL);
 	//launcher = new Launcher(App->physics, ball, 550, 900, 50, 20, this, launcherTexture, ColliderType::LAUNCHER);
 
 	//ball->SetBullet(true);
@@ -66,10 +70,39 @@ bool ModuleGame::Start()
 
 	currentBalls = 0; //restart balls
 
-	//CREATION OF THE MAP LEVEL 1;
+	////CREATION OF THE MAP LEVEL 1;
+	//currentMap = new Level1(App->physics, this, ball);
+	//currentMap->Start();
+	return ret;
+}
+
+void ModuleGame::StartGame()
+{
+	// Reset counters
+	currentBalls = 0;
+	restartBallFlag = false;
+
+	// Create objects only once space has been pressed
+	ball = new Ball(App->physics, 550, 800, this, b2_dynamicBody, ColliderType::BALL);
 	currentMap = new Level1(App->physics, this, ball);
 	currentMap->Start();
-	return ret;
+
+	state = GameState::PLAYING;
+}
+
+void ModuleGame::ResetGame()
+{
+	// Limpia entidades del nivel anterior
+	if (currentMap != nullptr)
+	{
+		currentMap->CleanUp();
+		delete currentMap;
+		currentMap = nullptr;
+	}
+
+	delete ball;
+	ball = nullptr;
+
 }
 
 // Load assets
@@ -77,8 +110,8 @@ bool ModuleGame::CleanUp()
 {
 	LOG("Unloading Intro scene");
 
-	currentMap->CleanUp();
-	delete currentMap;
+	UnloadTexture(introTexture);
+	UnloadTexture(endTexture);
 
 	return true;
 }
@@ -86,62 +119,106 @@ bool ModuleGame::CleanUp()
 // Update: draw background
 update_status ModuleGame::Update()
 {
-	if (currentBalls <= maxBalls) {
+	float dt = GetFrameTime();
 
-		//=== Input centralizado ===
+	switch (state)
+	{
+	case GameState::INTRO:
+	{
+		DrawTexture(introTexture, 0, 0, WHITE);
 
-		for (Launcher* l : currentMap->GetLaunchers()) {
-			if (IsKeyDown(KEY_DOWN))
-			{
-				l->Press(); // baja el lanzador
-			}
-
-			if (IsKeyReleased(KEY_DOWN))
-			{
-				l->Release(); // suelta la bola
-			}
-		}
-
-
-		//if (IsKeyDown(KEY_LEFT))
-		//	leftFlipper->Press();
-		//else 
-		//	leftFlipper->Release();
-
-		//if (IsKeyDown(KEY_RIGHT))
-		//	rightFlipper->Press();
-		//else 
-		//	rightFlipper->Release();
-
-		for (Flipper* f : currentMap->GetFlippers())
+		if (IsKeyPressed(KEY_SPACE))
 		{
-			if (IsKeyDown(KEY_LEFT) && f->IsLeft()) 
-				f->Press();
-			else if (f->IsLeft()) 
-				f->Release();
-
-			if (IsKeyDown(KEY_RIGHT) && !f->IsLeft()) 
-				f->Press();
-			else if (!f->IsLeft()) 
-				f->Release();
+			StartGame();
 		}
 
-
-		// === Actualizar entidades ===
-		//launcher->Update();
-		currentMap->Update();
-		ball->Update();
-		//leftFlipper->Update();
-		//rightFlipper->Update();
-
-		if (restartBallFlag)
-			RestartBall();
-
+		return UPDATE_CONTINUE;
 	}
-	else {
-		//FINISH GAME	
-		cout << "GAME OVER" << endl;
-		
+	case GameState::PLAYING:
+	{
+		//For testing
+		if (IsKeyPressed(KEY_E)) {
+			state = GameState::GAMEOVER;
+		}
+		if (currentBalls <= maxBalls)
+		{
+			//Gameplay Controls
+
+			for (Launcher* l : currentMap->GetLaunchers()) {
+				if (IsKeyDown(KEY_DOWN))
+				{
+					l->Press(dt); // baja el lanzador
+				}
+
+				if (IsKeyReleased(KEY_DOWN))
+				{
+					l->Release(dt); // suelta la bola
+				}
+			}
+
+			for (Flipper* f : currentMap->GetFlippers())
+			{
+				if (IsKeyDown(KEY_LEFT) && f->IsLeft())
+					f->Press();
+				else if (f->IsLeft())
+					f->Release();
+
+				if (IsKeyDown(KEY_RIGHT) && !f->IsLeft())
+					f->Press();
+				else if (!f->IsLeft())
+					f->Release();
+			}
+
+			currentMap->Update(dt);
+			ball->Update();
+
+			//specialBumpers logic
+			bool allTouched = true;
+			for (Bumper* b : currentMap->GetBumpers())
+			{
+				if (!b->GetIsTouched())
+				{
+					allTouched = false;
+					break;
+				}
+			}
+
+			if (allTouched)
+			{
+				currentBalls--; //adds one more ball to play
+
+				//reset special bumpers touched to false
+				for (Bumper* b : currentMap->GetBumpers())
+				{
+					b->HasBeenTouched(false);
+				}
+			}
+
+			if (restartBallFlag)
+				RestartBall();
+		}
+		else
+		{
+			state = GameState::GAMEOVER;
+		}
+		break;
+	}
+	case GameState::GAMEOVER:
+	{
+		DrawTexture(endTexture, 0, 0, WHITE);
+
+		if (IsKeyPressed(KEY_SPACE))
+		{
+			// cleanup current game
+			//CleanUp();
+
+			ResetGame();
+			// go back to intro
+			state = GameState::INTRO;
+		}
+
+		return UPDATE_CONTINUE;
+	}
 	}
 
 	return UPDATE_CONTINUE;
@@ -155,8 +232,8 @@ void ModuleGame::RestartBall() {
 
 void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 
-	std::cout << "On Collision" << std::endl;
-	// Detectar quién es la bola y quién es el otro
+	//std::cout << "On Collision" << std::endl;
+	// Detectar quiÃ©n es la bola y quiÃ©n es el otro
 	PhysBody* ballBody = nullptr;
 	PhysBody* other = nullptr;
 
@@ -173,7 +250,22 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 	else if (other->entity && other->entity->GetColliderType() == ColliderType::BUMPER)
 	{
 		cout << "BumperCollision START" << endl;
-
+		// Intentamos castear a bumper
+		Bumper* bumper = dynamic_cast<Bumper*>(other->entity);
+		if (bumper != nullptr)
+		{
+			if (bumper->GetIsSpecial())
+			{
+				if (!bumper->GetIsTouched()) {
+					bumper->HasBeenTouched(true);
+					cout << "SPECIAL BUMPER ACTIVATED!" << endl;
+				}
+			}
+			else
+			{
+				//no special bumper touched
+			}
+		}
 	}
 	else if (other->entity && other->entity->GetColliderType() == ColliderType::VOID)
 	{
@@ -184,9 +276,9 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 }
 
 void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) {
-	std::cout << "On Collision End" << std::endl;
+	//std::cout << "On Collision End" << std::endl;
 
-	// Detectar quién es la bola y quién es el otro
+	// Detectar quiÃ©n es la bola y quiÃ©n es el otro
 	PhysBody* ballBody = nullptr;
 	PhysBody* other = nullptr;
 

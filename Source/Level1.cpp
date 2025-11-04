@@ -225,9 +225,16 @@ void Level1::Start()
 	walls.push_back(new PhysicEntity(physics->CreatePolygon(0, 0, rightTriangle, 16, b2_staticBody), listener, ColliderType::WALL));
 
 	//Bumpers creation
-	bumpers.push_back(new Bumper(physics, 242, 554, listener, bumpersText, b2_staticBody, ColliderType::BUMPER, 30));
-	bumpers.push_back(new Bumper(physics, 377, 554, listener, bumpersText, b2_staticBody, ColliderType::BUMPER, 30));
-	bumpers.push_back(new Bumper(physics, 312, 447, listener, bumpersText, b2_staticBody, ColliderType::BUMPER, 30));
+	//Normal Ones
+	bumpers.push_back(new Bumper(physics, 242, 554, listener, bumpersText, b2_staticBody, ColliderType::BUMPER, 30, false));
+	bumpers.push_back(new Bumper(physics, 377, 554, listener, bumpersText, b2_staticBody, ColliderType::BUMPER, 30, false));
+	bumpers.push_back(new Bumper(physics, 312, 447, listener, bumpersText, b2_staticBody, ColliderType::BUMPER, 30, false));
+
+	//extraLive
+	specialBumpers.push_back(new Bumper(physics, 205, 244, listener, bumpersText, b2_staticBody, ColliderType::BUMPER, 22, true));
+	specialBumpers.push_back(new Bumper(physics, 303, 306, listener, bumpersText, b2_staticBody, ColliderType::BUMPER, 25, true));
+	specialBumpers.push_back(new Bumper(physics, 400, 217, listener, bumpersText, b2_staticBody, ColliderType::BUMPER, 22, true));
+
 
 	//flippers creation
 	int leftFlipperCords[16] = {
@@ -241,8 +248,6 @@ void Level1::Start()
 			-43, 5
 	};
 
-	
-
 	int rightFlipperCords[16] = {
 		27, 24,
 		1, 49,
@@ -253,8 +258,9 @@ void Level1::Start()
 		53, 2,
 		43, 5
 	};
-	flippers.push_back(new Flipper(physics, 275, 835, true, listener, leftFlipper, b2_dynamicBody, ColliderType::FLIPPER, leftFlipperCords));
-	flippers.push_back(new Flipper(physics, 338, 835, false, listener, rightFlipper, b2_dynamicBody, ColliderType::FLIPPER, rightFlipperCords));
+
+	flippers.push_back(new Flipper(physics, 250, 830, true, listener, leftFlipper, b2_dynamicBody, ColliderType::FLIPPER, leftFlipperCords));
+	flippers.push_back(new Flipper(physics, 395, 855, false, listener, rightFlipper, b2_dynamicBody, ColliderType::FLIPPER, rightFlipperCords));
 
 
 
@@ -282,11 +288,29 @@ void Level1::CleanUp()
 	}
 	bumpers.clear();
 
-	delete sensorDown;
+	for (Bumper* b : specialBumpers)
+	{
+		delete b;
+	}
+	specialBumpers.clear();
 
+	for (Flipper* f : flippers) {
+		delete f;
+	}
+	flippers.clear();
+	
+	for (Launcher* l : launchers) {
+		delete l;
+	}
+	launchers.clear();
+
+	delete sensorDown;
+	sensorDown = nullptr;
+
+	std::cout << "Flipper count: " << flippers.size() << std::endl;
 }
 
-void Level1::Update() {
+void Level1::Update(float dt) {
 
 	DrawTexture(background, 0, 0, WHITE);
 
@@ -298,9 +322,17 @@ void Level1::Update() {
 			cout << "Bumper NULLPTR" << endl;
 	}
 
+	for (Bumper* b : specialBumpers)
+	{
+		if (b != nullptr)
+			b->Update();
+		else
+			cout << "Bumper NULLPTR" << endl;
+	}
+
 	for (Launcher* l : launchers) {
 		if (l != nullptr)
-			l->Update();
+			l->Update(dt);
 		else
 			cout << "Launcher NULLPTR" << endl;
 	}

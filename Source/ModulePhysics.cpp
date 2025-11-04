@@ -93,7 +93,17 @@ bool ModulePhysics::Start()
 
 update_status ModulePhysics::PreUpdate()
 {
-	world->Step(1.0f / 60.0f, 6, 2);
+	static double accumulator = 0.0;
+	const double fixedDeltaTime = 1.0 / 60.0;
+	double frameTime = GetFrameTime();
+
+	accumulator += frameTime;
+
+	while (accumulator >= fixedDeltaTime)
+	{
+		world->Step(fixedDeltaTime, 6, 2);
+		accumulator -= fixedDeltaTime;
+	}
 
 	//if (IsKeyPressed(KEY_F1)) {
 	//	showColliders = !showColliders;
@@ -335,6 +345,17 @@ update_status ModulePhysics::PostUpdate()
 			world->SetGravity(gravity);
 	}
 
+	static int fpsOptions[] = { 30, 60 };
+	static int currentFpsIndex = 1;
+	if (IsKeyPressed(KEY_F3))
+	{
+		currentFpsIndex = (currentFpsIndex + 1) % 2;
+		int newFps = fpsOptions[currentFpsIndex];
+		SetTargetFPS(newFps);
+		std::cout << "FPS changed to: " << newFps << std::endl;
+	}
+
+
 	if (!debug)
 	{
 		return UPDATE_CONTINUE;
@@ -426,7 +447,8 @@ bool ModulePhysics::CleanUp()
 	LOG("Destroying physics world");
 
 	// Delete the whole physics world!
-
+	delete world;
+	world = nullptr;
 
 	return true;
 }
@@ -445,7 +467,7 @@ void PhysBody::GetPhysicPosition(int& x, int& y) const
 
 void ModulePhysics::BeginContact(b2Contact* contact)
 {
-	std::cout << "BeginContact Physics" << std::endl;
+	//std::cout << "BeginContact Physics" << std::endl;
 
 	b2Fixture* fixtureA = contact->GetFixtureA();
 	b2Fixture* fixtureB = contact->GetFixtureB();
@@ -458,13 +480,13 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 	PhysBody* physB = (PhysBody*)bodyB->GetUserData().pointer;
 
 	if (physA && physA->listener) {
-		std::cout << "BeginContact2" << std::endl;
+		//std::cout << "BeginContact2" << std::endl;
 		physA->listener->OnCollision(physA, physB);
 	}
 
 
 	if (physB && physB->listener) {
-		std::cout << "BeginContact2" << std::endl;
+		//std::cout << "BeginContact2" << std::endl;
 		physB->listener->OnCollision(physB, physA);
 	}
 
@@ -472,7 +494,7 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 void ModulePhysics::EndContact(b2Contact* contact)
 {
-	std::cout << "End contact physics" << std::endl;
+	//std::cout << "End contact physics" << std::endl;
 
 	b2Fixture* fixtureA = contact->GetFixtureA();
 	b2Fixture* fixtureB = contact->GetFixtureB();

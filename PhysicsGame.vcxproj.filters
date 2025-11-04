@@ -49,6 +49,9 @@
     <ClCompile Include="Source\Map.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ModuleFonts.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source/p2Point.h">
@@ -100,6 +103,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Source\Map.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleFonts.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

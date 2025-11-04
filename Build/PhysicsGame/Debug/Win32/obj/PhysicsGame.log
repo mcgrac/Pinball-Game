@@ -1,28 +1,2 @@
-﻿  Application.cpp
-  Log.cpp
-  Main.cpp
-  ModuleAudio.cpp
-  ModulePhysics.cpp
-C:\Users\34628\Desktop\PinballGit2\Pinball-Game\Source\ModulePhysics.cpp(15,47): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\34628\Desktop\PinballGit2\Pinball-Game\Source\ModulePhysics.cpp(15,16): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-  ModuleRender.cpp
-  ModuleWindow.cpp
-  Ball.cpp
-  Bumper.cpp
-C:\Users\34628\Desktop\PinballGit2\Pinball-Game\Source\Bumper.cpp(3,47): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-  Flipper.cpp
-C:\Users\34628\Desktop\PinballGit2\Pinball-Game\Source\Flipper.cpp(51,13): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\34628\Desktop\PinballGit2\Pinball-Game\Source\Flipper.cpp(52,13): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\34628\Desktop\PinballGit2\Pinball-Game\Source\Flipper.cpp(106,26): warning C4838: la conversión de 'int' en 'float' requiere una conversión de restricción
-C:\Users\34628\Desktop\PinballGit2\Pinball-Game\Source\Flipper.cpp(106,26): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\34628\Desktop\PinballGit2\Pinball-Game\Source\Flipper.cpp(106,51): warning C4838: la conversión de 'int' en 'float' requiere una conversión de restricción
-C:\Users\34628\Desktop\PinballGit2\Pinball-Game\Source\Flipper.cpp(106,51): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-  Launcher.cpp
-C:\Users\34628\Desktop\PinballGit2\Pinball-Game\Source\Launcher.cpp(12,16): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-  Level1.cpp
-  Map.cpp
-  ModuleGame.cpp
-  PhysicEntity.cpp
-  Timer.cpp
-  Generando código...
+﻿  Level1.cpp
   PhysicsGame.vcxproj -> C:\Users\34628\Desktop\PinballGit2\Pinball-Game\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe
