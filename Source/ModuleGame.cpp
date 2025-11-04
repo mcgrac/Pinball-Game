@@ -123,11 +123,6 @@ update_status ModuleGame::Update()
 	}
 	case GameState::PLAYING:
 	{
-		//For testing
-		if (IsKeyPressed(KEY_E)) {
-			state = GameState::GAMEOVER;
-			StopSound(music);
-		}
 
 		if (currentBalls <= maxBalls)
 		{
@@ -221,6 +216,12 @@ update_status ModuleGame::Update()
 		{
 			StopSound(music);
 			PlaySound(gameOver);
+
+			//update highscore
+			if (scoreTracker->score > highScore) {
+				highScore = scoreTracker->score;
+			}
+
 			state = GameState::GAMEOVER;
 		}
 		break;
@@ -230,10 +231,13 @@ update_status ModuleGame::Update()
 		App->physics->SetDebug(false);
 
 		DrawTexture(endTexture, 0, 0, WHITE);
+		DrawText(TextFormat("%06i points", scoreTracker->score), 250, 550, 20, WHITE);
+		DrawText(TextFormat("High Score: %06i points", highScore), 200, 570, 20, WHITE);
+		DrawText(TextFormat("Previous score: %06i points", previousScore), 200, 590, 20, WHITE);
 
 		if (IsKeyPressed(KEY_SPACE))
 		{
-
+			previousScore = scoreTracker->score;
 			StopSound(gameOver);
 			ResetGame();
 			PlaySound(start);
@@ -261,7 +265,6 @@ void ModuleGame::ManageScore() {
 
 void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 
-	//std::cout << "On Collision" << std::endl;
 	// Detectar quién es la bola y quién es el otro
 	PhysBody* ballBody = nullptr;
 	PhysBody* other = nullptr;
@@ -272,13 +275,12 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 
 	if (other->entity && other->entity->GetColliderType() == ColliderType::LAUNCHER)
 	{
-		//launcher->OnBallCollision(true); //ball collision launcher true
 		ball->OnLauncherCollision(true);
-
 	}
 	else if (other->entity && other->entity->GetColliderType() == ColliderType::BUMPER)
 	{
 		cout << "BumperCollision START" << endl;
+
 		// Intentamos castear a bumper
 		Bumper* bumper = dynamic_cast<Bumper*>(other->entity);
 		if (bumper != nullptr)
@@ -289,10 +291,6 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 					bumper->HasBeenTouched(true);
 					cout << "SPECIAL BUMPER ACTIVATED!" << endl;
 				}
-			}
-			else
-			{
-				//no special bumper touched
 			}
 		}
 
@@ -320,7 +318,6 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 }
 
 void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) {
-	//std::cout << "On Collision End" << std::endl;
 
 	// Detectar quién es la bola y quién es el otro
 	PhysBody* ballBody = nullptr;
@@ -332,7 +329,6 @@ void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) {
 
 	if (other->entity && other->entity->GetColliderType() == ColliderType::LAUNCHER)
 	{
-		//launcher->OnBallCollision(false); //ballCollision launcher false
 		ball->OnLauncherCollision(false);
 	}
 	else if (other->entity && other->entity->GetColliderType() == ColliderType::BUMPER)

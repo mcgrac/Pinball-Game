@@ -1,6 +1,4 @@
 ﻿#include "Launcher.h"
-//#include "App.h"
-//#include "Input.h"
 #include"iostream"
 
 
@@ -80,10 +78,6 @@ void Launcher::Update(float dt)
         if (y_phys > initialY)
         {
             float upSpeed = -speedUp * (charge / maxCharge); // negativo porque sube
-
-/*            std::cout << "charge rate: " << charge/maxCharge << std::endl;
-            std::cout << "charge: " << charge << std::endl;
-            std::cout << "uSpeed: " << upSpeed << std::endl*/;
 
             body->GetB2Body()->SetLinearVelocity(b2Vec2(0, upSpeed));
         }

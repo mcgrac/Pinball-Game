@@ -1,1 +1,25 @@
-﻿  PhysicsGame.vcxproj -> C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe
+﻿  Application.cpp
+  ModulePhysics.cpp
+C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Source\ModulePhysics.cpp(16,47): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Source\ModulePhysics.cpp(16,16): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Source\ModulePhysics.cpp(108,15): warning C4305: 'argumento': truncamiento de 'const double' a 'float'
+  Flipper.cpp
+C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Source\Flipper.cpp(51,13): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Source\Flipper.cpp(52,13): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Source\Flipper.cpp(134,26): warning C4838: la conversión de 'int' en 'float' requiere una conversión de restricción
+C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Source\Flipper.cpp(134,26): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Source\Flipper.cpp(134,51): warning C4838: la conversión de 'int' en 'float' requiere una conversión de restricción
+C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Source\Flipper.cpp(134,51): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Source\Flipper.cpp(147,28): warning C4838: la conversión de 'int' en 'float' requiere una conversión de restricción
+C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Source\Flipper.cpp(147,28): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Source\Flipper.cpp(147,60): warning C4838: la conversión de 'int' en 'float' requiere una conversión de restricción
+C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Source\Flipper.cpp(147,60): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+  Launcher.cpp
+C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Source\Launcher.cpp(10,16): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+  Level1.cpp
+  Map.cpp
+  ModuleGame.cpp
+  ScoreTracker.cpp
+  Timer.cpp
+  Generando código...
+  PhysicsGame.vcxproj -> C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe

@@ -259,8 +259,8 @@ void Level1::Start()
 		43, 5
 	};
 
-	flippers.push_back(new Flipper(physics, 222, 820, true, listener, leftFlipper, b2_dynamicBody, ColliderType::FLIPPER, leftFlipperCords));
-	flippers.push_back(new Flipper(physics, 387, 820, false, listener, rightFlipper, b2_dynamicBody, ColliderType::FLIPPER, rightFlipperCords));
+	flippers.push_back(new Flipper(physics, 232, 816, true, listener, leftFlipper, b2_dynamicBody, ColliderType::FLIPPER, leftFlipperCords));
+	flippers.push_back(new Flipper(physics, 387, 816, false, listener, rightFlipper, b2_dynamicBody, ColliderType::FLIPPER, rightFlipperCords));
 
 
 
@@ -306,8 +306,6 @@ void Level1::CleanUp()
 
 	delete sensorDown;
 	sensorDown = nullptr;
-
-	std::cout << "Flipper count: " << flippers.size() << std::endl;
 }
 
 void Level1::Update(float dt) {
@@ -341,7 +339,6 @@ void Level1::Update(float dt) {
 		if (f != nullptr)
 		{
 			f->Update();
-			//cout << "Flipper NO NULLPTR" << endl;
 		}
 		else
 			cout << "Flipper NULLPTR" << endl;
