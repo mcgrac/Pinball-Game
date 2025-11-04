@@ -5,158 +5,155 @@
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
 
-#include"iostream"
-
+#include <iostream>
 
 ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	//physics = app->physics; // <-- Esto asegura que physics ya apunta al módulo correcto
+	state = GameState::INTRO;
 }
 
 ModuleGame::~ModuleGame()
-{}
-
-// Load assets
-bool ModuleGame::Start()
 {
-	LOG("Loading Intro assets");
-
-	bool ret = true;
-
-	
-
-
-	ball = new Ball(App->physics, 550, 800, this, ballTexture, b2_dynamicBody, ColliderType::BALL);
-	//launcher = new Launcher(App->physics, ball, 550, 900, 50, 20, this, launcherTexture, ColliderType::LAUNCHER);
-
-	//ball->SetBullet(true);
-
-	int rightPoints[16] =
-	{
-		30, -8,
-		 5, -8,
-		 -12, -6,
-		 -30, -2,
-		 -30,  2,
-		 -12,  6,
-		 5,  8,
-		30,  8
-	};
-
-	int flipperLeftPoints[12] = {
-		 -40, -10,
-		 40, -10,
-		 50,  10,
-		 -30,  10,
-		 -35,   0,
-		 -40,   0
-	};
-
-	int flipperRightPoints[12] = {
-		40, -10,
-		-40, -10,
-		-50,  10,
-		30,  10,
-		35,   0,
-		40,   0
-	};
-
-	//leftFlipper = new Flipper(App->physics, 125, 800, true, this, leftFlipperTexture, b2_dynamicBody, ColliderType::FLIPPER, flipperLeftPoints);
-	//rightFlipper = new Flipper(App->physics, 275, 800, false, this, rightFlipperTexture, b2_dynamicBody, ColliderType::FLIPPER, flipperRightPoints);
-
-	currentBalls = 0; //restart balls
-
-	//CREATION OF THE MAP LEVEL 1;
-	currentMap = new Level1(App->physics, this, ball);
-	currentMap->Start();
-	return ret;
 }
 
-// Load assets
+bool ModuleGame::Start()
+{
+	LOG("Game Module Start");
+
+	// Load intro and end textures
+	introTexture = LoadTexture("Assets/Textures/initialScreen.png");
+	endTexture = LoadTexture("Assets/Textures/endScreen.png");
+
+	// Load game textures (if needed here or later)
+	ballTexture = LoadTexture("Assets/Textures/ball.png");
+	launcherTexture = LoadTexture("Assets/Textures/launcher.png");
+
+	// Load Main Sounds
+	start = LoadSound("Assets/Sounds/start.wav");
+	gameOver = LoadSound("Assets/Sounds/gameOver.wav");;
+	music = LoadSound("Assets/Sounds/music.wav");;
+	//Load Collision Sounds
+	walls = LoadSound("Assets/Sounds/walls.wav");;
+	bumpers = LoadSound("Assets/Sounds/bumpers.wav");;
+	flippers = LoadSound("Assets/Sounds/flippers.wav");;
+	voids = LoadSound("Assets/Sounds/voids.wav");;
+
+	PlaySound(start);
+	return true; // wait for user to press SPACE
+}
+
 bool ModuleGame::CleanUp()
 {
-	LOG("Unloading Intro scene");
-
-	currentMap->CleanUp();
-	delete currentMap;
+	LOG("Cleaning Game Module");
+	if (currentMap != nullptr)
+	{
+		currentMap->CleanUp();
+		delete currentMap;
+		currentMap = nullptr;
+	}
 
 	return true;
 }
 
-// Update: draw background
+void ModuleGame::StartGame()
+{
+	// Reset counters
+	currentBalls = 0;
+	restartBallFlag = false;
+
+	// Create objects only once space has been pressed
+	ball = new Ball(App->physics, 550, 800, this, ballTexture, b2_dynamicBody, ColliderType::BALL);
+	launcher = new Launcher(App->physics, ball, 550, 900, 50, 20, this, launcherTexture, ColliderType::LAUNCHER);
+
+	currentMap = new Level1(App->physics, this);
+	currentMap->Start();
+
+	state = GameState::PLAYING;
+}
+
 update_status ModuleGame::Update()
 {
-	if (currentBalls <= maxBalls) {
-
-		//=== Input centralizado ===
-
-		for (Launcher* l : currentMap->GetLaunchers()) {
-			if (IsKeyDown(KEY_DOWN))
-			{
-				l->Press(); // baja el lanzador
-			}
-
-			if (IsKeyReleased(KEY_DOWN))
-			{
-				l->Release(); // suelta la bola
-			}
-		}
-
-
-		//if (IsKeyDown(KEY_LEFT))
-		//	leftFlipper->Press();
-		//else 
-		//	leftFlipper->Release();
-
-		//if (IsKeyDown(KEY_RIGHT))
-		//	rightFlipper->Press();
-		//else 
-		//	rightFlipper->Release();
-
-		for (Flipper* f : currentMap->GetFlippers())
-		{
-			if (IsKeyDown(KEY_LEFT) && f->IsLeft()) 
-				f->Press();
-			else if (f->IsLeft()) 
-				f->Release();
-
-			if (IsKeyDown(KEY_RIGHT) && !f->IsLeft()) 
-				f->Press();
-			else if (!f->IsLeft()) 
-				f->Release();
-		}
-
-
-		// === Actualizar entidades ===
-		//launcher->Update();
-		currentMap->Update();
-		ball->Update();
-		//leftFlipper->Update();
-		//rightFlipper->Update();
-
-		if (restartBallFlag)
-			RestartBall();
-
-	}
-	else {
-		//FINISH GAME	
-		cout << "GAME OVER" << endl;
+	switch (state)
+	{
+	case GameState::INTRO:
+	{
 		
+		BeginDrawing();
+		ClearBackground(BLACK);
+		DrawTexture(introTexture, 0, 0, WHITE);
+		EndDrawing();
+
+		if (IsKeyPressed(KEY_SPACE))
+		{
+			PlaySound(music);
+			StartGame();
+		}
+
+		return UPDATE_CONTINUE;
+	}
+	case GameState::PLAYING:
+	{
+
+		if (IsKeyPressed(KEY_SPACE))
+		{
+			PlaySound(gameOver);
+			state = GameState::GAMEOVER;
+		}
+
+		if (currentBalls <= maxBalls)
+		{
+			if (IsKeyDown(KEY_DOWN)) launcher->Press();
+			if (IsKeyReleased(KEY_DOWN)) launcher->Release();
+
+			launcher->Update();
+			currentMap->Update();
+			ball->Update();
+
+			if (restartBallFlag)
+				RestartBall();
+		}
+		else
+		{
+			PlaySound(gameOver);
+			state = GameState::GAMEOVER;
+		}
+		break;
+	}
+	case GameState::GAMEOVER:
+	{
+
+		BeginDrawing();
+		ClearBackground(BLACK);
+		DrawTexture(endTexture, 0, 0, WHITE);
+		EndDrawing();
+
+		if (IsKeyPressed(KEY_SPACE))
+		{
+			// cleanup current game
+			CleanUp();
+			// go back to intro
+			StopSound(gameOver);
+			state = GameState::INTRO;
+		}
+
+		return UPDATE_CONTINUE;
+	}
 	}
 
 	return UPDATE_CONTINUE;
 }
 
-void ModuleGame::RestartBall() {
+void ModuleGame::RestartBall()
+{
 	ball->GetBody()->SetPosition(550, 800);
 	currentBalls++;
 	restartBallFlag = false;
 }
 
-void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
+void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
+{
+	if (!ball) return;
 
-	std::cout << "On Collision" << std::endl;
-	// Detectar quién es la bola y quién es el otro
 	PhysBody* ballBody = nullptr;
 	PhysBody* other = nullptr;
 
@@ -164,29 +161,27 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 	else if (bodyB == ball->GetBody()) { ballBody = bodyB; other = bodyA; }
 	else return;
 
+	if (other->entity && other->entity->GetColliderType() == ColliderType::WALL) {PlaySound(walls);}
+	if (other->entity && other->entity->GetColliderType() == ColliderType::FLIPPER) { PlaySound(flippers); }
+	if (other->entity && other->entity->GetColliderType() == ColliderType::BUMPER) { PlaySound(bumpers); }
+	if (other->entity && other->entity->GetColliderType() == ColliderType::VOID) { PlaySound(voids); }
+
 	if (other->entity && other->entity->GetColliderType() == ColliderType::LAUNCHER)
 	{
-		//launcher->OnBallCollision(true); //ball collision launcher true
-		ball->OnLauncherCollision(true);
 
-	}
-	else if (other->entity && other->entity->GetColliderType() == ColliderType::BUMPER)
-	{
-		cout << "BumperCollision START" << endl;
-
+		launcher->OnBallCollision(true);
 	}
 	else if (other->entity && other->entity->GetColliderType() == ColliderType::VOID)
 	{
+		//PlaySound(voids);
 		restartBallFlag = true;
-		cout << "VoidCollision START" << endl;
-
 	}
 }
 
-void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) {
-	std::cout << "On Collision End" << std::endl;
+void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB)
+{
+	if (!ball) return;
 
-	// Detectar quién es la bola y quién es el otro
 	PhysBody* ballBody = nullptr;
 	PhysBody* other = nullptr;
 
@@ -196,17 +191,6 @@ void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) {
 
 	if (other->entity && other->entity->GetColliderType() == ColliderType::LAUNCHER)
 	{
-		//launcher->OnBallCollision(false); //ballCollision launcher false
-		ball->OnLauncherCollision(false);
-	}
-	else if (other->entity && other->entity->GetColliderType() == ColliderType::BUMPER)
-	{
-		cout << "BumperCollision END" << endl;
-
-	}
-	else if (other->entity && other->entity->GetColliderType() == ColliderType::VOID)
-	{
-		cout << "VoidCollision END" << endl;
-
+		launcher->OnBallCollision(false);
 	}
 }

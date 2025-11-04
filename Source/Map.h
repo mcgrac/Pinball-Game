@@ -6,7 +6,6 @@
 #include "Bumper.h"
 #include "Flipper.h"
 #include "Launcher.h"
-#include "Ball.h"
 
 using namespace std;
 

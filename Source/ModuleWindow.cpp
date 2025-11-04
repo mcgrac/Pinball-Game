@@ -39,8 +39,6 @@ bool ModuleWindow::Init()
 	SetConfigFlags(flags);
 	InitWindow(width, height, TITLE);
 
-	SetTargetFPS(120); // o el número que prefieras tambien desactivar el vsync para que funcione
-
 	return ret;
 }
 

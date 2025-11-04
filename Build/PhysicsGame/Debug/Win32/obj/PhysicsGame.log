@@ -1,8 +1,2 @@
-﻿  Flipper.cpp
-C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Source\Flipper.cpp(51,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Source\Flipper.cpp(52,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Source\Flipper.cpp(106,26): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
-C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Source\Flipper.cpp(106,26): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Source\Flipper.cpp(106,51): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
-C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Source\Flipper.cpp(106,51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  PhysicsGame.vcxproj -> C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe
+﻿  ModuleGame.cpp
+  PhysicsGame.vcxproj -> C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game-main\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe

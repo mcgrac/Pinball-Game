@@ -88,16 +88,41 @@ bool ModulePhysics::Start()
 
 	world->SetContactListener(this);
 
+	// 
+	// CreateRectangle(0, 980, 1280, 40, b2_staticBody);
+	//std::vector<int> fieldPoints;
+
+	//// --- Parámetros del semicírculo ---
+	//const float centerX = 640.0f;
+	//const float centerY = 400.0f;
+	//const float radius = 400.0f;
+	//const int numPoints = 24;
+
+	//// Generar semicírculo superior (de 180° a 0°)
+	//for (int i = 0; i <= numPoints; ++i)
+	//{
+	//	float angle = PI + (PI * i / numPoints); // de π a 2π
+	//	float x = centerX + cosf(angle) * radius;
+	//	float y = centerY + sinf(angle) * radius;
+	//	fieldPoints.push_back((int)x);
+	//	fieldPoints.push_back((int)y + 50);
+	//}
+
+	//// --- Lados inferiores del campo ---
+	//fieldPoints.push_back(1040);  // esquina inferior derecha
+	//fieldPoints.push_back(880);
+
+	//fieldPoints.push_back(400);   // esquina inferior izquierda
+	//fieldPoints.push_back(880);
+
+	//PhysBody* table = CreateChain(0, 0, fieldPoints.data(), fieldPoints.size());
+
 	return true;
 }
 
 update_status ModulePhysics::PreUpdate()
 {
 	world->Step(1.0f / 60.0f, 6, 2);
-
-	//if (IsKeyPressed(KEY_F1)) {
-	//	showColliders = !showColliders;
-	//}
 
 	return UPDATE_CONTINUE;
 }
@@ -177,7 +202,6 @@ PhysBody* ModulePhysics::CreateBall(int x, int y, int radius, b2BodyType type)
 
 	return pbody;
 }
-
 PhysBody* ModulePhysics::CreateChain(int x, int y, const int* points, int size, b2BodyType type){
 
 	PhysBody* pbody = new PhysBody();
@@ -323,16 +347,11 @@ void ModulePhysics::DestroyPhysBody(PhysBody* pbody)
 
 update_status ModulePhysics::PostUpdate()
 {
+
+
 	if (IsKeyPressed(KEY_F1))
 	{
 		debug = !debug;
-	}
-
-	if (IsKeyPressed(KEY_F2)) {
-		if (world->GetGravity() == gravity)
-			world->SetGravity(alternativeGravity);
-		else
-			world->SetGravity(gravity);
 	}
 
 	if (!debug)
