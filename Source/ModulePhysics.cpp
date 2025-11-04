@@ -419,48 +419,17 @@ void ModulePhysics::DestroyPhysBody(PhysBody* pbody)
 
 update_status ModulePhysics::PostUpdate()
 {
-	//if (IsKeyPressed(KEY_F1))
-	//{
-	//	debug = !debug;
-	//	useMouseLauncher = !useMouseLauncher;
-
-	//	//if there is a mouseJoint when clicking, delete it
-	//	if (mouseJoint)
-	//	{
-	//		world->DestroyJoint(mouseJoint);
-	//		mouseJoint = nullptr;
-	//	}
-	//}
 
 	if (IsKeyPressed(KEY_F1))
 	{
 		debug = !debug;
-		//useMouseLauncher = !useMouseLauncher;
 
 		std::cout << "Launcher control: " << (useMouseLauncher ? "Mouse" : "Keyboard") << std::endl;
-
-		//if (debug && mouseJoint == nullptr)
-		//{
-		//	std::cout << "Debug ON: enabling mouse joint support\n";
-		//}
-		//else
-		//{
-		//	std::cout << "Debug OFF: disabling mouse joint\n";
-		//	if (mouseJoint)
-		//	{
-		//		world->DestroyJoint(mouseJoint);
-		//		mouseJoint = nullptr;
-		//	}
-		//}
 	}
 
 	if (IsKeyPressed(KEY_F2))
 	{
 		useMouseLauncher = !useMouseLauncher;
-		//if (!useMouseLauncher) {
-		//	world->DestroyJoint(mouseJoint);
-		//	mouseJoint = nullptr;
-		//}
 		std::cout << "Launcher control: " << (useMouseLauncher ? "Mouse" : "Keyboard") << std::endl;
 	}
 
