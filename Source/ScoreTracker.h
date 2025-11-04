@@ -13,6 +13,7 @@ public:
 	void StartScoreTracker();
 	void PauseTracker();
 	void ResumeTracker();
+	void BumperHit();
 	bool paused = true;
 	int score;
 	Timer* timer;

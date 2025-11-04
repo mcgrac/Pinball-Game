@@ -126,7 +126,6 @@ update_status ModuleGame::Update()
 		ManageScore();
 
 		if (restartBallFlag)
-			scoreTracker->PauseTracker();
 			RestartBall();
 
 	}
@@ -171,6 +170,7 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 	else if (other->entity && other->entity->GetColliderType() == ColliderType::VOID)
 	{
 		restartBallFlag = true;
+		scoreTracker->PauseTracker();
 		cout << "VoidCollision START" << endl;
 
 	}
@@ -190,17 +190,17 @@ void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) {
 	if (other->entity && other->entity->GetColliderType() == ColliderType::LAUNCHER)
 	{
 		launcher->OnBallCollision(false); //ballCollision launcher false
-		if (scoreTracker->score > 0) {
-			scoreTracker->ResumeTracker();
-		}
-		else {
-			scoreTracker->StartScoreTracker();
-		}
+		
+		
 
 	}
 	else if (other->entity && other->entity->GetColliderType() == ColliderType::BUMPER)
 	{
-		scoreTracker->score += 50;
+		if (scoreTracker->paused) {
+			scoreTracker->paused = false;
+		}
+		scoreTracker->BumperHit();
+
 		cout << "BumperCollision END" << endl;
 
 	}
