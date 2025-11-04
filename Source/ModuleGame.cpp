@@ -29,7 +29,7 @@ bool ModuleGame::Start()
 	// Load intro and end textures
 	introTexture = LoadTexture("Assets/Textures/initialScreen.png");
 	endTexture = LoadTexture("Assets/Textures/endScreen.png");
-	
+
 	// Load Main Sounds
 	start = LoadSound("Assets/Sounds/start.wav");
 	gameOver = LoadSound("Assets/Sounds/gameOver.wav");;
@@ -166,18 +166,20 @@ update_status ModuleGame::Update()
 			}
 			if (allTouched)
 			{
-				currentBalls--; //adds one more ball to play
+				currentBalls -= 1; //adds one more ball to play
 
 				//reset special bumpers touched to false
-				for (Bumper* b : currentMap->GetBumpers())
+				for (Bumper* b : currentMap->GetSpecialBumpers())
 				{
 					b->HasBeenTouched(false);
 				}
+
+				allTouched = false;
 			}
 
 			//change bounciness of bumpers
-			if (IsKeyPressed(KEY_F5)) 
-			{ 
+			if (IsKeyPressed(KEY_F5))
+			{
 				fixtureChanged = !fixtureChanged;
 
 				if (!fixtureChanged) { //normal restitution
