@@ -72,6 +72,7 @@ public:
 	PhysBody* CreateBall(int x, int y, int radius, b2BodyType type);
 
 	void DestroyPhysBody(PhysBody* pbody);
+	//PhysBody* GetBodyAtMouse();
 
 	b2World* GetWorld() const { return world; }  // Devuelve el puntero al mundo físico
 
@@ -82,6 +83,11 @@ private:
 
 	b2Vec2 gravity = { 0,9.81f };
 	b2Vec2 alternativeGravity = { 0,1.62f };
+
+	b2MouseJoint* mouseJoint = nullptr;
+	b2Body* groundBody = nullptr; // cuerpo estático para anclar el mouse joint
+	//b2Body* selectedBody = nullptr;
+	bool mouseJointActivated = false;
 
 	b2World* world = nullptr;
 	bool debug;

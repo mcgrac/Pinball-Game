@@ -300,15 +300,15 @@ void Level1::Update() {
 			cout << "Launcher NULLPTR" << endl;
 	}
 
-	//for (Flipper* f : flippers) {
-	//	if (f != nullptr)
-	//	{
-	//		f->Update();
-	//		//cout << "Flipper NO NULLPTR" << endl;
-	//	}
-	//	else
-	//		cout << "Flipper NULLPTR" << endl;
-	//}
+	for (Flipper* f : flippers) {
+		if (f != nullptr)
+		{
+			f->Update();
+			//cout << "Flipper NO NULLPTR" << endl;
+		}
+		else
+			cout << "Flipper NULLPTR" << endl;
+	}
 }
 
 

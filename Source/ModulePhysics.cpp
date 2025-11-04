@@ -86,6 +86,9 @@ bool ModulePhysics::Start()
 
 	world = new b2World(b2Vec2(gravity));
 
+	b2BodyDef bd;
+	groundBody = world->CreateBody(&bd);
+
 	world->SetContactListener(this);
 
 	return true;
@@ -94,10 +97,6 @@ bool ModulePhysics::Start()
 update_status ModulePhysics::PreUpdate()
 {
 	world->Step(1.0f / 60.0f, 6, 2);
-
-	//if (IsKeyPressed(KEY_F1)) {
-	//	showColliders = !showColliders;
-	//}
 
 	return UPDATE_CONTINUE;
 }
@@ -321,11 +320,14 @@ void ModulePhysics::DestroyPhysBody(PhysBody* pbody)
 	delete pbody;
 }
 
+
 update_status ModulePhysics::PostUpdate()
 {
 	if (IsKeyPressed(KEY_F1))
 	{
 		debug = !debug;
+
+		mouseJointActivated = !mouseJointActivated;
 	}
 
 	if (IsKeyPressed(KEY_F2)) {
@@ -333,6 +335,43 @@ update_status ModulePhysics::PostUpdate()
 			world->SetGravity(alternativeGravity);
 		else
 			world->SetGravity(gravity);
+	}
+
+	if (mouseJointActivated)
+	{
+		//Vector2 mouse = GetMousePosition();
+		//b2Vec2 mouseWorld = { PIXEL_TO_METERS(mouse.x), PIXEL_TO_METERS(mouse.y) };
+
+		//// CLICK para crear MouseJoint
+		//if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		//{
+		//	b2MouseJointDef mj;
+		//	mj.bodyA = groundBody;
+		//	//mj.bodyB = launcher->GetBody()->GetB2Body();  // LAUNCHER DIRECTO
+		//	mj.target = mouseWorld;
+		//	mj.maxForce = 1000.0f * mj.bodyB->GetMass();
+		//	mj.stiffness = 100.0f;
+		//	mj.damping = 5.0f;
+
+		//	mouseJoint = (b2MouseJoint*)world->CreateJoint(&mj);
+
+		//	//launcher->Press(); // Empieza a cargar
+		//}
+
+		//// Si existe, actualiza la posición
+		//if (mouseJoint)
+		//{
+		//	mouseJoint->SetTarget(mouseWorld);
+
+		//	// Al soltar el click -> destruir joint
+		//	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+		//	{
+		//		world->DestroyJoint(mouseJoint);
+		//		mouseJoint = nullptr;
+
+		//		//launcher->Release(); // Suelta y dispara la bola
+		//	}
+		//}
 	}
 
 	if (!debug)

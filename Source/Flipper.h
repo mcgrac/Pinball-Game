@@ -17,9 +17,12 @@ public:
 	inline bool IsLeft() { return isLeft; }
 
 private:
-	b2RevoluteJoint* joint;
-	bool isLeft;
-	Vector2 centroidPixels;
-	Texture2D texture;
-	int* points;
+
+	b2RevoluteJoint* joint = nullptr;
+	bool isLeft = false;
+	Texture2D texture{};
+
+	int* points = nullptr;
+	Vector2 pivotLocalPx{ 0,0 };
+	Vector2 texOriginPx{ 0,0 };
 };
