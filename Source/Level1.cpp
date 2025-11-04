@@ -231,16 +231,18 @@ void Level1::Start()
 
 	//flippers creation
 	int leftFlipperCords[16] = {
-		-27, 24,
-		-1, 49,
-		-2, 54,
-		-7, 57,
-		-63, 31,
-		-68, 21,
-		-53, 2,
-		-43, 5
+			-27, 24,
+			-1, 49,
+			-2, 54,
+			-7, 57,
+			-63, 31,
+			-68, 21,
+			-53, 2,
+			-43, 5
 	};
-	flippers.push_back(new Flipper(physics, 275, 835, true, listener, leftFlipper, b2_kinematicBody, ColliderType::FLIPPER, leftFlipperCords));
+
+	
+
 	int rightFlipperCords[16] = {
 		27, 24,
 		1, 49,
@@ -251,7 +253,10 @@ void Level1::Start()
 		53, 2,
 		43, 5
 	};
-	flippers.push_back(new Flipper(physics, 338, 835, false, listener, rightFlipper, b2_kinematicBody, ColliderType::FLIPPER, rightFlipperCords));
+	flippers.push_back(new Flipper(physics, 275, 835, true, listener, leftFlipper, b2_dynamicBody, ColliderType::FLIPPER, leftFlipperCords));
+	flippers.push_back(new Flipper(physics, 338, 835, false, listener, rightFlipper, b2_dynamicBody, ColliderType::FLIPPER, rightFlipperCords));
+
+
 
 	//launcher creation
 	launchers.push_back(new Launcher(physics, ball, 550, 900, 50, 20, listener, launcherText, ColliderType::LAUNCHER));

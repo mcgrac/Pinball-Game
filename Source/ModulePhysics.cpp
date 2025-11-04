@@ -177,7 +177,7 @@ PhysBody* ModulePhysics::CreateBall(int x, int y, int radius, b2BodyType type)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateChain(int x, int y, const int* points, int size, b2BodyType type){
+PhysBody* ModulePhysics::CreateChain(int x, int y, const int* points, int size, b2BodyType type) {
 
 	PhysBody* pbody = new PhysBody();
 

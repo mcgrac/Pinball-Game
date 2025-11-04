@@ -2,14 +2,14 @@
 
 
 Flipper::Flipper(ModulePhysics* physics, int _x, int _y, bool _isLeft, Module* _listener, Texture2D _texture, b2BodyType _type, ColliderType _collType, int* _points)
-	: PhysicEntity(physics->CreatePolygon(_x, _y, _points, 16, b2_dynamicBody), _listener, _collType), texture(_texture)
+    : PhysicEntity(physics->CreatePolygon(_x, _y, _points, 16, b2_dynamicBody), _listener, _collType), texture(_texture)
 {
-	this->isLeft = _isLeft;
-	body->entity = this;
+    this->isLeft = _isLeft;
+    body->entity = this;
     this->points = _points;
     if (isLeft) { texture = LoadTexture("Assets/Textures/leftFlipper.png"); }
-    else{ texture = LoadTexture("Assets/Textures/rightFlipper.png"); }
-   
+    else { texture = LoadTexture("Assets/Textures/rightFlipper.png"); }
+
     float best1 = isLeft ? -1e9f : 1e9f;  int i1 = -1;
     float best2 = isLeft ? -1e9f : 1e9f;  int i2 = -1;
 
