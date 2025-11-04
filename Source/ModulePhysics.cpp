@@ -413,6 +413,20 @@ update_status ModulePhysics::PostUpdate()
 
 
 		}
+		static int fpsOptions[] = { 30, 60, 120 };
+		static int currentFpsIndex = 1; 
+		if (IsKeyPressed(KEY_F3))
+		{
+			currentFpsIndex = (currentFpsIndex + 1) % 3;
+			int newFps = fpsOptions[currentFpsIndex];
+			SetTargetFPS(newFps);
+			std::cout << "FPS changed to: " << newFps << std::endl;
+		}
+
+		if (!debug)
+		{
+			return UPDATE_CONTINUE;
+		}
 	}
 
 

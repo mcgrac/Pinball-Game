@@ -253,8 +253,8 @@ void Level1::Start()
 		53, 2,
 		43, 5
 	};
-	flippers.push_back(new Flipper(physics, 275, 835, true, listener, leftFlipper, b2_dynamicBody, ColliderType::FLIPPER, leftFlipperCords));
-	flippers.push_back(new Flipper(physics, 338, 835, false, listener, rightFlipper, b2_dynamicBody, ColliderType::FLIPPER, rightFlipperCords));
+	flippers.push_back(new Flipper(physics, 210, 855, true, listener, leftFlipper, b2_kinematicBody, ColliderType::FLIPPER, leftFlipperCords));
+	flippers.push_back(new Flipper(physics, 395, 855, false, listener, rightFlipper, b2_kinematicBody, ColliderType::FLIPPER, rightFlipperCords));
 
 
 

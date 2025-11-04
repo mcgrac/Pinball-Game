@@ -22,6 +22,8 @@ private:
     Texture2D texture{};
 
     int* points = nullptr;
-    Vector2 pivotLocalPx{ 0,0 };
-    Vector2 texOriginPx{ 0,0 };
+    Vector2 pivotLocalPx{ 0.5,0.5 };
+    Vector2 pivotLocalPy{ 0.5,0.5 };
+    Vector2 texOriginPx{ 0.5,0.5 };
+    Vector2 texOriginPy{ 0.5,0.5 };
 };

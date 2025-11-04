@@ -67,9 +67,16 @@ Flipper::Flipper(ModulePhysics* physics, int _x, int _y, bool _isLeft, Module* _
     jointDef.bodyA = pivot;
     jointDef.bodyB = b;
 
-    jointDef.localAnchorA.Set(0.0f, 0.0f);
-    jointDef.localAnchorB.Set(isLeft ? -0.30f : 0.30f, 0.0f);
+    b2Vec2 localAnchorB;
+    float verticalOffset = PIXEL_TO_METERS(texture.height * 0.15f); // ~center vertically
 
+    if (isLeft)
+        localAnchorB = b2Vec2(-PIXEL_TO_METERS(texture.width * 0.95f), verticalOffset);
+    else
+        localAnchorB = b2Vec2(PIXEL_TO_METERS(texture.width * 0.95f), verticalOffset);
+
+    jointDef.localAnchorA.Set(0.1, -0.1);
+    jointDef.localAnchorB = localAnchorB;
     jointDef.collideConnected = false;
     jointDef.enableLimit = true;
 
@@ -115,4 +122,8 @@ void Flipper::Update()
         origin = { texture.width * 0.0f, texture.height * 0.0f };
 
     DrawTexturePro(texture, src, dest, origin, angle, WHITE);
+    b2Vec2 pivotWorld = joint->GetAnchorA(); // the actual world coordinates of the joint anchor
+    Vector2 pivotPixel = { METERS_TO_PIXELS(pivotWorld.x), METERS_TO_PIXELS(pivotWorld.y) };
+
+    DrawCircleV(pivotPixel, 5, RED);
 }
