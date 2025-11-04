@@ -123,16 +123,6 @@ update_status ModuleGame::Update()
 	}
 	case GameState::PLAYING:
 	{
-		//For testing
-		//if (IsKeyPressed(KEY_E)) {
-
-		//	if (scoreTracker->score > highScore) {
-		//		highScore = scoreTracker->score;
-		//	}
-
-		//	state = GameState::GAMEOVER;
-		//	StopSound(music);
-		//}
 
 		if (currentBalls <= maxBalls)
 		{
@@ -275,7 +265,6 @@ void ModuleGame::ManageScore() {
 
 void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 
-	//std::cout << "On Collision" << std::endl;
 	// Detectar quién es la bola y quién es el otro
 	PhysBody* ballBody = nullptr;
 	PhysBody* other = nullptr;
@@ -286,13 +275,12 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 
 	if (other->entity && other->entity->GetColliderType() == ColliderType::LAUNCHER)
 	{
-		//launcher->OnBallCollision(true); //ball collision launcher true
 		ball->OnLauncherCollision(true);
-
 	}
 	else if (other->entity && other->entity->GetColliderType() == ColliderType::BUMPER)
 	{
 		cout << "BumperCollision START" << endl;
+
 		// Intentamos castear a bumper
 		Bumper* bumper = dynamic_cast<Bumper*>(other->entity);
 		if (bumper != nullptr)
@@ -303,10 +291,6 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 					bumper->HasBeenTouched(true);
 					cout << "SPECIAL BUMPER ACTIVATED!" << endl;
 				}
-			}
-			else
-			{
-				//no special bumper touched
 			}
 		}
 
@@ -334,7 +318,6 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 }
 
 void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) {
-	//std::cout << "On Collision End" << std::endl;
 
 	// Detectar quién es la bola y quién es el otro
 	PhysBody* ballBody = nullptr;
@@ -346,7 +329,6 @@ void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) {
 
 	if (other->entity && other->entity->GetColliderType() == ColliderType::LAUNCHER)
 	{
-		//launcher->OnBallCollision(false); //ballCollision launcher false
 		ball->OnLauncherCollision(false);
 	}
 	else if (other->entity && other->entity->GetColliderType() == ColliderType::BUMPER)

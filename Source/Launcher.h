@@ -8,9 +8,9 @@ public:
 
 	~Launcher();
 
-	void Update(float dt);          // mueve físicamente el launcher
-	void Press(float dt);           // llamada cuando se mantiene pulsado ↓
-	void Release();         // llamada cuando se suelta ↓
+	void Update(float dt);          
+	void Press(float dt);           
+	void Release();         
 	inline bool OnBallCollision(bool res) { return onBallCollision = res; }
 
 	int RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal) override

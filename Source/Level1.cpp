@@ -306,8 +306,6 @@ void Level1::CleanUp()
 
 	delete sensorDown;
 	sensorDown = nullptr;
-
-	std::cout << "Flipper count: " << flippers.size() << std::endl;
 }
 
 void Level1::Update(float dt) {
@@ -341,7 +339,6 @@ void Level1::Update(float dt) {
 		if (f != nullptr)
 		{
 			f->Update();
-			//cout << "Flipper NO NULLPTR" << endl;
 		}
 		else
 			cout << "Flipper NULLPTR" << endl;
