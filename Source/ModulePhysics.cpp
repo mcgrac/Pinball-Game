@@ -2,7 +2,8 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModulePhysics.h"
-
+#include "Launcher.h"
+#include "Ball.h"
 #include"iostream"
 
 #include "p2Point.h"
@@ -73,6 +74,7 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	debug = true;
+
 }
 
 // Destructor
@@ -86,6 +88,9 @@ bool ModulePhysics::Start()
 
 	world = new b2World(b2Vec2(gravity));
 
+	b2BodyDef bd;
+	mouseGround = world->CreateBody(&bd);
+
 	world->SetContactListener(this);
 
 	return true;
@@ -96,7 +101,6 @@ update_status ModulePhysics::PreUpdate()
 	static double accumulator = 0.0;
 	const double fixedDeltaTime = 1.0 / 60.0;
 	double frameTime = GetFrameTime();
-
 	accumulator += frameTime;
 
 	while (accumulator >= fixedDeltaTime)
@@ -105,9 +109,91 @@ update_status ModulePhysics::PreUpdate()
 		accumulator -= fixedDeltaTime;
 	}
 
-	//if (IsKeyPressed(KEY_F1)) {
-	//	showColliders = !showColliders;
-	//}
+	if (useMouseLauncher)
+	{
+		static b2Body* grabbedLauncher = nullptr;
+		static float grabStartY = 0.0f;
+		static Launcher* grabbedLauncherEntity = nullptr;
+
+		b2Vec2 mouseWorld = b2Vec2(PIXEL_TO_METERS(GetMouseX()), PIXEL_TO_METERS(GetMouseY()));
+
+
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			b2AABB aabb;
+			aabb.lowerBound = mouseWorld - b2Vec2(0.001f, 0.001f);
+			aabb.upperBound = mouseWorld + b2Vec2(0.001f, 0.001f);
+
+			struct QueryCallback : public b2QueryCallback
+			{
+				b2Vec2 point;
+				b2Body* launcherBody = nullptr;
+				QueryCallback(const b2Vec2& p) : point(p) {}
+				bool ReportFixture(b2Fixture* fixture) override
+				{
+					b2Body* body = fixture->GetBody();
+					PhysBody* phys = reinterpret_cast<PhysBody*>(body->GetUserData().pointer);
+					if (phys && phys->ctype == ColliderType::LAUNCHER && fixture->TestPoint(point))
+					{
+						launcherBody = body;
+						return false;
+					}
+					return true;
+				}
+			};
+
+			QueryCallback cb(mouseWorld);
+			world->QueryAABB(&cb, aabb);
+
+			if (cb.launcherBody)
+			{
+				grabbedLauncher = cb.launcherBody;
+				grabStartY = grabbedLauncher->GetPosition().y;
+
+				PhysBody* phys = reinterpret_cast<PhysBody*>(grabbedLauncher->GetUserData().pointer);
+				grabbedLauncherEntity = phys ? dynamic_cast<Launcher*>(phys->entity) : nullptr;
+			}
+		}
+
+
+		if (grabbedLauncher && IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+		{
+			float maxPullMeters = PIXEL_TO_METERS(100.0f);
+			float mouseY = mouseWorld.y;
+
+
+			if (mouseY > grabStartY)
+			{
+				float clampedY = mouseY;
+				if (mouseY - grabStartY > maxPullMeters)
+					clampedY = grabStartY + maxPullMeters;
+
+
+				b2Vec2 currentPos = grabbedLauncher->GetPosition();
+				grabbedLauncher->SetTransform(b2Vec2(currentPos.x, clampedY), grabbedLauncher->GetAngle());
+
+
+				if (grabbedLauncherEntity)
+					grabbedLauncherEntity->SetIsCharging(true);
+			}
+		}
+
+
+		if (grabbedLauncher && IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+		{
+			if (grabbedLauncherEntity)
+			{
+				grabbedLauncherEntity->SetIsCharging(false);
+				grabbedLauncherEntity->SetIsCharging(true);
+
+
+				grabbedLauncherEntity->Release();
+			}
+
+			grabbedLauncher = nullptr;
+			grabbedLauncherEntity = nullptr;
+		}
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -333,12 +419,53 @@ void ModulePhysics::DestroyPhysBody(PhysBody* pbody)
 
 update_status ModulePhysics::PostUpdate()
 {
+	//if (IsKeyPressed(KEY_F1))
+	//{
+	//	debug = !debug;
+	//	useMouseLauncher = !useMouseLauncher;
+
+	//	//if there is a mouseJoint when clicking, delete it
+	//	if (mouseJoint)
+	//	{
+	//		world->DestroyJoint(mouseJoint);
+	//		mouseJoint = nullptr;
+	//	}
+	//}
+
 	if (IsKeyPressed(KEY_F1))
 	{
 		debug = !debug;
+		//useMouseLauncher = !useMouseLauncher;
+
+		std::cout << "Launcher control: " << (useMouseLauncher ? "Mouse" : "Keyboard") << std::endl;
+
+		//if (debug && mouseJoint == nullptr)
+		//{
+		//	std::cout << "Debug ON: enabling mouse joint support\n";
+		//}
+		//else
+		//{
+		//	std::cout << "Debug OFF: disabling mouse joint\n";
+		//	if (mouseJoint)
+		//	{
+		//		world->DestroyJoint(mouseJoint);
+		//		mouseJoint = nullptr;
+		//	}
+		//}
 	}
 
-	if (IsKeyPressed(KEY_F2)) {
+	if (IsKeyPressed(KEY_F2))
+	{
+		useMouseLauncher = !useMouseLauncher;
+		//if (!useMouseLauncher) {
+		//	world->DestroyJoint(mouseJoint);
+		//	mouseJoint = nullptr;
+		//}
+		std::cout << "Launcher control: " << (useMouseLauncher ? "Mouse" : "Keyboard") << std::endl;
+	}
+
+
+	if (IsKeyPressed(KEY_F3)) {
 		if (world->GetGravity() == gravity)
 			world->SetGravity(alternativeGravity);
 		else
@@ -347,7 +474,7 @@ update_status ModulePhysics::PostUpdate()
 
 	static int fpsOptions[] = { 30, 60 };
 	static int currentFpsIndex = 1;
-	if (IsKeyPressed(KEY_F3))
+	if (IsKeyPressed(KEY_F4))
 	{
 		currentFpsIndex = (currentFpsIndex + 1) % 2;
 		int newFps = fpsOptions[currentFpsIndex];

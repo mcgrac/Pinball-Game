@@ -42,7 +42,7 @@ public:
 
 public:
 	Module* listener = nullptr;
-	//ColliderType ctype = ColliderType::UNKNOWN;
+	ColliderType ctype = ColliderType::UNKNOWN; //antes comentado
 	int width, height;
 	b2Body* body;
 	PhysicEntity* entity = nullptr;
@@ -78,6 +78,9 @@ public:
 	void BeginContact(b2Contact* contact) override;
 	void EndContact(b2Contact* contact) override;
 
+	inline bool GetDebug() { return debug; }
+	inline void SetDebug(bool res) { debug = res; }
+
 private:
 
 	b2Vec2 gravity = { 0,9.81f };
@@ -86,4 +89,7 @@ private:
 	b2World* world = nullptr;
 	bool debug;
 
+	b2MouseJoint* mouseJoint = nullptr;
+	b2Body* mouseGround = nullptr;
+	bool useMouseLauncher = false;
 };

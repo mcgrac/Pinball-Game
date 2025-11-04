@@ -84,17 +84,19 @@ Flipper::Flipper(ModulePhysics* physics, int _x, int _y, bool _isLeft, Module* _
     jointDef.enableLimit = true;
 
 
-    jointDef.lowerAngle = -25.0f * DEGTORAD;
-    jointDef.upperAngle = 25.0f * DEGTORAD;
+    jointDef.lowerAngle = -45.0f * DEGTORAD;
+    jointDef.upperAngle = 10.0f * DEGTORAD;
 
     jointDef.enableMotor = true;
-    jointDef.maxMotorTorque = 600.0f;
-    jointDef.motorSpeed = 100.0f;
+    jointDef.maxMotorTorque = 700.0f;
+    jointDef.motorSpeed = 200.0f;
 
     joint = (b2RevoluteJoint*)physics->GetWorld()->CreateJoint(&jointDef);
 }
 
-Flipper::~Flipper() {}
+Flipper::~Flipper() {
+    UnloadTexture(texture);
+}
 
 void Flipper::Press()
 {

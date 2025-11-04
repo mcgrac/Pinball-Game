@@ -5,6 +5,7 @@
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
 
+
 #include"iostream"
 
 
@@ -23,6 +24,7 @@ bool ModuleGame::Start()
 
 	bool ret = true;
 	state = GameState::INTRO;
+	scoreTracker = new ScoreTracker(0, 0.5, 1);
 
 	// Load intro and end textures
 	introTexture = LoadTexture("Assets/Textures/initialScreen.png");
@@ -47,6 +49,8 @@ bool ModuleGame::Start()
 
 void ModuleGame::StartGame()
 {
+	scoreTracker = new ScoreTracker(0, 0.5, 1);
+
 	// Reset counters
 	currentBalls = 0;
 	restartBallFlag = false;
@@ -71,6 +75,9 @@ void ModuleGame::ResetGame()
 
 	delete ball;
 	ball = nullptr;
+
+	delete scoreTracker;
+	scoreTracker = nullptr;
 
 }
 
@@ -121,10 +128,9 @@ update_status ModuleGame::Update()
 			state = GameState::GAMEOVER;
 			StopSound(music);
 		}
+
 		if (currentBalls <= maxBalls)
 		{
-			//Gameplay Controls
-
 			for (Launcher* l : currentMap->GetLaunchers()) {
 				if (IsKeyDown(KEY_DOWN))
 				{
@@ -133,7 +139,7 @@ update_status ModuleGame::Update()
 
 				if (IsKeyReleased(KEY_DOWN))
 				{
-					l->Release(dt); // suelta la bola
+					l->Release(); // suelta la bola
 				}
 			}
 
@@ -175,7 +181,7 @@ update_status ModuleGame::Update()
 			}
 
 			//change bounciness of bumpers
-			if (IsKeyPressed(KEY_F4)) 
+			if (IsKeyPressed(KEY_F5)) 
 			{ 
 				fixtureChanged = !fixtureChanged;
 
@@ -203,6 +209,11 @@ update_status ModuleGame::Update()
 				}
 			}
 
+			//manage the score and Score meter
+			ManageScore();
+			//Gameplay Controls
+			DrawText(TextFormat("Number of used balls: %d", currentBalls), 300, 60, 20, RED);
+
 			if (restartBallFlag)
 				RestartBall();
 		}
@@ -216,6 +227,8 @@ update_status ModuleGame::Update()
 	}
 	case GameState::GAMEOVER:
 	{
+		App->physics->SetDebug(false);
+
 		DrawTexture(endTexture, 0, 0, WHITE);
 
 		if (IsKeyPressed(KEY_SPACE))
@@ -239,6 +252,11 @@ void ModuleGame::RestartBall() {
 	ball->GetBody()->SetPosition(550, 800);
 	currentBalls++;
 	restartBallFlag = false;
+}
+
+void ModuleGame::ManageScore() {
+	scoreTracker->UpdateScore();
+	scoreTracker->PrintScore(highScore);
 }
 
 void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
@@ -284,6 +302,7 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 	{
 		PlaySound(voids);
 		restartBallFlag = true;
+		scoreTracker->PauseTracker();
 		cout << "VoidCollision START" << endl;
 
 	}
@@ -318,6 +337,10 @@ void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) {
 	}
 	else if (other->entity && other->entity->GetColliderType() == ColliderType::BUMPER)
 	{
+		if (scoreTracker->paused) {
+			scoreTracker->paused = false;
+		}
+		scoreTracker->BumperHit();
 		cout << "BumperCollision END" << endl;
 
 	}

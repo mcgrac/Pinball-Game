@@ -52,6 +52,9 @@
     <ClCompile Include="Source\ModuleFonts.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ScoreTracker.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source/p2Point.h">
@@ -106,6 +109,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Source\ModuleFonts.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScoreTracker.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -10,9 +10,15 @@ Launcher::Launcher(ModulePhysics* physics, Ball* ball, int _x, int _y, int _widt
     this->ball = ball;
     body->entity = this;
     initialY = _y;
+
+    body->GetB2Body()->SetGravityScale(0.0f);
+    body->ctype = ColliderType::LAUNCHER;
+
+    texture = LoadTexture("Assets/Textures/launcher.png");
 }
 Launcher::~Launcher()
 {
+    UnloadTexture(texture);
 }
 
 void Launcher::Press(float dt)
@@ -24,7 +30,7 @@ void Launcher::Press(float dt)
     body->GetB2Body()->SetLinearVelocity(b2Vec2(0, speedDown));
 }
 
-void Launcher::Release(float dt)
+void Launcher::Release()
 {
     // convertimos la carga en un impulso inicial
     float launchPower = charge * .5f; // multiplica para ajustar fuerza
@@ -43,11 +49,22 @@ void Launcher::Release(float dt)
 
 void Launcher::Update(float dt)
 {
-    float y = body->GetPositionY();
+    //Draw
+    int x, y;
+    body->GetPhysicPosition(x, y);
+    Vector2 position{ (float)x, (float)y };
+    float scale = 1.0f;
+    Rectangle source = { 0.0f, 0.0f, (float)texture.width, (float)texture.height };
+    Rectangle dest = { position.x, position.y, (float)texture.width * scale, (float)texture.height * scale };
+    Vector2 origin = { (float)texture.width / 2.0f, (float)texture.height / 2.0f };
+    float rotation = body->GetRotation() * RAD2DEG;
 
+    DrawTexturePro(texture, source, dest, origin, rotation, WHITE);
+
+    float y_phys = body->GetPositionY();
     if (isCharging)
     {
-        if (y < initialY + maxOffset)
+        if (y_phys < initialY + maxOffset)
         {
             body->GetB2Body()->SetLinearVelocity(b2Vec2(0, speedDown));
             charge += chargeRate;
@@ -60,7 +77,7 @@ void Launcher::Update(float dt)
     }
     else if (returning)
     {
-        if (y > initialY)
+        if (y_phys > initialY)
         {
             float upSpeed = -speedUp * (charge / maxCharge); // negativo porque sube
 

@@ -201,26 +201,26 @@ void Level1::Start()
 	walls.push_back(new PhysicEntity(physics->CreateChain(0, 0, backgroundInternal, 118, b2_staticBody), listener, ColliderType::WALL));
 
 	int leftTriangle[16] = {
-	224, 831,
-	235, 830,
-	242, 819,
-	204, 721,
-	195, 714,
-	185, 719,
-	146, 768,
-	147, 778
+	217, 815,
+	229, 813,
+	233, 803,
+	195, 721,
+	187, 717,
+	179, 719,
+	149, 762,
+	148, 774
 	};
 	walls.push_back(new PhysicEntity(physics->CreatePolygon(0, 0, leftTriangle, 16, b2_staticBody), listener, ColliderType::WALL));
 
 	int rightTriangle[16] = {
-	386, 831,
-	375, 827,
-	372, 815,
-	410, 719,
-	418, 713,
-	427, 716,
-	469, 766,
-	468, 778
+	397, 813,
+	387, 810,
+	384, 800,
+	423, 720,
+	430, 715,
+	437, 717,
+	469, 763,
+	469, 772
 	};
 	walls.push_back(new PhysicEntity(physics->CreatePolygon(0, 0, rightTriangle, 16, b2_staticBody), listener, ColliderType::WALL));
 
@@ -259,8 +259,8 @@ void Level1::Start()
 		43, 5
 	};
 
-	flippers.push_back(new Flipper(physics, 250, 830, true, listener, leftFlipper, b2_dynamicBody, ColliderType::FLIPPER, leftFlipperCords));
-	flippers.push_back(new Flipper(physics, 395, 855, false, listener, rightFlipper, b2_dynamicBody, ColliderType::FLIPPER, rightFlipperCords));
+	flippers.push_back(new Flipper(physics, 222, 820, true, listener, leftFlipper, b2_dynamicBody, ColliderType::FLIPPER, leftFlipperCords));
+	flippers.push_back(new Flipper(physics, 387, 820, false, listener, rightFlipper, b2_dynamicBody, ColliderType::FLIPPER, rightFlipperCords));
 
 
 

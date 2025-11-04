@@ -11,7 +11,7 @@
 #include"Flipper.h"
 #include "raylib.h"
 #include <vector>
-
+#include "ScoreTracker.h"
 #include "Map.h"
 #include"Level1.h"
 
@@ -37,6 +37,7 @@ public:
 	void RestartBall();
 	void StartGame();
 	void ResetGame();
+	void ManageScore();
 
 	ModulePhysics* physics = nullptr;
 	//PhysBody* ball = nullptr;
@@ -75,4 +76,7 @@ private:
 
 	Texture2D introTexture;
 	Texture2D endTexture;
+
+	ScoreTracker* scoreTracker; //object that keeps track of the player's score
+	int highScore;
 };

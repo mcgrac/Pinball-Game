@@ -8,18 +8,9 @@ public:
 
 	~Launcher();
 
-	//void Update() override
-	//{
-	//	/*int x, y;
-	//	body->GetPhysicPosition(x, y);
-	//	DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width, (float)texture.height },
-	//		Rectangle{ (float)x, (float)y, (float)texture.width, (float)texture.height },
-	//		Vector2{ (float)texture.width / 2.0f, (float)texture.height / 2.0f }, body->GetRotation() * RAD2DEG, WHITE);*/
-	//}
-
 	void Update(float dt);          // mueve físicamente el launcher
 	void Press(float dt);           // llamada cuando se mantiene pulsado ↓
-	void Release(float dt);         // llamada cuando se suelta ↓
+	void Release();         // llamada cuando se suelta ↓
 	inline bool OnBallCollision(bool res) { return onBallCollision = res; }
 
 	int RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal) override
@@ -29,19 +20,19 @@ public:
 
 	bool ballInside = false;
 
+	inline bool GetIsCharging() { return isCharging; }
+	inline bool GetReturning() { return returning; }
+	
+	inline void SetIsCharging(bool res) { isCharging = res; }
+	inline void SetIsReturning(bool res) { returning = res; }
+
 private:
 	Texture2D texture;
 
 	Ball* ball = nullptr;
 
-	//bool isPressed = false;
-	//float initialY = 0.0f;
-	//float maxOffset = 100.0f;  // cuánto puede bajar
-
 	float pressStartTime = 0.0f; // tiempo en que se empezó a presionar
 	float maxPower = 25.0f;      // fuerza máxima
-	//float chargeSpeed = 10.0f;   // velocidad de carga del impulso
-
 
 
 	bool isCharging = false;

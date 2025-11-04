@@ -11,7 +11,6 @@ Ball::Ball(ModulePhysics* physics, int _x, int _y, Module* _listener, b2BodyType
 
 Ball::~Ball() {
 	UnloadTexture(texture);
-	
 }
 
 void Ball::Update(){
