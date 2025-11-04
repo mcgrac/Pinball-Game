@@ -1,4 +1,9 @@
-﻿  ModuleGame.cpp
+﻿  Application.cpp
+  ModuleFonts.cpp
+  ModuleGame.cpp
+\Source\ModuleFonts.cpp(1,1): error C1083: No se puede abrir el archivo origen: 'Source\ModuleFonts.cpp': No such file or directory
+  (compilando archivo de origen "/Source/ModuleFonts.cpp")
+  
   ScoreTracker.cpp
+  Timer.cpp
   Generando código...
-  PhysicsGame.vcxproj -> C:\Users\34628\Desktop\PinballGit2\Pinball-Game\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe
