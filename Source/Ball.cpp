@@ -1,8 +1,8 @@
 #include"Ball.h"
 
-Ball::Ball(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture, b2BodyType _type, ColliderType _collType)
+Ball::Ball(ModulePhysics* physics, int _x, int _y, Module* _listener, b2BodyType _type, ColliderType _collType)
 	: PhysicEntity(physics->CreateBall(_x, _y, 15, _type), _listener, _collType)
-	, texture(_texture)
+	
 {
 	body->entity = this;
 
@@ -11,7 +11,6 @@ Ball::Ball(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D 
 
 Ball::~Ball() {
 	UnloadTexture(texture);
-
 }
 
 void Ball::Update(){

@@ -6,6 +6,7 @@
 #include "Bumper.h"
 #include "Flipper.h"
 #include "Launcher.h"
+#include "Ball.h"
 
 using namespace std;
 
@@ -15,17 +16,20 @@ public:
     virtual ~Map() {}
 
     virtual void Start() = 0;     // Construye el nivel
-    virtual void Update() = 0;      // Opcional (animaciones)
+    virtual void Update(float dt) = 0;      // Opcional (animaciones)
     virtual void CleanUp() = 0;   // Libera memoria
 
     inline virtual vector<Flipper*>& GetFlippers() { static std::vector<Flipper*> empty; return empty; }
     inline virtual vector<Launcher*>& GetLaunchers() { static std::vector<Launcher*> empty; return empty; }
+    inline virtual vector<Bumper*>& GetSpecialBumpers() { static std::vector<Bumper*> empty; return empty; }
+    inline virtual vector<Bumper*>& GetBumpers() { static std::vector<Bumper*> empty; return empty; }
 
 protected:
 
     // Cosas comunes que quieran los niveles:
     vector<PhysicEntity*> walls;
     vector<Bumper*> bumpers;
+    vector<Bumper*> specialBumpers;
     vector<Flipper*> flippers;
     vector<Launcher*> launchers;
 

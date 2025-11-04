@@ -9,16 +9,21 @@
 #include"Launcher.h"
 #include "Bumper.h"
 #include"Flipper.h"
-#include "ScoreTracker.h"
-
 #include "raylib.h"
 #include <vector>
-
+#include "ScoreTracker.h"
 #include "Map.h"
 #include"Level1.h"
 
 class PhysBody;
 class PhysicEntity;
+
+enum class GameState
+{
+	INTRO,
+	PLAYING,
+	GAMEOVER
+};
 
 class ModuleGame : public Module
 {
@@ -28,31 +33,19 @@ public:
 
 	bool Start();
 	update_status Update();
-	void ManageScore();
 	bool CleanUp();
 	void RestartBall();
+	void StartGame();
+	void ResetGame();
+	void ManageScore();
 
 	ModulePhysics* physics = nullptr;
 	//PhysBody* ball = nullptr;
 	PhysBody* launcherBase = nullptr;
 	PhysBody* launcherPlunger = nullptr;
 
-	bool launcherCharging = false;
-	float launcherPower = 0.0f;
-	const float maxLauncherPower = 8.0f; // potencia máxima
-
-	float launcherX = 1150.0f;
-	float launcherY = 600.0f;
-
-	ScoreTracker* scoreTracker; //object that keeps track of the player's score
-
-	Texture2D ballTexture;
-	Texture2D launcherTexture;
-	Texture2D leftFlipperTexture;
-	Texture2D rightFlipperTexture;
-
 	Ball* ball;
-	Launcher* launcher;
+	//Launcher* launcher;
 	//Flipper* leftFlipper;
 	//Flipper* rightFlipper;
 
@@ -61,12 +54,29 @@ public:
 
 	Map* currentMap = nullptr;
 
-public:
 	std::vector<PhysicEntity*> entities;
+
+	Sound start;
+	Sound gameOver;
+	Sound music;
+
+	Sound walls;
+	Sound bumpers;
+	Sound flippers;
+	Sound voids;
 
 private:
 	int maxBalls = 5;
 	int currentBalls = 0;
 
+	bool fixtureChanged = false;
+
 	bool restartBallFlag = false;
+	GameState state = GameState::INTRO;
+
+	Texture2D introTexture;
+	Texture2D endTexture;
+
+	ScoreTracker* scoreTracker; //object that keeps track of the player's score
+	int highScore = 0;
 };

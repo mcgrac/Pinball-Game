@@ -48,4 +48,4 @@
   b2_world_callbacks.cpp
   b2_rope.cpp
   Generating Code...
-  box2d.vcxproj -> C:\Users\marcv\Desktop\Pinball-Game-copy-main\Pinball-Game-copy-main\Build\box2d\Debug\Win32\box2d.lib
+  box2d.vcxproj -> C:\Users\marcv\Desktop\fisica2\Pinball-Game-main\Build\box2d\Debug\Win32\box2d.lib

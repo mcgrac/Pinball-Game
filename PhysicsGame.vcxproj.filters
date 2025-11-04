@@ -49,7 +49,10 @@
     <ClCompile Include="Source\Map.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Documents\GitHub\Pinball-Game\Source\ScoreTracker.cpp">
+    <ClCompile Include="Source\ModuleFonts.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ScoreTracker.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -105,7 +108,10 @@
     <ClInclude Include="Source\Map.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Documents\GitHub\Pinball-Game\Source\ScoreTracker.h">
+    <ClInclude Include="Source\ModuleFonts.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScoreTracker.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

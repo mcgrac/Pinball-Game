@@ -9,7 +9,11 @@ public:
 	ScoreTracker(int initialScore, double frequancy, int amount);
 	~ScoreTracker();
 	void UpdateScore();
-	void PrintScore();
+	void PrintScore(int highScore);
+	void PauseTracker();
+	void ResumeTracker();
+	void BumperHit();
+	bool paused = true;
 	int score;
 	Timer* timer;
 	double Frequency;
