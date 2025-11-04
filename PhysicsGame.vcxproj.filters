@@ -49,6 +49,12 @@
     <ClCompile Include="Source\Map.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Source\ModuleFonts.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+>>>>>>> e30fad6803b8a76164b31fa5542244c1f9c00051
     <ClCompile Include="Source\ScoreTracker.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -105,6 +111,12 @@
     <ClInclude Include="Source\Map.h">
       <Filter>Headers</Filter>
     </ClInclude>
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Source\ModuleFonts.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+>>>>>>> e30fad6803b8a76164b31fa5542244c1f9c00051
     <ClInclude Include="Source\ScoreTracker.h">
       <Filter>Headers</Filter>
     </ClInclude>

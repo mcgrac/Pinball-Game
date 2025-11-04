@@ -2,7 +2,11 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
+<<<<<<< HEAD
       <FullPath>C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe</FullPath>
+=======
+      <FullPath>C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe</FullPath>
+>>>>>>> e30fad6803b8a76164b31fa5542244c1f9c00051
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

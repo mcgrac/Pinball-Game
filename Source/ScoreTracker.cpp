@@ -20,6 +20,7 @@ void ScoreTracker::UpdateScore() {
 			lastUpdate = timer->ReadSec();
 		}
 	}
+<<<<<<< HEAD
 	if (score >= 2000 && firstMile==false) {
 		PlaySound(firstMilestone);
 		firstMile = true;
@@ -32,6 +33,8 @@ void ScoreTracker::UpdateScore() {
 		PlaySound(firstMilestone);
 		thirdMile = true;
 	}
+=======
+>>>>>>> e30fad6803b8a76164b31fa5542244c1f9c00051
 }
 void ScoreTracker::PrintScore(int highScore) {
 	DrawText(TextFormat("Score: %06i points", score), 300, 20, 20, RED);

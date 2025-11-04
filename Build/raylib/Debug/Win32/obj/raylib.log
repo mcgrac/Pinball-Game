@@ -1,1 +1,14 @@
+<<<<<<< HEAD
 ﻿  raylib.vcxproj -> C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Build\raylib\Debug\Win32\raylib.lib
+=======
+﻿  raudio.c
+  rcore.c
+  rmodels.c
+  rglfw.c
+  rshapes.c
+  rtext.c
+  rtextures.c
+  utils.c
+  Generating Code...
+  raylib.vcxproj -> C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Build\raylib\Debug\Win32\raylib.lib
+>>>>>>> e30fad6803b8a76164b31fa5542244c1f9c00051

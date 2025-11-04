@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  Application.cpp
   ModulePhysics.cpp
 C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Source\ModulePhysics.cpp(16,47): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
@@ -23,3 +24,7 @@ C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Source\Launcher.cpp(10
   Timer.cpp
   Generando código...
   PhysicsGame.vcxproj -> C:\Users\Bernat Pazos Ridao\Documents\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe
+=======
+﻿  Level1.cpp
+  PhysicsGame.vcxproj -> C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe
+>>>>>>> e30fad6803b8a76164b31fa5542244c1f9c00051

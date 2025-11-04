@@ -8,6 +8,7 @@ Flipper::Flipper(ModulePhysics* physics, int _x, int _y, bool _isLeft, Module* _
     isLeft = _isLeft;
     body->entity = this;
     points = _points;
+<<<<<<< HEAD
 
 
     texture = isLeft
@@ -51,18 +52,74 @@ Flipper::Flipper(ModulePhysics* physics, int _x, int _y, bool _isLeft, Module* _
     float u = (pivotLocalPx.x - minx) / 0.5;
     float v = (pivotLocalPx.y - miny) / 0.5;
     texOriginPx = { u * texture.width, v * texture.height };
+=======
+>>>>>>> e30fad6803b8a76164b31fa5542244c1f9c00051
 
+   
+    texture = isLeft
+        ? LoadTexture("Assets/Textures/leftFlipper.png")
+        : LoadTexture("Assets/Textures/rightFlipper.png");
 
+<<<<<<< HEAD
     b2Body* b = body->GetB2Body();
     b->SetGravityScale(1.0f);
 
 
+=======
+   
+    float best1 = isLeft ? -1e9f : 1e9f;  int i1 = -1;
+    float best2 = isLeft ? -1e9f : 1e9f;  int i2 = -1;
+
+    auto consider = [&](int idx, float x) {
+        if (isLeft) {
+            if (x > best1) { best2 = best1; i2 = i1; best1 = x; i1 = idx; }
+            else if (x > best2) { best2 = x; i2 = idx; }
+        }
+        else {
+            if (x < best1) { best2 = best1; i2 = i1; best1 = x; i1 = idx; }
+            else if (x < best2) { best2 = x; i2 = idx; }
+        }
+    };
+
+    for (int i = 0; i < 16; i += 2) {
+        consider(i, static_cast<float>(points[i]));
+    }
+
+   
+    pivotLocalPx.x = (points[i1] + points[i2]) * 0.5f;
+    pivotLocalPx.y = (points[i1 + 1] + points[i2 + 1]) * 0.5f;
+
+   
+    float minx = 1e9f, maxx = -1e9f, miny = 1e9f, maxy = -1e9f;
+    for (int i = 0; i < 16; i += 2) {
+        float x = static_cast<float>(points[i]);
+        float y = static_cast<float>(points[i + 1]);
+        if (x < minx) minx = x; if (x > maxx) maxx = x;
+        if (y < miny) miny = y; if (y > maxy) maxy = y;
+    }
+    float w = (maxx - minx); if (w < 1.0f) w = 1.0f;
+    float h = (maxy - miny); if (h < 1.0f) h = 1.0f;
+
+    float u = (pivotLocalPx.x - minx) /0.5;   
+    float v = (pivotLocalPx.y - miny) / 0.5;   
+    texOriginPx = { u * texture.width, v * texture.height };
+
+   
+    b2Body* b = body->GetB2Body();
+    b->SetGravityScale(1.0f);
+
+ 
+>>>>>>> e30fad6803b8a76164b31fa5542244c1f9c00051
     b2BodyDef pivotDef;
     pivotDef.type = b2_staticBody;
     pivotDef.position.Set(PIXEL_TO_METERS(_x), PIXEL_TO_METERS(_y));
     b2Body* pivot = physics->GetWorld()->CreateBody(&pivotDef);
 
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> e30fad6803b8a76164b31fa5542244c1f9c00051
     b2RevoluteJointDef jointDef;
     jointDef.bodyA = pivot;
     jointDef.bodyB = b;

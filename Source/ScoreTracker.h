@@ -19,6 +19,7 @@ public:
 	double Frequency;
 	int amount;
 	double lastUpdate;
+<<<<<<< HEAD
 
 	bool firstMile = false;
 	Sound firstMilestone = LoadSound("Assets/Sounds/points1.wav");
@@ -26,4 +27,6 @@ public:
 	Sound secondMilestone = LoadSound("Assets/Sounds/points2.wav");
 	bool thirdMile = false;
 	Sound thirdMilestone = LoadSound("Assets/Sounds/points3.wav");
+=======
+>>>>>>> e30fad6803b8a76164b31fa5542244c1f9c00051
 };

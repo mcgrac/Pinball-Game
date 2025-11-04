@@ -79,5 +79,8 @@ private:
 
 	ScoreTracker* scoreTracker; //object that keeps track of the player's score
 	int highScore = 0;
+<<<<<<< HEAD
 	int previousScore = 0;
+=======
+>>>>>>> e30fad6803b8a76164b31fa5542244c1f9c00051
 };
