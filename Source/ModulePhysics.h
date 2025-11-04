@@ -81,6 +81,8 @@ public:
 private:
 
 	b2Vec2 gravity = { 0,9.81f };
+	b2Vec2 alternativeGravity = { 0,1.62f };
+
 	b2World* world = nullptr;
 	bool debug;
 

@@ -33,7 +33,7 @@ void Launcher::Release()
     body->GetB2Body()->SetLinearVelocity(b2Vec2(0, -launchPower));
 
     // aplica impulso a la bola
-    if (onBallCollision) {
+    if (ball->GetTouchingLauncher()) {
         ball->GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0, -launchPower * 2), true);
     }
 
