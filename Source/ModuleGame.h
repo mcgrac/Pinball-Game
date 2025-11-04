@@ -45,6 +45,7 @@ public:
 	float launcherY = 600.0f;
 
 	ScoreTracker* scoreTracker; //object that keeps track of the player's score
+	int highScore;
 
 	Texture2D ballTexture;
 	Texture2D launcherTexture;

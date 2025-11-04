@@ -213,5 +213,5 @@ void ModuleGame::OnCollisionEnd(PhysBody* bodyA, PhysBody* bodyB) {
 
 void ModuleGame::ManageScore() {
 	scoreTracker->UpdateScore();
-	scoreTracker->PrintScore();
+	scoreTracker->PrintScore(highScore);
 }

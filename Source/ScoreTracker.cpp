@@ -21,8 +21,9 @@ void ScoreTracker::UpdateScore() {
 		}
 	}
 }
-void ScoreTracker::PrintScore() {
+void ScoreTracker::PrintScore(int highScore) {
 	DrawText(TextFormat("Score: %06i points", score), 300, 20, 20, RED);
+	DrawText(TextFormat("High Score: %06i points", highScore), 300, 40, 20, RED);
 }
 
 /*void ScoreTracker::StartScoreTracker() {
