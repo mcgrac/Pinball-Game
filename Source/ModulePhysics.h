@@ -42,7 +42,7 @@ public:
 
 public:
 	Module* listener = nullptr;
-	//ColliderType ctype = ColliderType::UNKNOWN;
+	ColliderType ctype = ColliderType::UNKNOWN;
 	int width, height;
 	b2Body* body;
 	PhysicEntity* entity = nullptr;
@@ -74,6 +74,7 @@ public:
 	void DestroyPhysBody(PhysBody* pbody);
 
 	b2World* GetWorld() const { return world; }  // Devuelve el puntero al mundo físico
+	bool IsUsingMouseLauncher() const { return useMouseLauncher; }
 
 	void BeginContact(b2Contact* contact) override;
 	void EndContact(b2Contact* contact) override;
@@ -85,5 +86,10 @@ private:
 
 	b2World* world = nullptr;
 	bool debug;
+
+	
+	b2MouseJoint* mouseJoint = nullptr;   
+	b2Body* mouseGround = nullptr;        
+	bool useMouseLauncher = false;        
 
 };

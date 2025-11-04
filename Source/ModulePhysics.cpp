@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModulePhysics.h"
+#include "Launcher.h"
+#include "Ball.h"
 
 #include"iostream"
 
@@ -85,6 +87,8 @@ bool ModulePhysics::Start()
 	LOG("Creating Physics 2D environment");
 
 	world = new b2World(b2Vec2(gravity));
+	b2BodyDef bd;
+	mouseGround = world->CreateBody(&bd);
 
 	world->SetContactListener(this);
 
@@ -93,10 +97,10 @@ bool ModulePhysics::Start()
 
 update_status ModulePhysics::PreUpdate()
 {
+	
 	static double accumulator = 0.0;
 	const double fixedDeltaTime = 1.0 / 60.0;
-	double frameTime = GetFrameTime();        
-
+	double frameTime = GetFrameTime();
 	accumulator += frameTime;
 
 	while (accumulator >= fixedDeltaTime)
@@ -105,39 +109,123 @@ update_status ModulePhysics::PreUpdate()
 		accumulator -= fixedDeltaTime;
 	}
 
-	//if (IsKeyPressed(KEY_F1)) {
-	//	showColliders = !showColliders;
-	//}
+	
+	if (debug && useMouseLauncher)
+	{
+		static b2Body* grabbedLauncher = nullptr;
+		static float grabStartY = 0.0f;
+		static Launcher* grabbedLauncherEntity = nullptr;
+
+		b2Vec2 mouseWorld = b2Vec2(PIXEL_TO_METERS(GetMouseX()), PIXEL_TO_METERS(GetMouseY()));
+
+		
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			b2AABB aabb;
+			aabb.lowerBound = mouseWorld - b2Vec2(0.001f, 0.001f);
+			aabb.upperBound = mouseWorld + b2Vec2(0.001f, 0.001f);
+
+			struct QueryCallback : public b2QueryCallback
+			{
+				b2Vec2 point;
+				b2Body* launcherBody = nullptr;
+				QueryCallback(const b2Vec2& p) : point(p) {}
+				bool ReportFixture(b2Fixture* fixture) override
+				{
+					b2Body* body = fixture->GetBody();
+					PhysBody* phys = reinterpret_cast<PhysBody*>(body->GetUserData().pointer);
+					if (phys && phys->ctype == ColliderType::LAUNCHER && fixture->TestPoint(point))
+					{
+						launcherBody = body;
+						return false;
+					}
+					return true;
+				}
+			};
+
+			QueryCallback cb(mouseWorld);
+			world->QueryAABB(&cb, aabb);
+
+			if (cb.launcherBody)
+			{
+				grabbedLauncher = cb.launcherBody;
+				grabStartY = grabbedLauncher->GetPosition().y;
+
+				PhysBody* phys = reinterpret_cast<PhysBody*>(grabbedLauncher->GetUserData().pointer);
+				grabbedLauncherEntity = phys ? dynamic_cast<Launcher*>(phys->entity) : nullptr;
+			}
+		}
+
+		
+		if (grabbedLauncher && IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+		{
+			float maxPullMeters = PIXEL_TO_METERS(100.0f); 
+			float mouseY = mouseWorld.y;
+
+			
+			if (mouseY > grabStartY)
+			{
+				float clampedY = mouseY;
+				if (mouseY - grabStartY > maxPullMeters)
+					clampedY = grabStartY + maxPullMeters;
+
+			
+				b2Vec2 currentPos = grabbedLauncher->GetPosition();
+				grabbedLauncher->SetTransform(b2Vec2(currentPos.x, clampedY), grabbedLauncher->GetAngle());
+
+				
+				if (grabbedLauncherEntity)
+					grabbedLauncherEntity->isCharging = true;
+			}
+		}
+
+		
+		if (grabbedLauncher && IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+		{
+			if (grabbedLauncherEntity)
+			{
+				grabbedLauncherEntity->isCharging = false;
+				grabbedLauncherEntity->returning = true;
+
+				
+				grabbedLauncherEntity->Release();
+			}
+
+			grabbedLauncher = nullptr;
+			grabbedLauncherEntity = nullptr;
+		}
+	}
 
 	return UPDATE_CONTINUE;
 }
+
 
 PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type)
 {
 	if (world == nullptr)
 		return nullptr;
 
-	// --- Do phys body to return it ---
+	
 	PhysBody* pbody = new PhysBody();
 
-	// --- Body definition ---
+
 	b2BodyDef bodyDef;
-	bodyDef.type = type; // dynamic or static
-	bodyDef.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y)); //set initial position
+	bodyDef.type = type;
+	bodyDef.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y)); 
 	bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
 
-	b2Body* body = world->CreateBody(&bodyDef); //adds that body into the body list (allocates memory)
+	b2Body* body = world->CreateBody(&bodyDef); 
 
-	// --- Shape definition ---
+	
 	b2CircleShape shape;
 	shape.m_radius = PIXEL_TO_METERS(radius);
 
-	// --- Fixture definition ---
+
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
 	fixture.density = 1.0f;
 	fixture.friction = 0.3f;
-	fixture.restitution = 0.4f; // mid rebote
+	fixture.restitution = 0.4f; 
 
 	body->CreateFixture(&fixture);
 
@@ -155,27 +243,27 @@ PhysBody* ModulePhysics::CreateBall(int x, int y, int radius, b2BodyType type)
 	if (world == nullptr)
 		return nullptr;
 
-	// --- Do phys body to return it ---
+	
 	PhysBody* pbody = new PhysBody();
 
-	// --- Body definition ---
+	
 	b2BodyDef bodyDef;
-	bodyDef.type = type; // dynamic or static
-	bodyDef.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y)); //set initial position
+	bodyDef.type = type; 
+	bodyDef.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y)); 
 	bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
 
-	b2Body* body = world->CreateBody(&bodyDef); //adds that body into the body list (allocates memory)
+	b2Body* body = world->CreateBody(&bodyDef); 
 
-	// --- Shape definition ---
+	
 	b2CircleShape shape;
 	shape.m_radius = PIXEL_TO_METERS(radius);
 
-	// --- Fixture definition ---
+	
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
 	fixture.density = 1.0f;
 	fixture.friction = 0.3f;
-	fixture.restitution = 0.1f; // mid rebote
+	fixture.restitution = 0.1f; 
 
 	body->CreateFixture(&fixture);
 
@@ -336,13 +424,27 @@ update_status ModulePhysics::PostUpdate()
 	if (IsKeyPressed(KEY_F1))
 	{
 		debug = !debug;
+
+		
+		if (debug && mouseJoint == nullptr)
+		{
+			std::cout << "Debug ON: enabling mouse joint support\n";
+		}
+		else
+		{
+			std::cout << "Debug OFF: disabling mouse joint\n";
+			if (mouseJoint)
+			{
+				world->DestroyJoint(mouseJoint);
+				mouseJoint = nullptr;
+			}
+		}
 	}
 
-	if (IsKeyPressed(KEY_F2)) {
-		if (world->GetGravity() == gravity)
-			world->SetGravity(alternativeGravity);
-		else
-			world->SetGravity(gravity);
+	if (IsKeyPressed(KEY_F2))
+	{
+		useMouseLauncher = !useMouseLauncher;
+		std::cout << "Launcher control: " << (useMouseLauncher ? "Mouse" : "Keyboard") << std::endl;
 	}
 
 	if (!debug)

@@ -4,11 +4,13 @@
 #include"iostream"
 
 
-Launcher::Launcher(ModulePhysics* physics, Ball* ball, int _x, int _y, int _width, int _heigh, Module* _listener, Texture2D _texture, ColliderType _collType)
-    : PhysicEntity(physics->CreateRectangle(_x, _y, _width, _heigh, b2_kinematicBody), _listener, _collType)
+Launcher::Launcher(ModulePhysics* physics, Ball* ball, int _x, int _y, int _heigh, int _width, Module* _listener, Texture2D _texture, ColliderType _collType)
+    : PhysicEntity(physics->CreateRectangle(_x, _y, _heigh, _width, b2_kinematicBody), _listener, _collType)
 {
     this->ball = ball;
     body->entity = this;
+    body->GetB2Body()->SetGravityScale(0.0f);
+    body->ctype = ColliderType::LAUNCHER;
     initialY = _y;
 }
 Launcher::~Launcher()

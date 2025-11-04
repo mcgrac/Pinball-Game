@@ -1,5 +1,12 @@
-﻿  ModulePhysics.cpp
-C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Source\ModulePhysics.cpp(15,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Source\ModulePhysics.cpp(15,16): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Source\ModulePhysics.cpp(104,15): warning C4305: 'argument': truncation from 'const double' to 'float'
+﻿  Application.cpp
+  ModulePhysics.cpp
+C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Source\ModulePhysics.cpp(17,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Source\ModulePhysics.cpp(17,16): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Source\ModulePhysics.cpp(108,15): warning C4305: 'argument': truncation from 'const double' to 'float'
+  Launcher.cpp
+C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Source\Launcher.cpp(14,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Level1.cpp
+  Map.cpp
+  ModuleGame.cpp
+  Generating Code...
   PhysicsGame.vcxproj -> C:\Users\espag\OneDrive\Documentos\GitHub\Pinball-Game\Build\PhysicsGame\Debug\Win32\PhysicsGame.exe

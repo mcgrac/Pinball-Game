@@ -4,7 +4,7 @@
 class Launcher : public PhysicEntity
 {
 public:
-	Launcher(ModulePhysics* physics, Ball* ball, int _x, int _y, int _width, int _heigh, Module* _listener, Texture2D _texture, ColliderType _collType);
+	Launcher(ModulePhysics* physics, Ball* ball, int _x, int _y, int _heigh, int _width, Module* _listener, Texture2D _texture, ColliderType _collType);
 
 	~Launcher();
 
@@ -26,8 +26,11 @@ public:
 	{
 		return body->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);;
 	}
+	Ball* GetBall() const { return ball; }
 
 	bool ballInside = false;
+	bool isCharging = false;
+	bool returning = false;
 
 private:
 	Texture2D texture;
@@ -44,8 +47,7 @@ private:
 
 
 
-	bool isCharging = false;
-	bool returning = false;
+	
 	bool onBallCollision = false;
 
 	float initialY = 0.0f;
