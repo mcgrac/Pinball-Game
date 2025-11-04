@@ -77,15 +77,31 @@ Flipper::Flipper(ModulePhysics* physics, int _x, int _y, bool _isLeft, Module* _
         localAnchorB = b2Vec2(PIXEL_TO_METERS(texture.width * 0.95f), verticalOffset);
     //-------------------------
 
-    jointDef.localAnchorA.Set(0.1f, -0.1f);
+    if (isLeft)
+    {
+        jointDef.localAnchorA.Set(-0.1f, 0.0f);
+        localAnchorB = b2Vec2(-PIXEL_TO_METERS(texture.width * 0.95f), PIXEL_TO_METERS(texture.height * 0.15f));
+    }
+    else
+    {
+        jointDef.localAnchorA.Set(0.1f, 0.0f);
+        localAnchorB = b2Vec2(PIXEL_TO_METERS(texture.width * 0.95f), PIXEL_TO_METERS(texture.height * 0.15f));
+    }
+
     jointDef.localAnchorB = localAnchorB;
 
     jointDef.collideConnected = false;
     jointDef.enableLimit = true;
 
 
-    jointDef.lowerAngle = -45.0f * DEGTORAD;
-    jointDef.upperAngle = 10.0f * DEGTORAD;
+    if (isLeft) {
+        jointDef.lowerAngle = -45.0f * DEGTORAD;
+        jointDef.upperAngle = 10.0f * DEGTORAD;
+    }
+    else {
+        jointDef.lowerAngle = -10.0f * DEGTORAD;
+        jointDef.upperAngle = 45.0f * DEGTORAD;
+    }
 
     jointDef.enableMotor = true;
     jointDef.maxMotorTorque = 700.0f;
