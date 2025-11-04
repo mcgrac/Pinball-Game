@@ -194,8 +194,10 @@
     <ClInclude Include="Source\Launcher.h" />
     <ClInclude Include="Source\Level1.h" />
     <ClInclude Include="Source\Map.h" />
+    <ClInclude Include="Source\ModuleFonts.h" />
     <ClInclude Include="Source\ModuleGame.h" />
     <ClInclude Include="Source\PhysicEntity.h" />
+    <ClInclude Include="Source\ScoreTracker.h" />
     <ClInclude Include="Source\Timer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -212,8 +214,10 @@
     <ClCompile Include="Source\Launcher.cpp" />
     <ClCompile Include="Source\Level1.cpp" />
     <ClCompile Include="Source\Map.cpp" />
+    <ClCompile Include="Source\ModuleFonts.cpp" />
     <ClCompile Include="Source\ModuleGame.cpp" />
     <ClCompile Include="Source\PhysicEntity.cpp" />
+    <ClCompile Include="Source\ScoreTracker.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,16 @@ PhysicEntity::PhysicEntity(PhysBody* _body, Module* _listener, ColliderType _col
 	//body->ctype = _collType;
 	body->listener = _listener; // quién recibe BeginContact
 }
-PhysicEntity::~PhysicEntity() {};
+PhysicEntity::~PhysicEntity() {
+
+	//destroy bodies
+    if (body != nullptr)
+    {
+        b2World* world = body->GetB2Body()->GetWorld();
+        world->DestroyBody(body->GetB2Body());
+        body = nullptr;
+    }
+};
 
 void PhysicEntity::Update() {
 
